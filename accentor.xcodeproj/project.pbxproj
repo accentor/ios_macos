@@ -1,0 +1,630 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FDFFD6E829113CDE003A1501 /* accentorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E729113CDE003A1501 /* accentorApp.swift */; };
+		FDFFD6EA29113CDE003A1501 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E929113CDE003A1501 /* Persistence.swift */; };
+		FDFFD6ED29113CDE003A1501 /* accentor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */; };
+		FDFFD6EF29113CDE003A1501 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6EE29113CDE003A1501 /* ContentView.swift */; };
+		FDFFD6F129113CDF003A1501 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDFFD6F029113CDF003A1501 /* Assets.xcassets */; };
+		FDFFD6F529113CDF003A1501 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDFFD6F429113CDF003A1501 /* Preview Assets.xcassets */; };
+		FDFFD6FF29113CDF003A1501 /* accentorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6FE29113CDF003A1501 /* accentorTests.swift */; };
+		FDFFD70929113CDF003A1501 /* accentorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD70829113CDF003A1501 /* accentorUITests.swift */; };
+		FDFFD70B29113CDF003A1501 /* accentorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD70A29113CDF003A1501 /* accentorUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FDFFD6FB29113CDF003A1501 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDFFD6DC29113CDE003A1501 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDFFD6E329113CDE003A1501;
+			remoteInfo = accentor;
+		};
+		FDFFD70529113CDF003A1501 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDFFD6DC29113CDE003A1501 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDFFD6E329113CDE003A1501;
+			remoteInfo = accentor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FDFFD6E429113CDE003A1501 /* accentor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accentor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDFFD6E729113CDE003A1501 /* accentorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorApp.swift; sourceTree = "<group>"; };
+		FDFFD6E929113CDE003A1501 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		FDFFD6EC29113CDE003A1501 /* accentor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = accentor.xcdatamodel; sourceTree = "<group>"; };
+		FDFFD6EE29113CDE003A1501 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FDFFD6F029113CDF003A1501 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FDFFD6F229113CDF003A1501 /* accentor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = accentor.entitlements; sourceTree = "<group>"; };
+		FDFFD6F429113CDF003A1501 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FDFFD6FA29113CDF003A1501 /* accentorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = accentorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDFFD6FE29113CDF003A1501 /* accentorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorTests.swift; sourceTree = "<group>"; };
+		FDFFD70429113CDF003A1501 /* accentorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = accentorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDFFD70829113CDF003A1501 /* accentorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorUITests.swift; sourceTree = "<group>"; };
+		FDFFD70A29113CDF003A1501 /* accentorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FDFFD6E129113CDE003A1501 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDFFD6F729113CDF003A1501 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDFFD70129113CDF003A1501 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FDFFD6DB29113CDE003A1501 = {
+			isa = PBXGroup;
+			children = (
+				FDFFD6E629113CDE003A1501 /* accentor */,
+				FDFFD6FD29113CDF003A1501 /* accentorTests */,
+				FDFFD70729113CDF003A1501 /* accentorUITests */,
+				FDFFD6E529113CDE003A1501 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FDFFD6E529113CDE003A1501 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FDFFD6E429113CDE003A1501 /* accentor.app */,
+				FDFFD6FA29113CDF003A1501 /* accentorTests.xctest */,
+				FDFFD70429113CDF003A1501 /* accentorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FDFFD6E629113CDE003A1501 /* accentor */ = {
+			isa = PBXGroup;
+			children = (
+				FDFFD6E729113CDE003A1501 /* accentorApp.swift */,
+				FDFFD6E929113CDE003A1501 /* Persistence.swift */,
+				FDFFD6EE29113CDE003A1501 /* ContentView.swift */,
+				FDFFD6F029113CDF003A1501 /* Assets.xcassets */,
+				FDFFD6F229113CDF003A1501 /* accentor.entitlements */,
+				FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */,
+				FDFFD6F329113CDF003A1501 /* Preview Content */,
+			);
+			path = accentor;
+			sourceTree = "<group>";
+		};
+		FDFFD6F329113CDF003A1501 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FDFFD6F429113CDF003A1501 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FDFFD6FD29113CDF003A1501 /* accentorTests */ = {
+			isa = PBXGroup;
+			children = (
+				FDFFD6FE29113CDF003A1501 /* accentorTests.swift */,
+			);
+			path = accentorTests;
+			sourceTree = "<group>";
+		};
+		FDFFD70729113CDF003A1501 /* accentorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FDFFD70829113CDF003A1501 /* accentorUITests.swift */,
+				FDFFD70A29113CDF003A1501 /* accentorUITestsLaunchTests.swift */,
+			);
+			path = accentorUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FDFFD6E329113CDE003A1501 /* accentor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDFFD70E29113CDF003A1501 /* Build configuration list for PBXNativeTarget "accentor" */;
+			buildPhases = (
+				FDFFD6E029113CDE003A1501 /* Sources */,
+				FDFFD6E129113CDE003A1501 /* Frameworks */,
+				FDFFD6E229113CDE003A1501 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = accentor;
+			productName = accentor;
+			productReference = FDFFD6E429113CDE003A1501 /* accentor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FDFFD6F929113CDF003A1501 /* accentorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDFFD71129113CDF003A1501 /* Build configuration list for PBXNativeTarget "accentorTests" */;
+			buildPhases = (
+				FDFFD6F629113CDF003A1501 /* Sources */,
+				FDFFD6F729113CDF003A1501 /* Frameworks */,
+				FDFFD6F829113CDF003A1501 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FDFFD6FC29113CDF003A1501 /* PBXTargetDependency */,
+			);
+			name = accentorTests;
+			productName = accentorTests;
+			productReference = FDFFD6FA29113CDF003A1501 /* accentorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FDFFD70329113CDF003A1501 /* accentorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDFFD71429113CDF003A1501 /* Build configuration list for PBXNativeTarget "accentorUITests" */;
+			buildPhases = (
+				FDFFD70029113CDF003A1501 /* Sources */,
+				FDFFD70129113CDF003A1501 /* Frameworks */,
+				FDFFD70229113CDF003A1501 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FDFFD70629113CDF003A1501 /* PBXTargetDependency */,
+			);
+			name = accentorUITests;
+			productName = accentorUITests;
+			productReference = FDFFD70429113CDF003A1501 /* accentorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FDFFD6DC29113CDE003A1501 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					FDFFD6E329113CDE003A1501 = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+					FDFFD6F929113CDF003A1501 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = FDFFD6E329113CDE003A1501;
+					};
+					FDFFD70329113CDF003A1501 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = FDFFD6E329113CDE003A1501;
+					};
+				};
+			};
+			buildConfigurationList = FDFFD6DF29113CDE003A1501 /* Build configuration list for PBXProject "accentor" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FDFFD6DB29113CDE003A1501;
+			productRefGroup = FDFFD6E529113CDE003A1501 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FDFFD6E329113CDE003A1501 /* accentor */,
+				FDFFD6F929113CDF003A1501 /* accentorTests */,
+				FDFFD70329113CDF003A1501 /* accentorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FDFFD6E229113CDE003A1501 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDFFD6F529113CDF003A1501 /* Preview Assets.xcassets in Resources */,
+				FDFFD6F129113CDF003A1501 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDFFD6F829113CDF003A1501 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDFFD70229113CDF003A1501 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FDFFD6E029113CDE003A1501 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDFFD6ED29113CDE003A1501 /* accentor.xcdatamodeld in Sources */,
+				FDFFD6E829113CDE003A1501 /* accentorApp.swift in Sources */,
+				FDFFD6EF29113CDE003A1501 /* ContentView.swift in Sources */,
+				FDFFD6EA29113CDE003A1501 /* Persistence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDFFD6F629113CDF003A1501 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDFFD6FF29113CDF003A1501 /* accentorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDFFD70029113CDF003A1501 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDFFD70B29113CDF003A1501 /* accentorUITestsLaunchTests.swift in Sources */,
+				FDFFD70929113CDF003A1501 /* accentorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FDFFD6FC29113CDF003A1501 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDFFD6E329113CDE003A1501 /* accentor */;
+			targetProxy = FDFFD6FB29113CDF003A1501 /* PBXContainerItemProxy */;
+		};
+		FDFFD70629113CDF003A1501 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDFFD6E329113CDE003A1501 /* accentor */;
+			targetProxy = FDFFD70529113CDF003A1501 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FDFFD70C29113CDF003A1501 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FDFFD70D29113CDF003A1501 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		FDFFD70F29113CDF003A1501 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = accentor/accentor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"accentor/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.accentor.accentor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FDFFD71029113CDF003A1501 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = accentor/accentor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"accentor/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.accentor.accentor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FDFFD71229113CDF003A1501 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.accentor.accentorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/accentor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/accentor";
+			};
+			name = Debug;
+		};
+		FDFFD71329113CDF003A1501 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.accentor.accentorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/accentor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/accentor";
+			};
+			name = Release;
+		};
+		FDFFD71529113CDF003A1501 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.accentor.accentorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = accentor;
+			};
+			name = Debug;
+		};
+		FDFFD71629113CDF003A1501 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.accentor.accentorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = accentor;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FDFFD6DF29113CDE003A1501 /* Build configuration list for PBXProject "accentor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDFFD70C29113CDF003A1501 /* Debug */,
+				FDFFD70D29113CDF003A1501 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDFFD70E29113CDF003A1501 /* Build configuration list for PBXNativeTarget "accentor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDFFD70F29113CDF003A1501 /* Debug */,
+				FDFFD71029113CDF003A1501 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDFFD71129113CDF003A1501 /* Build configuration list for PBXNativeTarget "accentorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDFFD71229113CDF003A1501 /* Debug */,
+				FDFFD71329113CDF003A1501 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDFFD71429113CDF003A1501 /* Build configuration list for PBXNativeTarget "accentorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDFFD71529113CDF003A1501 /* Debug */,
+				FDFFD71629113CDF003A1501 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FDFFD6EC29113CDE003A1501 /* accentor.xcdatamodel */,
+			);
+			currentVersion = FDFFD6EC29113CDE003A1501 /* accentor.xcdatamodel */;
+			path = accentor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = FDFFD6DC29113CDE003A1501 /* Project object */;
+}
