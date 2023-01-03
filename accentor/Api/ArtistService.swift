@@ -15,7 +15,7 @@ struct ArtistService {
     func index(context: NSManagedObjectContext) {
         let startLoading = NSDate()
         
-        AbstractService.shared.index(path: apiPath, completion: { jsonData in
+        AbstractService.shared.index(path: apiPath, entityName: "Artist", completion: { jsonData in
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             
@@ -29,8 +29,6 @@ struct ArtistService {
                 print("Error decoding artists")
             }
         })
-        
-        self.removeOld(beforeDate: startLoading)
     }
     
     private func saveArtists(context: NSManagedObjectContext, artists: [APIArtist]) {
@@ -66,10 +64,6 @@ struct ArtistService {
         } catch {
             print(error.localizedDescription)
         }
-    }
-    
-    private func removeOld(beforeDate: NSDate) {
-        AbstractService.shared.removeOld(entityName: "Artist", beforeDate: beforeDate)
     }
 }
 
