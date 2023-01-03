@@ -40,8 +40,8 @@
         <attribute name="imageType" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="normalizedName" attributeType="String"/>
-        <relationship name="albumArtists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AlbumArtist" inverseName="artist" inverseEntity="AlbumArtist"/>
-        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackArtist" inverseName="artist" inverseEntity="TrackArtist"/>
+        <relationship name="albumArtists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AlbumArtist" inverseName="artist" inverseEntity="AlbumArtist"/>
+        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrackArtist" inverseName="artist" inverseEntity="TrackArtist"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -60,7 +60,7 @@
         <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="tracks" inverseEntity="Album"/>
-        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TrackArtist" inverseName="track" inverseEntity="TrackArtist"/>
+        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TrackArtist" inverseName="track" inverseEntity="TrackArtist"/>
         <fetchIndex name="byAlbumId">
             <fetchIndexElement property="albumId" type="Binary" order="ascending"/>
         </fetchIndex>
