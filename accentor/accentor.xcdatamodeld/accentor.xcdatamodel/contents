@@ -1,9 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Album" representedClassName="Album" syncable="YES" codeGenerationType="class">
+        <attribute name="edition" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="editionDescription" optional="YES" attributeType="String"/>
+        <attribute name="fetchedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="image100" optional="YES" attributeType="String"/>
+        <attribute name="image250" optional="YES" attributeType="String"/>
+        <attribute name="image500" optional="YES" attributeType="String"/>
+        <attribute name="normalizedTitle" attributeType="String"/>
+        <attribute name="releaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="reviewComment" optional="YES" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="albumArtists" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="AlbumArtist" inverseName="album" inverseEntity="AlbumArtist"/>
+        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Track" inverseName="album" inverseEntity="Track"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="AlbumArtist" representedClassName="AlbumArtist" syncable="YES" codeGenerationType="class">
+        <attribute name="artistId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="normalizedName" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="separator" optional="YES" attributeType="String"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="albumArtists" inverseEntity="Album"/>
+        <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="albumArtists" inverseEntity="Artist"/>
+    </entity>
+    <entity name="Artist" representedClassName="Artist" syncable="YES" codeGenerationType="class">
+        <attribute name="fetchedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="image100" optional="YES" attributeType="String"/>
+        <attribute name="image250" optional="YES" attributeType="String"/>
+        <attribute name="image500" optional="YES" attributeType="String"/>
+        <attribute name="imageType" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="normalizedName" attributeType="String"/>
+        <relationship name="albumArtists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AlbumArtist" inverseName="artist" inverseEntity="AlbumArtist"/>
+        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackArtist" inverseName="artist" inverseEntity="TrackArtist"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Track" representedClassName="Track" syncable="YES" codeGenerationType="class">
+        <attribute name="albumId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bitrate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="codecId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fetchedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="length" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="normalizedTitle" attributeType="String"/>
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="tracks" inverseEntity="Album"/>
+        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TrackArtist" inverseName="track" inverseEntity="TrackArtist"/>
+        <fetchIndex name="byAlbumId">
+            <fetchIndexElement property="albumId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="TrackArtist" representedClassName="TrackArtist" syncable="YES" codeGenerationType="class">
+        <attribute name="artistId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hidden" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="normalizedName" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="role" attributeType="String"/>
+        <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="trackArtists" inverseEntity="Artist"/>
+        <relationship name="track" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="trackArtists" inverseEntity="Track"/>
+    </entity>
 </model>
