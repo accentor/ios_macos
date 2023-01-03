@@ -36,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FDFEA3E729644A80000B9ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FDFFD6E429113CDE003A1501 /* accentor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accentor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFFD6E729113CDE003A1501 /* accentorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorApp.swift; sourceTree = "<group>"; };
 		FDFFD6E929113CDE003A1501 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		FDFFD6E629113CDE003A1501 /* accentor */ = {
 			isa = PBXGroup;
 			children = (
+				FDFEA3E729644A80000B9ABF /* Info.plist */,
 				FDFFD6E729113CDE003A1501 /* accentorApp.swift */,
 				FDFFD6E929113CDE003A1501 /* Persistence.swift */,
 				FDFFD6EE29113CDE003A1501 /* ContentView.swift */,
@@ -426,6 +428,7 @@
 				DEVELOPMENT_TEAM = B46GULRMJ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = accentor/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -463,6 +466,7 @@
 				DEVELOPMENT_TEAM = B46GULRMJ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = accentor/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
