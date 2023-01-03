@@ -11,11 +11,13 @@ import CoreData
 class AbstractService {
     public static let shared = AbstractService()
     
-    func index(path: String, completion: @escaping (Data) -> ()) {
-        self.fetchPage(page: 1, path: path, completion: completion)
+    func index(path: String, entityName: String, completion: @escaping (Data) -> ()) {
+        let startLoading = NSDate()
+
+        self.fetchPage(page: 1, path: path, entityName: entityName, startLoading: startLoading, completion: completion)
     }
     
-    private func fetchPage(page: Int, path: String, completion: @escaping (Data) -> ()) {
+    private func fetchPage(page: Int, path: String, entityName: String, startLoading: NSDate, completion: @escaping (Data) -> ()) {
 
         var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
         components.path = "/api/" + path
@@ -42,12 +44,15 @@ class AbstractService {
             
             let totalPages = Int(response.value(forHTTPHeaderField: "x-total-pages")!) ?? 0
             if (page < totalPages) {
-                self.fetchPage(page: page + 1, path: path, completion: completion)
+                self.fetchPage(page: page + 1, path: path, entityName: entityName, startLoading: startLoading, completion: completion)
+            }  else {
+                self.removeOld(entityName: entityName, beforeDate: startLoading)
             }
         }.resume()
     }
     
-    func removeOld(entityName: String, beforeDate: NSDate) {
+    private func removeOld(entityName: String, beforeDate: NSDate) {
+        print("removing old")
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
         fetchRequest.predicate = NSPredicate(format: "fetchedAt < %@", beforeDate)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

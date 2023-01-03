@@ -13,9 +13,7 @@ struct TrackService {
     public static let shared = TrackService()
     
     func index(context: NSManagedObjectContext) {
-        let startLoading = NSDate()
-
-        AbstractService.shared.index(path: apiPath, completion: { jsonData in
+        AbstractService.shared.index(path: apiPath, entityName: "Track", completion: { jsonData in
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             do {
@@ -30,8 +28,6 @@ struct TrackService {
             }
             
         })
-        
-        self.removeOld(beforeDate: startLoading)
     }
     
     private func saveTracks(context: NSManagedObjectContext, tracks: [APITrack]) {
@@ -102,10 +98,6 @@ struct TrackService {
         } catch {
             print(error)
         }
-    }
-    
-    private func removeOld(beforeDate: NSDate) {
-        AbstractService.shared.removeOld(entityName: "Track", beforeDate: beforeDate)
     }
 }
 

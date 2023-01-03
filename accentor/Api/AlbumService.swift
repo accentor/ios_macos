@@ -13,9 +13,8 @@ struct AlbumService {
     public static let shared = AlbumService()
     
     func index(context: NSManagedObjectContext) {
-        let startLoading = NSDate()
-
-        AbstractService.shared.index(path: apiPath, completion: { jsonData in
+        AbstractService.shared.index(path: apiPath, entityName: "Album", completion: { jsonData in
+            print("Inside complettion for albums")
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
 
@@ -32,8 +31,6 @@ struct AlbumService {
                 print("Error decoding albums", error.localizedDescription)
             }
         })
-        
-        self.removeOld(beforeDate: startLoading)
     }
     
     private func saveAlbums(context: NSManagedObjectContext, albums: [APIAlbum]) {
@@ -64,6 +61,11 @@ struct AlbumService {
             entity.image500 = album.image500
             entity.fetchedAt = Date()
             
+            entity.albumArtists?.forEach({ item in
+                let albumArtist = item as! AlbumArtist
+                context.delete(albumArtist)
+            })
+            
             if (album.albumArtists  != []) {
                 album.albumArtists.forEach { (albumArtist) in
                     let nestedEntity = AlbumArtist(context: context)
@@ -91,11 +93,6 @@ struct AlbumService {
             print(error.localizedDescription)
         }
     }
-
-    private func removeOld(beforeDate: NSDate) {
-        AbstractService.shared.removeOld(entityName: "Album", beforeDate: beforeDate)
-    }
-
 }
 
 struct APIAlbumArtist: Decodable, Hashable {
