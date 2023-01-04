@@ -20,12 +20,11 @@ struct Player: View {
     
     var body: some View {
         ZStack {
-            Rectangle()
+            Rectangle().foregroundColor(Color.white.opacity(0.0)).frame(height: 65)
                         #if os(iOS)
-                        .foregroundColor(Color.white.opacity(0.0)).frame(width: UIScreen.main.bounds.size.width, height: 65)
                         .background(UIBlur())
                         #else
-                        .foregroundColor(Color.white).frame(height: 65)
+                        .background(NSBlur())
                         #endif
             HStack {
                 Button(action: {}) {
@@ -79,6 +78,28 @@ struct UIBlur: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
         uiView.effect = UIBlurEffect(style: style)
+    }
+}
+#endif
+
+#if os(macOS)
+struct NSBlur: NSViewRepresentable {
+    let material: NSVisualEffectView.Material = NSVisualEffectView.Material.headerView
+    let blendingMode: NSVisualEffectView.BlendingMode = NSVisualEffectView.BlendingMode.withinWindow
+    
+    func makeNSView(context: Context) -> NSVisualEffectView
+    {
+        let visualEffectView = NSVisualEffectView()
+        visualEffectView.material = material
+        visualEffectView.blendingMode = blendingMode
+        visualEffectView.state = NSVisualEffectView.State.active
+        return visualEffectView
+    }
+
+    func updateNSView(_ visualEffectView: NSVisualEffectView, context: Context)
+    {
+        visualEffectView.material = material
+        visualEffectView.blendingMode = blendingMode
     }
 }
 #endif
