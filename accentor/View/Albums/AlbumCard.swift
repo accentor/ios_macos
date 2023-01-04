@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct AlbumCard: View {
     var album: Album
@@ -25,24 +26,7 @@ struct AlbumCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if (album.image250 != nil) {
-                AsyncImage(url: URL(string: album.image250!)) { phase in
-                    if let image = phase.image {
-                        image.resizable().aspectRatio(contentMode: .fit)
-                    } else {
-                        ZStack {
-                            Rectangle().fill(.gray)
-                            Image(systemName: "music.note").font(.largeTitle)
-                        }.aspectRatio(1, contentMode: .fit)
-                    }
-                }
-            } else {
-                ZStack {
-                    Rectangle().fill(Color.gray)
-                    Image(systemName: "music.note").font(.largeTitle)
-                }.aspectRatio(1, contentMode: .fit)
-                
-            }
+            AlbumImage(album: album)
             Text(album.title ?? "")
             Text(albumArtistsText())
             Spacer()
@@ -51,9 +35,3 @@ struct AlbumCard: View {
         }
     }
 }
-
-//struct AlbumCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AlbumCard()
-//    }
-//}

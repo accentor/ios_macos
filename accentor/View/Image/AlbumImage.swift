@@ -6,15 +6,30 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct AlbumImage: View {
+    var album: Album
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct AlbumImage_Previews: PreviewProvider {
-    static var previews: some View {
-        AlbumImage()
+        if (album.image250 != nil) {
+            CachedAsyncImage(url: URL(string: album.image250!)) { phase in
+                if let image = phase.image {
+                    image.resizable().aspectRatio(contentMode: .fit)
+                } else {
+                    ZStack {
+                        Rectangle().fill(.gray)
+                        Image(systemName: "music.note").font(.largeTitle)
+                    }.aspectRatio(1, contentMode: .fit)
+                }
+            }
+        } else {
+            ZStack {
+                Rectangle().fill(Color.gray)
+                Image(systemName: "music.note").font(.largeTitle)
+            }.aspectRatio(1, contentMode: .fit)
+            
+        }
     }
 }
