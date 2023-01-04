@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFAudio
+import CachedAsyncImage
 
 struct Player: View {
     @State private var showQueue = false
@@ -30,7 +31,7 @@ struct Player: View {
                 Button(action: {}) {
                     HStack {
                         if (viewModel.playQueue.currentTrack != nil && viewModel.playQueue.currentTrack?.track.album?.image250 != nil) {
-                            AsyncImage(url: URL(string: viewModel.playQueue.currentTrack!.track.album!.image250!)) { phase in
+                            CachedAsyncImage(url: URL(string: viewModel.playQueue.currentTrack!.track.album!.image250!)) { phase in
                                 if let image = phase.image {
                                     image.resizable().frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
                                 } else {
