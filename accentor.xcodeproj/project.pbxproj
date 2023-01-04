@@ -113,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD8CAECE2965B98300BADDC4 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +326,9 @@
 			dependencies = (
 			);
 			name = accentor;
+			packageProductDependencies = (
+				FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */,
+			);
 			productName = accentor;
 			productReference = FDFFD6E429113CDE003A1501 /* accentor.app */;
 			productType = "com.apple.product-type.application";
@@ -397,6 +401,9 @@
 				Base,
 			);
 			mainGroup = FDFFD6DB29113CDE003A1501;
+			packageReferences = (
+				FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+			);
 			productRefGroup = FDFFD6E529113CDE003A1501 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -828,6 +835,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */ = {
