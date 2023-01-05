@@ -54,7 +54,7 @@ struct Player: View {
                 }
                 #if os(macOS)
                 Button(action: viewModel.prev) {
-                    Image(systemName: "backward.fill").font(.title3)
+                    Image(systemName: "backward.end.fill").font(.title3)
                 }.foregroundColor(viewModel.canGoPrev ? .black : .gray.opacity(0.75)).disabled(!viewModel.canGoPrev)
                 #endif
                 
@@ -64,7 +64,7 @@ struct Player: View {
                  .keyboardShortcut(.space, modifiers: [])
                 
                 Button(action: viewModel.next) {
-                    Image(systemName: "forward.fill").font(.title3)
+                    Image(systemName: "forward.end.fill").font(.title3)
                 }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.trailing, 30).disabled(!viewModel.canGoNext)
             }
             #if os(macOS)
