@@ -13,11 +13,14 @@ struct ArtistService {
     public static let shared = ArtistService()
     
     func index(context: NSManagedObjectContext) {
-        let startLoading = NSDate()
-        
         AbstractService.shared.index(path: apiPath, entityName: "Artist", completion: { jsonData in
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            dateFormatter.locale = Locale(identifier: "en_US")
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
             
             do {
                 let artists = try decoder.decode([APIArtist].self, from: jsonData)
@@ -49,6 +52,13 @@ struct ArtistService {
                     entity = results?.first
                 }
                 
+                entity.fetchedAt = Date()
+                
+                // If the updatedAt date is the same (or larger, but this is impossible) we don't update everything else
+                guard entity.updatedAt == nil || entity.updatedAt! < artist.updatedAt else { return }
+
+                entity.createdAt = artist.createdAt
+                entity.updatedAt = artist.updatedAt
                 entity.name = artist.name
                 entity.normalizedName = artist.normalizedName
                 entity.image = artist.image
@@ -56,7 +66,6 @@ struct ArtistService {
                 entity.image250 = artist.image250
                 entity.image500 = artist.image500
                 entity.imageType = artist.imageType
-                entity.fetchedAt = Date()
             }
             
             try context.save()
@@ -78,4 +87,8 @@ struct APIArtist: Decodable, Hashable {
     var image250: String?
     var image500: String?
     var imageType: String?
+    
+    // Timestamps
+    var createdAt: Date
+    var updatedAt: Date
 }
