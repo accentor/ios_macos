@@ -76,8 +76,9 @@ struct Player: View {
                 
                 Button(action: viewModel.togglePlaying) {
                     Image(systemName: viewModel.playing ? "pause.fill" : "play.fill").font(.title3)
-                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.horizontal).disabled(!viewModel.canPlay)
-                 .keyboardShortcut(.space, modifiers: [])
+                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).frame(width: 5)
+                 .padding(.horizontal).disabled(!viewModel.canPlay)
+                 .keyboardShortcut(.space, modifiers: [])   
                 
                 Button(action: viewModel.next) {
                     Image(systemName: "forward.end.fill").font(.title3)
