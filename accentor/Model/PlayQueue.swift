@@ -31,7 +31,6 @@ class PlayQueue: ObservableObject {
         guard newIndex < queue.count && newIndex > -1 else {
             currentIndex = -1
             return
-            
         }
 
         currentIndex = newIndex
@@ -47,7 +46,7 @@ class PlayQueue: ObservableObject {
         }
         
         // Start playing if this is the first track was added
-        if (queue.count == 1) { currentIndex = 0 }
+        if (queue.count == 1) { setIndex(0) }
     }
     
     func addAlbumToQueue(album: Album, position: QueueItemPosition = .last, replace: Bool = false) {
@@ -67,7 +66,7 @@ class PlayQueue: ObservableObject {
             }
             
             // Start playing if the queue was empty
-            if (queue.count == tracks.count) { currentIndex = 0 }
+            if (queue.count == tracks.count) { setIndex(0) }
         } catch let error {
             print("Error fetching tracks \(error)")
         }
