@@ -14,6 +14,15 @@ class PlayerViewModel: NSObject, ObservableObject {
     @Published var playing: Bool = false
     @Published var playingTrack: Track?
     @Published var playQueue: PlayQueue = PlayQueue.shared
+    var canPlay: Bool {
+        get { return playQueue.queue.count > 0 }
+    }
+    var canGoNext: Bool {
+        get { return playQueue.currentIndex < (playQueue.queue.count - 1) }
+    }
+    var canGoPrev: Bool {
+        get { return playQueue.currentIndex > 0 }
+    }
 
     private var player: AVPlayer = AVPlayer()
     private var cancellables: Set<AnyCancellable> = []
@@ -43,13 +52,11 @@ class PlayerViewModel: NSObject, ObservableObject {
     
     // Player
     func togglePlaying() {
-        print(playQueue.currentIndex)
         guard playQueue.currentIndex != -1 else {
             playQueue.setIndex(0)
             return
         }
-        
-        print (self.playing)
+
         if self.playing {
             self.pause()
         } else {
@@ -64,7 +71,7 @@ class PlayerViewModel: NSObject, ObservableObject {
     
     func stop() {
         self.player.pause()
-        self.player.seek(to: CMTime())
+        self.player.seek(to: CMTime(value: 0, timescale: 1))
         self.playing = false
     }
     

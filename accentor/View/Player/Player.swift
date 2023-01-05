@@ -53,16 +53,16 @@ struct Player: View {
                     }
                 }.buttonStyle(PlainButtonStyle())
                 #if os(macOS)
-                    Button(action: viewModel.prev) {
-                        Image(systemName: "backward.fill").font(.title3)
-                    }.buttonStyle(PlainButtonStyle())
+                Button(action: viewModel.prev) {
+                    Image(systemName: "backward.fill").font(.title3)
+                }.buttonStyle(.automatic).foregroundColor(viewModel.canGoPrev ? .black : .gray.opacity(0.5)).disabled(!viewModel.canGoPrev)
                 #endif
                 Button(action: viewModel.togglePlaying) {
                     Image(systemName: viewModel.playing ? "pause.fill" : "play.fill").font(.title3)
-                }.buttonStyle(PlainButtonStyle()).padding(.horizontal)
+                }.buttonStyle(.automatic).foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.5)).disabled(!viewModel.canPlay)
                 Button(action: viewModel.next) {
                     Image(systemName: "forward.fill").font(.title3)
-                }.buttonStyle(PlainButtonStyle()).padding(.trailing, 30)
+                }.buttonStyle(.automatic).foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.5)).padding(.trailing, 30).disabled(!viewModel.canGoNext)
             }
         }
         
