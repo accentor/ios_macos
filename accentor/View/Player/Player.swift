@@ -50,23 +50,26 @@ struct Player: View {
 
                         Text(viewModel.playQueue.currentTrack?.track.title ?? "").padding(.leading, 10)
                         Spacer()
-                    }
-                }.buttonStyle(PlainButtonStyle())
+                    }.foregroundColor(.black)
+                }
                 #if os(macOS)
                 Button(action: viewModel.prev) {
                     Image(systemName: "backward.fill").font(.title3)
-                }.buttonStyle(.automatic).foregroundColor(viewModel.canGoPrev ? .black : .gray.opacity(0.5)).disabled(!viewModel.canGoPrev)
+                }.foregroundColor(viewModel.canGoPrev ? .black : .gray.opacity(0.75)).disabled(!viewModel.canGoPrev)
                 #endif
                 
                 Button(action: viewModel.togglePlaying) {
                     Image(systemName: viewModel.playing ? "pause.fill" : "play.fill").font(.title3)
-                }.buttonStyle(.automatic).foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.5)).disabled(!viewModel.canPlay)
+                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.horizontal).disabled(!viewModel.canPlay)
                  .keyboardShortcut(.space, modifiers: [])
                 
                 Button(action: viewModel.next) {
                     Image(systemName: "forward.fill").font(.title3)
-                }.buttonStyle(.automatic).foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.5)).padding(.trailing, 30).disabled(!viewModel.canGoNext)
+                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.trailing, 30).disabled(!viewModel.canGoNext)
             }
+            #if os(macOS)
+            .buttonStyle(.plain)
+            #endif
         }
         
     }
