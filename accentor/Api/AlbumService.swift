@@ -19,7 +19,7 @@ struct AlbumService {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
 
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
             dateFormatter.locale = Locale(identifier: "en_US")
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
             do {
@@ -28,7 +28,7 @@ struct AlbumService {
                     self.saveAlbums(context: context, albums: albums)
                 }
             } catch {
-                print("Error decoding albums", error.localizedDescription)
+                print("Error decoding albums", error)
             }
         })
     }
@@ -49,6 +49,14 @@ struct AlbumService {
             } else {
                 entity = results?.first
             }
+            
+            entity.fetchedAt = Date()
+            
+            // If the updatedAt date is the same (or larger, but this is impossible) we don't update everything else
+            guard entity.updatedAt == nil || entity.updatedAt! < album.updatedAt else { return }
+
+            entity.createdAt = album.createdAt
+            entity.updatedAt = album.updatedAt
             entity.title = album.title
             entity.normalizedTitle = album.normalizedTitle
             entity.releaseDate = album.releaseDate
@@ -59,13 +67,13 @@ struct AlbumService {
             entity.image100 = album.image100
             entity.image250 = album.image250
             entity.image500 = album.image500
-            entity.fetchedAt = Date()
+
             
             entity.albumArtists?.forEach({ item in
                 let albumArtist = item as! AlbumArtist
                 context.delete(albumArtist)
             })
-            
+
             if (album.albumArtists  != []) {
                 album.albumArtists.forEach { (albumArtist) in
                     let nestedEntity = AlbumArtist(context: context)
@@ -75,14 +83,13 @@ struct AlbumService {
                     nestedEntity.normalizedName = albumArtist.normalizedName
                     nestedEntity.order = albumArtist.order
                     nestedEntity.separator = albumArtist.separator
-                    
+
                     // Look for the artist and re-create the association
                     let fetchArtist: NSFetchRequest<Artist> = Artist.fetchRequest()
                     fetchArtist.predicate = NSPredicate(format: "id == %ld", albumArtist.artistId)
                     let artist = try? context.fetch(fetchArtist).first
                     nestedEntity.artist = artist
                 }
-            
             }
         }
         
@@ -90,7 +97,7 @@ struct AlbumService {
             try context.save();
             print("successfully saved albums")
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 }
@@ -106,7 +113,7 @@ struct APIAlbumArtist: Decodable, Hashable {
 struct APIAlbum: Decodable, Hashable {
 
     enum CodingKeys: String, CodingKey {
-        case id, title, normalizedTitle, edition, editionDescription, reviewComment, image, image100, image250, image500, albumArtists
+        case id, title, normalizedTitle, edition, editionDescription, reviewComment, image, image100, image250, image500, albumArtists, createdAt, updatedAt
         
         // Map the JSON key "release" to the Swift property name "releaseDate"
         case releaseDate = "release"
@@ -130,6 +137,10 @@ struct APIAlbum: Decodable, Hashable {
     
     // Album artists
     var albumArtists: [APIAlbumArtist] = []
+    
+    // Timestamps
+    var createdAt: Date
+    var updatedAt: Date
 }
 
 // NOTE: The dateFormatter does not seem to recognize `01-01-0000` as a valid date
@@ -149,6 +160,8 @@ extension APIAlbum {
         image100 = try? container.decode(String.self, forKey: .image100)
         image250 = try? container.decode(String.self, forKey: .image250)
         image500 = try? container.decode(String.self, forKey: .image500)
+        createdAt = try container.decode(Date.self, forKey: .createdAt)
+        updatedAt = try container.decode(Date.self, forKey: .updatedAt)
     
         // The api always returns and empty array, so we can call `try!` here.
         albumArtists = try container.decode([APIAlbumArtist].self, forKey: .albumArtists)

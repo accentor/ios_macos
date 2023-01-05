@@ -16,6 +16,12 @@ struct TrackService {
         AbstractService.shared.index(path: apiPath, entityName: "Track", completion: { jsonData in
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            dateFormatter.locale = Locale(identifier: "en_US")
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+
             do {
                 let tracks = try decoder.decode([APITrack].self, from: jsonData)
 
@@ -47,7 +53,14 @@ struct TrackService {
                 } else {
                     entity = results?.first
                 }
+                
+                entity.fetchedAt = Date()
+                
+                // If the updatedAt date is the same (or larger, but this is impossible) we don't update everything else
+                guard entity.updatedAt == nil || entity.updatedAt! < track.updatedAt else { return }
 
+                entity.createdAt = track.createdAt
+                entity.updatedAt = track.updatedAt
                 entity.title = track.title
                 entity.normalizedTitle = track.normalizedTitle
                 entity.number = track.number
@@ -63,7 +76,6 @@ struct TrackService {
                     entity.length = track.length!
                 }
 
-                entity.fetchedAt = Date()
                 entity.albumId = track.albumId
                 
                 // Look for the album and re-create the association
@@ -71,6 +83,11 @@ struct TrackService {
                 fetchAlbum.predicate = NSPredicate(format: "id == %ld", track.albumId)
                 let album = try? context.fetch(fetchAlbum).first
                 entity.album = album
+                
+                entity.trackArtists?.forEach({ item in
+                    let trackArtist = item as! TrackArtist
+                    context.delete(trackArtist)
+                })
                 
                 if (track.trackArtists  != []) {
                     track.trackArtists.forEach { (trackArtist) in
@@ -82,14 +99,14 @@ struct TrackService {
                         nestedEntity.order = trackArtist.order
                         nestedEntity.role = trackArtist.role
                         nestedEntity.hidden = trackArtist.hidden
-                        
+
                         // Look for the artist and re-create the association
                         let fetchArtist: NSFetchRequest<Artist> = Artist.fetchRequest()
                         fetchArtist.predicate = NSPredicate(format: "id == %ld", trackArtist.artistId)
                         let artist = try? context.fetch(fetchArtist).first
                         nestedEntity.artist = artist
                     }
-                
+
                 }
             }
             
@@ -125,4 +142,8 @@ struct APITrack: Decodable, Hashable {
     
     // Track artists
     var trackArtists: [APITrackArtist] = []
+    
+    // Timestamps
+    var createdAt: Date
+    var updatedAt: Date
 }
