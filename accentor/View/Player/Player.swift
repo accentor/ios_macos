@@ -12,7 +12,7 @@ import CachedAsyncImage
 struct Player: View {
     @State private var showQueue = false
 //    @FetchRequest(entity: QueueItem.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \QueueItem.index, ascending: true)]) var queueItems : FetchedResults<QueueItem>
-    @StateObject var viewModel = PlayerViewModel()
+    @StateObject var viewModel = PlayerViewModel.shared
     @StateObject var playQueue = PlayQueue.shared
     
     func toggleShowQueue() {
