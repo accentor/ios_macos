@@ -23,6 +23,10 @@ class PlayerViewModel: NSObject, ObservableObject {
     var canGoPrev: Bool {
         get { return playQueue.currentIndex > 0 }
     }
+    
+    // The PlayerViewModel is a singleton class, since we only want one player
+    // Otherwise our track would restart when the view was updated
+    public static let shared = PlayerViewModel()
 
     private var player: AVPlayer = AVPlayer()
     private var cancellables: Set<AnyCancellable> = []
