@@ -83,12 +83,6 @@ struct AlbumService {
                     nestedEntity.normalizedName = albumArtist.normalizedName
                     nestedEntity.order = albumArtist.order
                     nestedEntity.separator = albumArtist.separator
-
-                    // Look for the artist and re-create the association
-                    let fetchArtist: NSFetchRequest<Artist> = Artist.fetchRequest()
-                    fetchArtist.predicate = NSPredicate(format: "id == %ld", albumArtist.artistId)
-                    let artist = try? context.fetch(fetchArtist).first
-                    nestedEntity.artist = artist
                 }
             }
         }

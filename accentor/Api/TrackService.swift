@@ -78,12 +78,6 @@ struct TrackService {
 
                 entity.albumId = track.albumId
                 
-                // Look for the album and re-create the association
-                let fetchAlbum: NSFetchRequest<Album> = Album.fetchRequest()
-                fetchAlbum.predicate = NSPredicate(format: "id == %ld", track.albumId)
-                let album = try? context.fetch(fetchAlbum).first
-                entity.album = album
-                
                 entity.trackArtists?.forEach({ item in
                     let trackArtist = item as! TrackArtist
                     context.delete(trackArtist)
@@ -99,12 +93,6 @@ struct TrackService {
                         nestedEntity.order = trackArtist.order
                         nestedEntity.role = trackArtist.role
                         nestedEntity.hidden = trackArtist.hidden
-
-                        // Look for the artist and re-create the association
-                        let fetchArtist: NSFetchRequest<Artist> = Artist.fetchRequest()
-                        fetchArtist.predicate = NSPredicate(format: "id == %ld", trackArtist.artistId)
-                        let artist = try? context.fetch(fetchArtist).first
-                        nestedEntity.artist = artist
                     }
 
                 }

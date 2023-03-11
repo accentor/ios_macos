@@ -51,25 +51,16 @@ class PlayQueue: ObservableObject {
     
     func addAlbumToQueue(album: Album, position: QueueItemPosition = .last, replace: Bool = false) {
         if replace { self.clearQueue() }
-    
-        let fetchRequest: NSFetchRequest<Track> = Track.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Track.number, ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "albumId == %i", album.id)
         
-        do {
-            let tracks = try PersistenceController.shared.container.viewContext.fetch(fetchRequest)
-            let mapped = tracks.map { PlayQueueItem(track: $0) }
-            
-            switch position {
-            case .last: queue.insert(contentsOf: mapped, at: queue.endIndex)
-            case .next: queue.insert(contentsOf: mapped, at: min(queue.endIndex, 1))
-            }
-            
-            // Start playing if the queue was empty
-            if (queue.count == tracks.count) { setIndex(0) }
-        } catch let error {
-            print("Error fetching tracks \(error)")
+        let mapped = album.tracks.map { PlayQueueItem(track: $0) }
+        
+        switch position {
+        case .last: queue.insert(contentsOf: mapped, at: queue.endIndex)
+        case .next: queue.insert(contentsOf: mapped, at: min(queue.endIndex, 1))
         }
+        
+        // Start playing if the queue was empty
+        if (queue.count == album.tracks.count) { setIndex(0) }
         
     }
     

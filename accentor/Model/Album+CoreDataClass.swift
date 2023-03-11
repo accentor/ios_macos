@@ -24,4 +24,13 @@ public class Album: NSManagedObject {
 
         }
     }
+    
+    var tracks: [Track] {
+        get {
+            let fetchRequest: NSFetchRequest<Track> = Track.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Track.number, ascending: true)]
+            fetchRequest.predicate = NSPredicate(format: "albumId == %i", self.id)
+            return try! PersistenceController.shared.container.viewContext.fetch(fetchRequest)
+        }
+    }
 }

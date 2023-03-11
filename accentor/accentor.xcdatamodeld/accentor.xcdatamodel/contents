@@ -16,7 +16,6 @@
         <attribute name="title" attributeType="String"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="albumArtists" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="AlbumArtist" inverseName="album" inverseEntity="AlbumArtist"/>
-        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Track" inverseName="album" inverseEntity="Track"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -30,9 +29,8 @@
         <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="separator" optional="YES" attributeType="String"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="albumArtists" inverseEntity="Album"/>
-        <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="albumArtists" inverseEntity="Artist"/>
     </entity>
-    <entity name="Artist" representedClassName="Artist" syncable="YES" codeGenerationType="class">
+    <entity name="Artist" representedClassName="Artist" syncable="YES" codeGenerationType="category">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="fetchedAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -44,8 +42,6 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="normalizedName" attributeType="String"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="albumArtists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AlbumArtist" inverseName="artist" inverseEntity="AlbumArtist"/>
-        <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrackArtist" inverseName="artist" inverseEntity="TrackArtist"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -65,7 +61,6 @@
         <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="tracks" inverseEntity="Album"/>
         <relationship name="trackArtists" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TrackArtist" inverseName="track" inverseEntity="TrackArtist"/>
         <fetchIndex name="byAlbumId">
             <fetchIndexElement property="albumId" type="Binary" order="ascending"/>
@@ -83,7 +78,6 @@
         <attribute name="normalizedName" attributeType="String"/>
         <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="role" attributeType="String"/>
-        <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="trackArtists" inverseEntity="Artist"/>
         <relationship name="track" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="trackArtists" inverseEntity="Track"/>
     </entity>
 </model>

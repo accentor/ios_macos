@@ -11,6 +11,13 @@ import CoreData
 
 @objc(Track)
 public class Track: NSManagedObject {
+    var album: Album? {
+        get {
+            let fetchRequest: NSFetchRequest<Album> = Album.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %i", self.albumId)
+            return try! PersistenceController.shared.container.viewContext.fetch(fetchRequest).first ?? nil
+        }
+    }
     var trackArtistsText: String {
         get {
             guard let trackArtists = self.trackArtists else { return "" }
