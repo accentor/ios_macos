@@ -18,10 +18,22 @@ struct AlbumService {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
 
+            let dateTimeFormatter = DateFormatter()
+            dateTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            dateTimeFormatter.locale = Locale(identifier: "en_US")
+            dateTimeFormatter.timeZone = TimeZone(secondsFromGMT: 0)
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             dateFormatter.locale = Locale(identifier: "en_US")
-            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            decoder.dateDecodingStrategy = .custom({ decoder in
+                let container = try decoder.singleValueContainer()
+                let string = try container.decode(String.self)
+                if let date = dateTimeFormatter.date(from: string) ?? dateFormatter.date(from: string) {
+                    return date
+                }
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date: \(string)")
+            })
             do {
                 let albums = try decoder.decode([APIAlbum].self, from: jsonData)
                 DispatchQueue.main.async {
