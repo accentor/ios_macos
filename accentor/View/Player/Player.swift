@@ -19,19 +19,6 @@ struct Player: View {
         showQueue.toggle()
     }
     
-    func trackArtistsText() -> String {
-        guard let trackArtists = viewModel.playQueue.currentTrack?.track.trackArtists else { return "" }
-        
-        let sorted = trackArtists.sortedArray(using: [NSSortDescriptor(key: "order", ascending: true)])
-        let names = sorted.map { cur in
-            // NOTE: I'm note sure why this reducer looses the context if which type `cur`
-            // For now we simply force this to be an album artist
-            let aa = cur as! TrackArtist
-            return aa.name ?? ""
-        }
-        return names.joined(separator: " / ")
-    }
-    
     var body: some View {
         ZStack {
             Rectangle().foregroundColor(Color.white.opacity(0.0)).frame(height: 65)
@@ -62,7 +49,7 @@ struct Player: View {
                         }
                         VStack(alignment: .leading) {
                             Text(viewModel.playQueue.currentTrack?.track.title ?? "").lineLimit(1).truncationMode(.tail)
-                            Text(trackArtistsText()).lineLimit(1).truncationMode(.tail)
+                            Text(viewModel.playQueue.currentTrack?.track.trackArtistsText ?? "").lineLimit(1).truncationMode(.tail)
                         }.padding(.leading, 5)
                         
                         Spacer()
