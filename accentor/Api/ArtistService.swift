@@ -21,6 +21,7 @@ struct ArtistService {
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
             dateFormatter.locale = Locale(identifier: "en_US")
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
             
             do {
                 let artists = try decoder.decode([APIArtist].self, from: jsonData)
