@@ -57,19 +57,19 @@ struct Player: View {
                 }
                 #if os(macOS)
                 Button(action: viewModel.prev) {
-                    Image(systemName: "backward.end.fill").font(.title3)
+                    Image(systemName: "backward.end.fill").font(.title3).padding(12)
                 }.foregroundColor(viewModel.canGoPrev ? .black : .gray.opacity(0.75)).disabled(!viewModel.canGoPrev)
                 #endif
                 
                 Button(action: viewModel.togglePlaying) {
-                    Image(systemName: viewModel.playing ? "pause.fill" : "play.fill").font(.title3)
-                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).frame(width: 5)
-                 .padding(.horizontal).disabled(!viewModel.canPlay)
+                    Image(systemName: viewModel.playing ? "pause.fill" : "play.fill").font(.title3).padding(12)
+                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75))
+                 .padding(.horizontal, 2).disabled(!viewModel.canPlay)
                  .keyboardShortcut(.space, modifiers: [])   
                 
                 Button(action: viewModel.next) {
-                    Image(systemName: "forward.end.fill").font(.title3)
-                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.trailing, 30).disabled(!viewModel.canGoNext)
+                    Image(systemName: "forward.end.fill").font(.title3).padding(12)
+                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.trailing, 20).disabled(!viewModel.canGoNext)
             }
             #if os(macOS)
             .buttonStyle(.plain)
