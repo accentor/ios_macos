@@ -11,9 +11,32 @@ import AVFoundation
 import Combine
 
 class PlayerViewModel: NSObject, ObservableObject {
-    @Published var playing: Bool = false
+    // Possible values of `playerState`
+    enum PlayerState {
+        case stopped
+        case playing
+        case paused
+    }
+    
+    /// This property is published, so that changes in this state triggers a reload in the view
+    /// The view should use the computed `playing` property,
+    @Published private var playerState: PlayerState = .stopped {
+        didSet {
+            #if os(macOS)
+            NSLog("%@", "**** Set player state \(playerState), playbackState \(MPNowPlayingInfoCenter.default().playbackState.rawValue)")
+            #else
+            NSLog("%@", "**** Set player state \(playerState)")
+            #endif
+        }
+    }
+    
+
     @Published var playingTrack: Track?
     @Published var playQueue: PlayQueue = PlayQueue.shared
+
+    var playing: Bool {
+        get { return self.playerState == .playing }
+    }
     var canPlay: Bool {
         get { return playQueue.queue.count > 0 }
     }
@@ -61,22 +84,22 @@ class PlayerViewModel: NSObject, ObservableObject {
             return
         }
 
-        if self.playing {
-            self.pause()
-        } else {
-            self.play()
+        switch self.playerState  {
+        case .playing: self.pause()
+        case .paused: self.play()
+        case .stopped: self.play()
         }
     }
     
     func pause() {
         self.player.pause()
-        self.playing = false
+        self.playerState = .paused
     }
     
     func stop() {
         self.player.pause()
         self.player.seek(to: CMTime(value: 0, timescale: 1))
-        self.playing = false
+        self.playerState = .stopped
     }
     
     func next() {
@@ -104,7 +127,9 @@ class PlayerViewModel: NSObject, ObservableObject {
             
             
             self.player.play()
-            DispatchQueue.main.async { self.playing = true }
+            DispatchQueue.main.async {
+                self.playerState = .playing
+            }
         }
         catch {
             print("Error while playing")
