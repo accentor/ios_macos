@@ -41,6 +41,7 @@
 		FDCC75B929646D320079B983 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758A29646D310079B983 /* Player.swift */; };
 		FDCC75C529646D320079B983 /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC759A29646D310079B983 /* CachingPlayerItem.swift */; };
 		FDD37F48297DD75400967E55 /* Track+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD37F46297DD75400967E55 /* Track+CoreDataClass.swift */; };
+		FDD5BD802A064D100011EBF9 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD5BD7F2A064D100011EBF9 /* Home.swift */; };
 		FDFFD6E829113CDE003A1501 /* accentorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E729113CDE003A1501 /* accentorApp.swift */; };
 		FDFFD6EA29113CDE003A1501 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E929113CDE003A1501 /* Persistence.swift */; };
 		FDFFD6ED29113CDE003A1501 /* accentor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */; };
@@ -103,6 +104,7 @@
 		FDCC758A29646D310079B983 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FDCC759A29646D310079B983 /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		FDD37F46297DD75400967E55 /* Track+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FDD5BD7F2A064D100011EBF9 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		FDFEA3E729644A80000B9ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FDFFD6E429113CDE003A1501 /* accentor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accentor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFFD6E729113CDE003A1501 /* accentorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorApp.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		FDCC757729646D310079B983 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FDD5BD7C2A064CA20011EBF9 /* Home */,
 				FD8CAECF2965B9B400BADDC4 /* Image */,
 				FDCC757829646D310079B983 /* Tracks */,
 				FDCC757B29646D310079B983 /* AppWrapper */,
@@ -263,6 +266,14 @@
 				FDCC759A29646D310079B983 /* CachingPlayerItem.swift */,
 			);
 			path = Vendor;
+			sourceTree = "<group>";
+		};
+		FDD5BD7C2A064CA20011EBF9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FDD5BD7F2A064D100011EBF9 /* Home.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		FDFFD6DB29113CDE003A1501 = {
@@ -480,6 +491,7 @@
 				FDCC756629646D200079B983 /* AbstractService.swift in Sources */,
 				FDCC753D29646CCD0079B983 /* PlayQueueItem.swift in Sources */,
 				FDCC75B129646D320079B983 /* Artists.swift in Sources */,
+				FDD5BD802A064D100011EBF9 /* Home.swift in Sources */,
 				FD8CAED32965BBD800BADDC4 /* ArtistImage.swift in Sources */,
 				FDCC75B829646D320079B983 /* PlayerViewModel.swift in Sources */,
 				FDCC756229646D200079B983 /* PlayService.swift in Sources */,
