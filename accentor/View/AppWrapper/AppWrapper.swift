@@ -10,6 +10,7 @@ import SwiftUI
 enum Route: Hashable {
     case albums
     case artists
+    case home
     case tracks
 }
 
@@ -32,6 +33,9 @@ struct AppWrapper: View {
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedRoute) {
+                Section {
+                    NavigationLink(value: Route.home, label: { Label("Home", systemImage: "music.note.house") })
+                }
                 Section("Library") {
                     NavigationLink(value: Route.albums, label: { Label("Albums", systemImage: "square.stack") })
                     NavigationLink(value: Route.artists, label: { Label("Artists", systemImage: "music.mic") })
@@ -45,10 +49,12 @@ struct AppWrapper: View {
                     Albums()
                 case .artists:
                     Artists()
+                case .home:
+                    Home()
                 case .tracks:
                     Tracks()
                 default:
-                    Albums()
+                    Home()
                     
                 }
                 Player()

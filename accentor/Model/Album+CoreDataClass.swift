@@ -34,3 +34,17 @@ public class Album: NSManagedObject {
         }
     }
 }
+
+extension Album {
+    static var sortByRecentlyReleased: [NSSortDescriptor] {
+        return [
+            NSSortDescriptor(keyPath: \Album.releaseDate, ascending: false)
+        ]
+    }
+
+    static var sortByRecentlyAdded: [NSSortDescriptor] {
+        return [
+            NSSortDescriptor(keyPath: \Album.createdAt, ascending: false)
+        ]
+    }
+}
