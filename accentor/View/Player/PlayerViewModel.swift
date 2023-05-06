@@ -9,6 +9,7 @@ import SwiftUI
 import AVFAudio
 import AVFoundation
 import Combine
+import MediaPlayer
 
 class PlayerViewModel: NSObject, ObservableObject {
     // Possible values of `playerState`
@@ -56,6 +57,10 @@ class PlayerViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        // Mark player to allow external playback
+        player.allowsExternalPlayback = true
+        setupCommandCenter()
+
         playQueue.$currentIndex.sink { [weak self] newIndex in
             guard let self = self else { return }
             
@@ -150,5 +155,39 @@ class PlayerViewModel: NSObject, ObservableObject {
         self.player.replaceCurrentItem(with: queueItem?.playerItem())
         player.automaticallyWaitsToMinimizeStalling = false
         self.play()
+    }
+    
+    // MARK: Remote commands
+    enum RemoteCommand {
+        case play
+        case pause
+        case stop
+        case togglePausePlay
+        case nextTrack
+        case previousTrack
+    }
+
+    private func setupCommandCenter() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.addTarget { self.handleRemoteCommand(command: RemoteCommand.play, event: $0) }
+        commandCenter.pauseCommand.addTarget { self.handleRemoteCommand(command: RemoteCommand.pause, event: $0) }
+        commandCenter.stopCommand.addTarget { self.handleRemoteCommand(command: RemoteCommand.stop, event: $0) }
+        commandCenter.togglePlayPauseCommand.addTarget { self.handleRemoteCommand(command: RemoteCommand.togglePausePlay, event: $0) }
+        commandCenter.nextTrackCommand.addTarget { self.handleRemoteCommand(command: RemoteCommand.nextTrack, event: $0) }
+        commandCenter.previousTrackCommand.addTarget { self.handleRemoteCommand(command: RemoteCommand.previousTrack, event: $0) }
+        
+    }
+    
+    private func handleRemoteCommand(command: RemoteCommand, event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        switch command {
+        case .pause: pause()
+        case .play: play()
+        case .stop: stop()
+        case .togglePausePlay: togglePlaying()
+        case .nextTrack: next()
+        case .previousTrack: prev()
+        }
+        
+        return .success
     }
 }
