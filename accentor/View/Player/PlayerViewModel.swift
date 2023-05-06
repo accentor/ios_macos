@@ -118,9 +118,7 @@ class PlayerViewModel: NSObject, ObservableObject {
             #if os(iOS)
             // Configure and activate the AVAudioSession
             // This is only available on iOS
-            try AVAudioSession.sharedInstance().setCategory(
-                AVAudioSession.Category.playback
-            )
+            try AVAudioSession.sharedInstance().setCategory(.playback)
 
             try AVAudioSession.sharedInstance().setActive(true)
             #endif
