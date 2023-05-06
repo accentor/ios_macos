@@ -27,7 +27,7 @@ struct AppWrapper: View {
         URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
         URLCache.shared.diskCapacity = 1_000_000_000 // ~1GB disk cache space
 
-//        viewModel.fetchAll(context: context)
+        viewModel.fetchAll(context: context)
     }
     
     var body: some View {
