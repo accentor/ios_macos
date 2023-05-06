@@ -13,22 +13,17 @@ import MediaPlayer
 
 class PlayerViewModel: NSObject, ObservableObject {
     // Possible values of `playerState`
-    enum PlayerState {
-        case stopped
-        case playing
-        case paused
+    // The raw values match those of `MPNowPlayingPlaybackState`
+    enum PlayerState: UInt {
+        case stopped = 3
+        case playing = 1
+        case paused = 2
     }
     
     /// This property is published, so that changes in this state triggers a reload in the view
     /// The view should use the computed `playing` property,
     @Published private var playerState: PlayerState = .stopped {
-        didSet {
-            #if os(macOS)
-            NSLog("%@", "**** Set player state \(playerState), playbackState \(MPNowPlayingInfoCenter.default().playbackState.rawValue)")
-            #else
-            NSLog("%@", "**** Set player state \(playerState)")
-            #endif
-        }
+        didSet { self.handlePlaybackChange() }
     }
     
 
@@ -53,6 +48,7 @@ class PlayerViewModel: NSObject, ObservableObject {
     public static let shared = PlayerViewModel()
 
     private var player: AVPlayer = AVPlayer()
+    private var statusObserver: NSObjectProtocol!
     private var cancellables: Set<AnyCancellable> = []
     
     override init() {
@@ -69,6 +65,10 @@ class PlayerViewModel: NSObject, ObservableObject {
                 self.setPlayingTrack(queueItem: self.playQueue.currentTrack)
             }
         }.store(in: &cancellables)
+        
+        statusObserver = player.observe(\.currentItem?.status, options: .initial) {
+            [unowned self] _, _ in self.handlePlaybackChange()
+        }
         
         NotificationCenter.default
             .addObserver(self,
@@ -152,9 +152,45 @@ class PlayerViewModel: NSObject, ObservableObject {
 
         guard self.playingTrack != nil else { self.stop(); return }
 
+        self.handlePlayerItemChange()
         self.player.replaceCurrentItem(with: queueItem?.playerItem())
         player.automaticallyWaitsToMinimizeStalling = false
         self.play()
+    }
+
+    // MARK: Now playing info
+    private func handlePlayerItemChange() {
+        guard playerState != .stopped else { return }
+        // Find current item
+        guard let currentTrack = self.playingTrack else { return }
+
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        var nowPlayingInfo = [String: Any]()
+        
+        // Set track info
+        nowPlayingInfo[MPMediaItemPropertyTitle] = currentTrack.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = currentTrack.trackArtistsText
+        nowPlayingInfo[MPMediaItemPropertyAlbumArtist] = currentTrack.album?.albumArtistsText
+        nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = currentTrack.album?.title
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = currentTrack.length
+        
+        // Set playing metadata
+        nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = MPMediaType.music.rawValue
+
+        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func handlePlaybackChange() {
+        MPNowPlayingInfoCenter.default().playbackState = MPNowPlayingPlaybackState(rawValue: playerState.rawValue)!
+
+        guard let currentItem = player.currentItem else { return }
+        guard currentItem.status == .readyToPlay else { return }
+
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
+        
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Float(currentItem.currentTime().seconds)
+        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
     }
     
     // MARK: Remote commands
