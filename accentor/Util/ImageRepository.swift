@@ -50,8 +50,6 @@ public class ImageRepository: ImageRepositoryProtocol {
         do {
             let request = URLRequest(url: imageURL)
             let (data, response) = try await URLSession.shared.data(for: request)
-            print("response, \(response)")
-            print("status, \((response as! HTTPURLResponse).statusCode)")
     
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 return nil
@@ -102,8 +100,6 @@ public class ImageRepository: ImageRepositoryProtocol {
         do {
             let request = URLRequest(url: imageURL)
             let (data, response) = try await URLSession.shared.data(for: request)
-            print("response, \(response)")
-            print("status, \((response as! HTTPURLResponse).statusCode)")
     
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 return nil
