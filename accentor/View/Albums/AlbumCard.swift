@@ -13,7 +13,12 @@ struct AlbumCard: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            AlbumImage(album: album)
+            CachedImage(imageURL: album.image250) {
+                ZStack {
+                    Rectangle().fill(.gray)
+                    Image(systemName: "music.note").font(.largeTitle)
+                }
+            }.aspectRatio(1, contentMode: .fit)
             Text(album.title ?? "")
             Text(album.albumArtistsText)
             Spacer()

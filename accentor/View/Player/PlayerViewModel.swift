@@ -146,6 +146,7 @@ class PlayerViewModel: NSObject, ObservableObject {
         self.next()
     }
 
+    @MainActor
     private func setPlayingTrack(queueItem: PlayQueueItem?) {
         self.playingTrack = queueItem?.track
 

@@ -18,7 +18,7 @@ struct Home: View {
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
                         ForEach(recentlyReleasedAlbums) { item in
-                            AlbumCard(album: item).frame(minWidth: 130, maxWidth: 200)
+                            AlbumCard(album: item).frame(width: 200)
                         }
                     }
                 }
@@ -26,7 +26,7 @@ struct Home: View {
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
                         ForEach(recentlyAddedAlbums) { item in
-                            AlbumCard(album: item).frame(minWidth: 130, maxWidth: 200)
+                            AlbumCard(album: item).frame(width: 200)
                         }
                     }
                 }
@@ -34,7 +34,7 @@ struct Home: View {
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
                         ForEach(recentlyAddedAlbums.shuffled()) { item in
-                            AlbumCard(album: item).frame(minWidth: 130, maxWidth: 200)
+                            AlbumCard(album: item).frame(width: 200)
                         }
                     }
                 }
