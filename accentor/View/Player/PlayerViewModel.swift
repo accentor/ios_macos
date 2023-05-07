@@ -169,14 +169,16 @@ class PlayerViewModel: NSObject, ObservableObject {
     private func handlePlaybackChange() {
         MPNowPlayingInfoCenter.default().playbackState = MPNowPlayingPlaybackState(rawValue: playerState.rawValue)!
         
-        guard let currentItem = player.currentItem else { return }
-        guard currentItem.status == .readyToPlay else { return }
+        guard let currentItem = player.currentItem, currentItem.status == .readyToPlay else { return }
         
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
         var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? constructNowPlaying()
         
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Float(currentItem.currentTime().seconds)
         nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+        
+        // We start this in a separate thread, so we return from this function
+        Task { await self.setNowPlayingArtwork() }
     }
     
     private func constructNowPlaying() -> [String: Any] {
@@ -195,6 +197,27 @@ class PlayerViewModel: NSObject, ObservableObject {
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = currentTrack.length
         
         return nowPlayingInfo
+    }
+    
+    private func setNowPlayingArtwork() async {
+        guard let currentTrack = self.playingTrack else { return }
+        guard currentTrack.album?.image250 != nil, let imageURL = URL(string: currentTrack.album!.image250!) else { return }
+        let imageRepository = ImageRepository()
+        
+        guard let image = await imageRepository.getImage(imageURL: imageURL) else { return }
+
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? constructNowPlaying()
+        
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+
+        // If the player is playing, we update current time, so the notification doesn't get confused
+        if let currentItem = player.currentItem, currentItem.status == .readyToPlay {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Float(currentItem.currentTime().seconds)
+        }
+        
+        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+        
     }
     
     // MARK: Remote commands
