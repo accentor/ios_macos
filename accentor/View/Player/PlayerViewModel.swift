@@ -25,7 +25,6 @@ class PlayerViewModel: NSObject, ObservableObject {
     @Published private var playerState: PlayerState = .stopped {
         didSet { self.handlePlaybackChange() }
     }
-    
 
     @Published var playingTrack: Track?
     @Published var playQueue: PlayQueue = PlayQueue.shared
@@ -161,11 +160,32 @@ class PlayerViewModel: NSObject, ObservableObject {
     // MARK: Now playing info
     private func handlePlayerItemChange() {
         guard playerState != .stopped else { return }
-        // Find current item
-        guard let currentTrack = self.playingTrack else { return }
-
+        
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        nowPlayingInfoCenter.nowPlayingInfo = constructNowPlaying()
+
+    }
+    
+    private func handlePlaybackChange() {
+        MPNowPlayingInfoCenter.default().playbackState = MPNowPlayingPlaybackState(rawValue: playerState.rawValue)!
+        
+        guard let currentItem = player.currentItem else { return }
+        guard currentItem.status == .readyToPlay else { return }
+        
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? constructNowPlaying()
+        
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Float(currentItem.currentTime().seconds)
+        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func constructNowPlaying() -> [String: Any] {
         var nowPlayingInfo = [String: Any]()
+        
+        // Always set type to music
+        nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = MPMediaType.music.rawValue
+        
+        guard let currentTrack = self.playingTrack else { return nowPlayingInfo }
         
         // Set track info
         nowPlayingInfo[MPMediaItemPropertyTitle] = currentTrack.title
@@ -174,23 +194,7 @@ class PlayerViewModel: NSObject, ObservableObject {
         nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = currentTrack.album?.title
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = currentTrack.length
         
-        // Set playing metadata
-        nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = MPMediaType.music.rawValue
-
-        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-    }
-    
-    private func handlePlaybackChange() {
-        MPNowPlayingInfoCenter.default().playbackState = MPNowPlayingPlaybackState(rawValue: playerState.rawValue)!
-
-        guard let currentItem = player.currentItem else { return }
-        guard currentItem.status == .readyToPlay else { return }
-
-        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
-        
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Float(currentItem.currentTime().seconds)
-        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+        return nowPlayingInfo
     }
     
     // MARK: Remote commands
