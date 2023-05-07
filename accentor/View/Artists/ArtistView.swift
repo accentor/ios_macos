@@ -15,7 +15,12 @@ struct ArtistView: View {
             VStack(alignment: .leading) {
                 HStack {
                     if (artist.image250 != nil) {
-                        AsyncImage(url: URL(string: artist.image250!))
+                        CachedImage(imageURL: artist.image250) {
+                            ZStack {
+                                Rectangle().fill(.gray)
+                                Image(systemName: "music.mic").font(.largeTitle)
+                            }
+                        }
                     }
                     Text(artist.name ?? "")
                 }

@@ -7,11 +7,9 @@
 
 import SwiftUI
 import AVFAudio
-import CachedAsyncImage
 
 struct Player: View {
     @State private var showQueue = false
-//    @FetchRequest(entity: QueueItem.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \QueueItem.index, ascending: true)]) var queueItems : FetchedResults<QueueItem>
     @StateObject var viewModel = PlayerViewModel.shared
     @StateObject var playQueue = PlayQueue.shared
     
@@ -30,26 +28,26 @@ struct Player: View {
             HStack {
                 Button(action: {}) {
                     HStack {
-                        if (viewModel.playQueue.currentTrack != nil && viewModel.playQueue.currentTrack?.track.album?.image250 != nil) {
-                            CachedAsyncImage(url: URL(string: viewModel.playQueue.currentTrack!.track.album!.image250!)) { phase in
-                                if let image = phase.image {
-                                    image.resizable().frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
-                                } else {
-                                    ZStack {
-                                        Rectangle().fill(.gray)
-                                        Image(systemName: "music.note").font(.largeTitle)
-                                    }.frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
+                        // NOTE: we have to force a re-render when the `playingTrack` changes, so wrap this in an if/else
+                        if (viewModel.playingTrack?.album?.image250 != nil) {
+                            CachedImage(imageURL: viewModel.playingTrack?.album?.image250) {
+                                ZStack {
+                                    Rectangle().fill(.gray)
+                                    Image(systemName: "music.note").font(.largeTitle)
                                 }
-                            }
+                            }.frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
                         } else {
-                            ZStack {
-                                Rectangle().fill(Color.gray)
-                                Image(systemName: "music.note").font(.largeTitle)
+                            CachedImage(imageURL: viewModel.playingTrack?.album?.image250) {
+                                ZStack {
+                                    Rectangle().fill(.gray)
+                                    Image(systemName: "music.note").font(.largeTitle)
+                                }
                             }.frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
                         }
+                        
                         VStack(alignment: .leading) {
-                            Text(viewModel.playQueue.currentTrack?.track.title ?? "").lineLimit(1).truncationMode(.tail)
-                            Text(viewModel.playQueue.currentTrack?.track.trackArtistsText ?? "").lineLimit(1).truncationMode(.tail)
+                            Text(viewModel.playingTrack?.title ?? "").lineLimit(1).truncationMode(.tail)
+                            Text(viewModel.playingTrack?.trackArtistsText ?? "").lineLimit(1).truncationMode(.tail)
                         }.padding(.leading, 5)
                         
                         Spacer()

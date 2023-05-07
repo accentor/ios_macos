@@ -11,11 +11,11 @@
 		FD0C5CBC29644E50000AF7D6 /* CONTRIBUTING.md in Resources */ = {isa = PBXBuildFile; fileRef = FD0C5CB829644E50000AF7D6 /* CONTRIBUTING.md */; };
 		FD0C5CBD29644E50000AF7D6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FD0C5CB929644E50000AF7D6 /* README.md */; };
 		FD0C5CBE29644E50000AF7D6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FD0C5CBA29644E50000AF7D6 /* LICENSE */; };
+		FD344EF42A079F7D00B7ADA7 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD344EF32A079F7D00B7ADA7 /* ImageRepository.swift */; };
+		FD344EF72A07AF3D00B7ADA7 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD344EF62A07AF3D00B7ADA7 /* CachedImage.swift */; };
+		FD344EF92A07B07000B7ADA7 /* CachedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD344EF82A07B07000B7ADA7 /* CachedImageViewModel.swift */; };
 		FD89028B29BC873300AF8007 /* Album+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD89028A29BC873300AF8007 /* Album+CoreDataClass.swift */; };
 		FD89028D29BC968D00AF8007 /* Artist+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD89028C29BC968D00AF8007 /* Artist+CoreDataClass.swift */; };
-		FD8CAECE2965B98300BADDC4 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */; };
-		FD8CAED12965B9C300BADDC4 /* AlbumImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8CAED02965B9C300BADDC4 /* AlbumImage.swift */; };
-		FD8CAED32965BBD800BADDC4 /* ArtistImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8CAED22965BBD800BADDC4 /* ArtistImage.swift */; };
 		FDCC753C29646CCD0079B983 /* PlayQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC753A29646CCD0079B983 /* PlayQueue.swift */; };
 		FDCC753D29646CCD0079B983 /* PlayQueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC753B29646CCD0079B983 /* PlayQueueItem.swift */; };
 		FDCC756229646D200079B983 /* PlayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC755B29646D1F0079B983 /* PlayService.swift */; };
@@ -75,10 +75,11 @@
 		FD0C5CB829644E50000AF7D6 /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		FD0C5CB929644E50000AF7D6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FD0C5CBA29644E50000AF7D6 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		FD344EF32A079F7D00B7ADA7 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		FD344EF62A07AF3D00B7ADA7 /* CachedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
+		FD344EF82A07B07000B7ADA7 /* CachedImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageViewModel.swift; sourceTree = "<group>"; };
 		FD89028A29BC873300AF8007 /* Album+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Album+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FD89028C29BC968D00AF8007 /* Artist+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Artist+CoreDataClass.swift"; sourceTree = "<group>"; };
-		FD8CAED02965B9C300BADDC4 /* AlbumImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumImage.swift; sourceTree = "<group>"; };
-		FD8CAED22965BBD800BADDC4 /* ArtistImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistImage.swift; sourceTree = "<group>"; };
 		FDCC753A29646CCD0079B983 /* PlayQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayQueue.swift; sourceTree = "<group>"; };
 		FDCC753B29646CCD0079B983 /* PlayQueueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayQueueItem.swift; sourceTree = "<group>"; };
 		FDCC755B29646D1F0079B983 /* PlayService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayService.swift; sourceTree = "<group>"; };
@@ -126,7 +127,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD8CAECE2965B98300BADDC4 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +150,8 @@
 		FD8CAECF2965B9B400BADDC4 /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				FD8CAED02965B9C300BADDC4 /* AlbumImage.swift */,
-				FD8CAED22965BBD800BADDC4 /* ArtistImage.swift */,
+				FD344EF62A07AF3D00B7ADA7 /* CachedImage.swift */,
+				FD344EF82A07B07000B7ADA7 /* CachedImageViewModel.swift */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -186,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				FDCC756C29646D310079B983 /* DefaultSettings.swift */,
+				FD344EF32A079F7D00B7ADA7 /* ImageRepository.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -362,7 +363,6 @@
 			);
 			name = accentor;
 			packageProductDependencies = (
-				FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */,
 			);
 			productName = accentor;
 			productReference = FDFFD6E429113CDE003A1501 /* accentor.app */;
@@ -437,7 +437,6 @@
 			);
 			mainGroup = FDFFD6DB29113CDE003A1501;
 			packageReferences = (
-				FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = FDFFD6E529113CDE003A1501 /* Products */;
 			projectDirPath = "";
@@ -492,7 +491,6 @@
 				FDCC753D29646CCD0079B983 /* PlayQueueItem.swift in Sources */,
 				FDCC75B129646D320079B983 /* Artists.swift in Sources */,
 				FDD5BD802A064D100011EBF9 /* Home.swift in Sources */,
-				FD8CAED32965BBD800BADDC4 /* ArtistImage.swift in Sources */,
 				FDCC75B829646D320079B983 /* PlayerViewModel.swift in Sources */,
 				FDCC756229646D200079B983 /* PlayService.swift in Sources */,
 				FD89028B29BC873300AF8007 /* Album+CoreDataClass.swift in Sources */,
@@ -508,13 +506,15 @@
 				FDCC753C29646CCD0079B983 /* PlayQueue.swift in Sources */,
 				FDCC756429646D200079B983 /* AudioService.swift in Sources */,
 				FDFFD6EF29113CDE003A1501 /* ContentView.swift in Sources */,
+				FD344EF72A07AF3D00B7ADA7 /* CachedImage.swift in Sources */,
 				FDFFD6EA29113CDE003A1501 /* Persistence.swift in Sources */,
-				FD8CAED12965B9C300BADDC4 /* AlbumImage.swift in Sources */,
 				FDCC756329646D200079B983 /* AuthService.swift in Sources */,
 				FDD37F48297DD75400967E55 /* Track+CoreDataClass.swift in Sources */,
+				FD344EF42A079F7D00B7ADA7 /* ImageRepository.swift in Sources */,
 				FDCC75B529646D320079B983 /* Albums.swift in Sources */,
 				FDCC75AD29646D320079B983 /* Tracks.swift in Sources */,
 				FDCC75AE29646D320079B983 /* TrackRow.swift in Sources */,
+				FD344EF92A07B07000B7ADA7 /* CachedImageViewModel.swift in Sources */,
 				FDCC756829646D200079B983 /* ArtistService.swift in Sources */,
 				FDCC756529646D200079B983 /* TrackService.swift in Sources */,
 				FDCC756729646D200079B983 /* AlbumService.swift in Sources */,
@@ -886,25 +886,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
-			productName = CachedAsyncImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */ = {
