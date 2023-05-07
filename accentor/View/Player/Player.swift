@@ -7,7 +7,6 @@
 
 import SwiftUI
 import AVFAudio
-import CachedAsyncImage
 
 struct Player: View {
     @State private var showQueue = false

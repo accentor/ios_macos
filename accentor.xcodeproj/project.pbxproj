@@ -16,7 +16,6 @@
 		FD344EF92A07B07000B7ADA7 /* CachedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD344EF82A07B07000B7ADA7 /* CachedImageViewModel.swift */; };
 		FD89028B29BC873300AF8007 /* Album+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD89028A29BC873300AF8007 /* Album+CoreDataClass.swift */; };
 		FD89028D29BC968D00AF8007 /* Artist+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD89028C29BC968D00AF8007 /* Artist+CoreDataClass.swift */; };
-		FD8CAECE2965B98300BADDC4 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */; };
 		FDCC753C29646CCD0079B983 /* PlayQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC753A29646CCD0079B983 /* PlayQueue.swift */; };
 		FDCC753D29646CCD0079B983 /* PlayQueueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC753B29646CCD0079B983 /* PlayQueueItem.swift */; };
 		FDCC756229646D200079B983 /* PlayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC755B29646D1F0079B983 /* PlayService.swift */; };
@@ -128,7 +127,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD8CAECE2965B98300BADDC4 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,7 +363,6 @@
 			);
 			name = accentor;
 			packageProductDependencies = (
-				FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */,
 			);
 			productName = accentor;
 			productReference = FDFFD6E429113CDE003A1501 /* accentor.app */;
@@ -440,7 +437,6 @@
 			);
 			mainGroup = FDFFD6DB29113CDE003A1501;
 			packageReferences = (
-				FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = FDFFD6E529113CDE003A1501 /* Products */;
 			projectDirPath = "";
@@ -890,25 +886,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		FD8CAECD2965B98300BADDC4 /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FD8CAECC2965B98300BADDC4 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
-			productName = CachedAsyncImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */ = {
