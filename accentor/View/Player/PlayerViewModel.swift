@@ -25,10 +25,6 @@ class PlayerViewModel: NSObject, ObservableObject {
     @Published private var playerState: PlayerState = .stopped {
         didSet { self.handlePlaybackChange() }
     }
-    
-    
-
-
 
     @Published var playingTrack: Track?
     @Published var playQueue: PlayQueue = PlayQueue.shared
