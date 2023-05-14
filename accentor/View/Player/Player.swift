@@ -28,22 +28,15 @@ struct Player: View {
             HStack {
                 Button(action: {}) {
                     HStack {
-                        // NOTE: we have to force a re-render when the `playingTrack` changes, so wrap this in an if/else
-                        if (viewModel.playingTrack?.album?.image250 != nil) {
-                            CachedImage(imageURL: viewModel.playingTrack?.album?.image250) {
-                                ZStack {
-                                    Rectangle().fill(.gray)
-                                    Image(systemName: "music.note").font(.largeTitle)
-                                }
-                            }.frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
-                        } else {
-                            CachedImage(imageURL: viewModel.playingTrack?.album?.image250) {
-                                ZStack {
-                                    Rectangle().fill(.gray)
-                                    Image(systemName: "music.note").font(.largeTitle)
-                                }
-                            }.frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
-                        }
+                        CachedImage(imageURL: viewModel.playingTrack?.album?.image250) {
+                            ZStack {
+                                Rectangle().fill(.gray)
+                                Image(systemName: "music.note").font(.largeTitle)
+                            }
+                        /// NOTE: We use `.id()` to force the view to re-initialize.
+                        /// This ensure the image changes when the currentTrack changes
+                        }.id(viewModel.playingTrack?.album?.image250)
+                         .frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
                         
                         VStack(alignment: .leading) {
                             Text(viewModel.playingTrack?.title ?? "").lineLimit(1).truncationMode(.tail)
