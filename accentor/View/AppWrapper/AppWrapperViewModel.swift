@@ -9,9 +9,8 @@ import CoreData
 
 class AppWrapperViewModel: ObservableObject {
     func setDefaultSettings() {
-        if (UserDefaults.standard.object(forKey: "codecConversionId") == nil) {
-            UserDefaults.standard.set(DefaultSettings.codecConversionId, forKey: "codecConversionId")
-        }
+        // Always set this key, to apply new default settings
+        UserDefaults.standard.set(DefaultSettings.codecConversionId, forKey: "codecConversionId")
     }
     
     func fetchAll(context: NSManagedObjectContext) {
