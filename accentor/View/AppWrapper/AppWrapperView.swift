@@ -8,7 +8,7 @@
 import SwiftUI
 import GRDBQuery
 
-struct AppWrapper: View {
+struct AppWrapperView: View {
     @EnvironmentStateObject private var viewModel: AppWrapperViewModel
     
     init() {
@@ -43,15 +43,15 @@ struct AppWrapper: View {
             ZStack(alignment: .bottom) {
                 switch viewModel.selectedRoute {
                 case .albums:
-                    Albums().padding([.bottom], 65)
+                    AlbumsView().padding([.bottom], 65)
                 case .artists:
-                    Artists().padding([.bottom], 65)
+                    ArtistsView().padding([.bottom], 65)
                 case .home:
-                    Home().padding([.bottom], 65)
+                    HomeView().padding([.bottom], 65)
 //                case .tracks:
 //                    Tracks().padding([.bottom], 65)
                 default:
-                    Home()
+                    HomeView()
                     
                 }
                 PlayerView()

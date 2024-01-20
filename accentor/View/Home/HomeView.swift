@@ -8,7 +8,7 @@
 import SwiftUI
 import GRDBQuery
 
-struct Home: View {
+struct HomeView: View {
     @EnvironmentStateObject private var viewModel: HomeViewModel
 
     init() {
@@ -60,6 +60,6 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        HomeView()
     }
 }
