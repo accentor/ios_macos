@@ -17,7 +17,9 @@ final class AppWrapperViewModel: ObservableObject {
         case tracks
     }
 
-    @Published var selectedRoute: Route = .home
+    // NOTE: This will never actually be `nil`, but this is needed to build on iOS
+    // Since this initializer isn't available on iOS: <https://developer.apple.com/documentation/swiftui/list/init(selection:content:)-590zm>
+    @Published var selectedRoute: Route? = .home
     private let database: AppDatabase
 
     init(database: AppDatabase) {
