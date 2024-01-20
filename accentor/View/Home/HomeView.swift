@@ -20,7 +20,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Recently released")
+                Text("Recently released albums")
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
                         ForEach(viewModel.recentlyReleasedAlbums) { item in
@@ -36,18 +36,28 @@ struct HomeView: View {
                         }
                     }
                 }
-                Text("Random albums")
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: 5) {
-                        ForEach(viewModel.recentlyAddedAlbums.shuffled()) { item in
-                            AlbumCard(id: item.id).frame(width: 200)
-                        }
-                    }
-                }
                 Section("On this day") {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 5) {
                             ForEach(viewModel.onThisDay) { item in
+                                AlbumCard(id: item.id).frame(width: 200)
+                            }
+                        }
+                    }
+                }
+                Section("Recently played albums") {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 5) {
+                            ForEach(viewModel.recentlyPlayedAlbums) { album in
+                                AlbumCard(id: album.id).frame(width: 200)
+                            }
+                        }
+                    }
+                }
+                Section("Random albums") {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 5) {
+                            ForEach(viewModel.recentlyAddedAlbums.shuffled()) { item in
                                 AlbumCard(id: item.id).frame(width: 200)
                             }
                         }
