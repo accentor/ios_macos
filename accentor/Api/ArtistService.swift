@@ -6,73 +6,41 @@
 //
 
 import Foundation
-import CoreData
 
 struct ArtistService {
     let apiPath = "artists"
-    public static let shared = ArtistService()
-    
-    func index(context: NSManagedObjectContext) {
-        AbstractService.shared.index(path: apiPath, entityName: "Artist", completion: { jsonData in
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-            dateFormatter.locale = Locale(identifier: "en_US")
-            decoder.dateDecodingStrategy = .formatted(dateFormatter)
-            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            
+    let database: AppDatabase
+
+    init(_ db: AppDatabase) {
+        self.database = db
+    }
+
+    func index() async {
+        let startLoading = Date()
+        
+        await AbstractService.shared.index(path: apiPath, completion: { jsonData in
             do {
-                let artists = try decoder.decode([APIArtist].self, from: jsonData)
-                
-                DispatchQueue.main.async {
-                    self.saveArtists(context: context, artists: artists)
-                }
+                let artists = try AbstractService.jsonDecoder.decode([APIArtist].self, from: jsonData)
+                await self.saveArtists(apiArtists: artists)
             } catch {
-                print("Error decoding artists")
+                print("Error decoding artists", error)
             }
         })
+        
+        try! await database.deleteOldArtists(startLoading)
     }
     
-    private func saveArtists(context: NSManagedObjectContext, artists: [APIArtist]) {
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    private func saveArtists(apiArtists: [APIArtist]) async {
+        let fetchedAt = Date()
+        var artists: [Artist] = []
+        apiArtists.forEach { apiArtist in
+            artists.append(Artist(apiArtist: apiArtist, fetchedAt: fetchedAt))
+        }
         
         do {
-            artists.forEach { (artist) in
-                let entity: Artist!
-                
-                let fetchArtist: NSFetchRequest<Artist> = Artist.fetchRequest()
-                fetchArtist.predicate = NSPredicate(format: "id == %ld", artist.id)
-                
-                let results = try? context.fetch(fetchArtist)
-                if results?.count == 0 {
-                    entity = Artist(context: context)
-                    entity.id = artist.id
-                } else {
-                    entity = results?.first
-                }
-                
-                entity.fetchedAt = Date()
-                
-                // If the updatedAt date is the same (or larger, but this is impossible) we don't update everything else
-                guard entity.updatedAt == nil || entity.updatedAt! < artist.updatedAt else { return }
-
-                entity.createdAt = artist.createdAt
-                entity.updatedAt = artist.updatedAt
-                entity.name = artist.name
-                entity.normalizedName = artist.normalizedName
-                entity.image = artist.image
-                entity.image100 = artist.image100
-                entity.image250 = artist.image250
-                entity.image500 = artist.image500
-                entity.imageType = artist.imageType
-            }
-            
-            try context.save()
-            print("successfully saved artists")
+            try await database.saveArtists(artists)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 }
@@ -81,6 +49,7 @@ struct APIArtist: Decodable, Hashable {
     var id: Int64
     var name: String
     var normalizedName: String
+    var reviewComment: String?
     
     // Image
     var image: String?
