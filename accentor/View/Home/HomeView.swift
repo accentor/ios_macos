@@ -54,11 +54,38 @@ struct HomeView: View {
                         }
                     }
                 }
+                Section("Recently added artists") {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 5) {
+                            ForEach(viewModel.recentlyAddedArtists) { artist in
+                                ArtistCard(artist: artist).frame(width: 200)
+                            }
+                        }
+                    }
+                }
+                Section("Recently played artists") {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 5) {
+                            ForEach(viewModel.recentlyPlayedArtists) { artist in
+                                ArtistCard(artist: artist).frame(width: 200)
+                            }
+                        }
+                    }
+                }
                 Section("Random albums") {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 5) {
                             ForEach(viewModel.recentlyAddedAlbums.shuffled()) { item in
                                 AlbumCard(id: item.id).frame(width: 200)
+                            }
+                        }
+                    }
+                }
+                Section("Random artists") {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 5) {
+                            ForEach(viewModel.recentlyAddedArtists.shuffled()) { artist in
+                                ArtistCard(artist: artist).frame(width: 200)
                             }
                         }
                     }

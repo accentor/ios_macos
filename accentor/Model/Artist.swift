@@ -31,6 +31,7 @@ struct Artist: Identifiable, Equatable, Codable, Hashable, FetchableRecord, Pers
         static let id = Column(CodingKeys.id)
         static let name = Column(CodingKeys.name)
         static let normalizedName = Column(CodingKeys.normalizedName)
+        static let createdAt = Column(CodingKeys.createdAt)
     }
 }
 
@@ -58,6 +59,7 @@ extension Artist {
     static let albums = hasMany(Album.self, through: albumArtists, using: AlbumArtist.album)
     static let trackArtists = hasMany(TrackArtist.self, using: artistFK)
     static let tracks = hasMany(Track.self, through: trackArtists, using: TrackArtist.track)
+    static let playStat = hasOne(ArtistPlayStat.self, using: ArtistPlayStat.artistFK)
 }
 
 extension DerivableRequest<Artist> {
@@ -66,5 +68,11 @@ extension DerivableRequest<Artist> {
         guard let query = name, !query.isEmpty else { return all() }
 
         return filter(Artist.Columns.name.like("%\(query)%") || Artist.Columns.normalizedName.like("%\(query)%"))
+    }
+    
+    /// Order by recently played
+    func orderByRecentlyPlayed() -> Self {
+        let statAlias = TableAlias()
+        return joining(required: Artist.playStat.aliased(statAlias)).order(statAlias[ArtistPlayStat.Columns.lastPlayed.desc])
     }
 }

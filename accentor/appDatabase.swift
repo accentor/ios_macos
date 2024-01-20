@@ -209,6 +209,16 @@ extension AppDatabase {
                 FROM play INNER JOIN track ON track.id = play.trackId
                 GROUP BY albumId
             """)
+
+            try db.create(view: "artistPlayStat", asLiteral: """
+                SELECT
+                    artistId,
+                    COUNT(*) as playCount,
+                    MAX(playedAt) as lastPlayed
+                FROM play INNER JOIN trackArtist ON trackArtist.trackId = play.trackId
+                WHERE trackArtist.hidden IS false
+                GROUP BY artistId
+            """)
         }
 
         
