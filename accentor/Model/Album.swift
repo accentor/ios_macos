@@ -39,6 +39,7 @@ struct Album: Identifiable, Equatable, Codable, FetchableRecord, PersistableReco
         static let release = Column(CodingKeys.release)
         static let edition = Column(CodingKeys.edition)
         static let editionDescription = Column(CodingKeys.editionDescription)
+        static let createdAt = Column(CodingKeys.createdAt)
     }
 }
 
@@ -64,6 +65,8 @@ extension Album {
 extension Album {
     static let tracks = hasMany(Track.self, using: Track.albumFK)
     static let albumArtists = hasMany(AlbumArtist.self)
+    static let plays = hasMany(Play.self, through: tracks, using: Track.plays)
+    static let playStat = hasOne(AlbumPlayStat.self, using: AlbumPlayStat.albumFK)
     
     var tracks: QueryInterfaceRequest<Track> {
         request(for: Album.tracks)
@@ -92,5 +95,11 @@ extension DerivableRequest<Album> {
     // ORDER BY normalized_title ASC, release ASC, edition ASC, edition_description ASC, id ASC
     func orderByTitle() -> Self {
         order(Album.Columns.normalizedTitle, Album.Columns.release, Album.Columns.edition, Album.Columns.editionDescription, Album.Columns.id)
+    }
+    
+    /// Order by recently played
+    func orderByRecentlyPlayed() -> Self {
+        let statAlias = TableAlias()
+        return joining(required: Album.playStat.aliased(statAlias)).order(statAlias[AlbumPlayStat.Columns.lastPlayed.desc])
     }
 }

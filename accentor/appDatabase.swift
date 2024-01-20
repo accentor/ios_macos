@@ -191,6 +191,27 @@ extension AppDatabase {
             }
         }
         
+        migrator.registerMigration("20240120 - Add playStat views") { db in
+            try db.create(view: "trackPlayStat", asLiteral: """
+                SELECT
+                    trackId,
+                    COUNT(*) as playCount,
+                    MAX(playedAt) as lastPlayed
+                FROM play
+                GROUP BY trackId
+            """)
+            
+            try db.create(view: "albumPlayStat", asLiteral: """
+                SELECT
+                    albumId,
+                    COUNT(*) as playCount,
+                    MAX(playedAt) as lastPlayed
+                FROM play INNER JOIN track ON track.id = play.trackId
+                GROUP BY albumId
+            """)
+        }
+
+        
         return migrator
     }
 }
