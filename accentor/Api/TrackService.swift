@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct TrackService {
-    let apiPath = "tracks";
+    static let apiPath = "tracks";
     let database: AppDatabase
     
     init(_ db: AppDatabase) {
@@ -18,16 +18,26 @@ struct TrackService {
     
     func index() async {
         let startLoading = Date()
-
-        await AbstractService.shared.index(path: apiPath, completion: { jsonData in
+        var count = 0
+        var buffer: [APITrack] = []
+        
+        for await data in AbstractService.Index(path: TrackService.apiPath) {
             do {
-                let tracks = try AbstractService.jsonDecoder.decode([APITrack].self, from: jsonData)
-                await self.saveTracks(apiTracks: tracks)
+                let tracks = try AbstractService.jsonDecoder.decode([APITrack].self, from: data)
+                buffer.append(contentsOf: tracks)
             } catch {
                 print("Error decoding tracks", error)
             }
-        })
-        
+            
+            count += 1
+            if count >= 5 {
+                await self.saveTracks(apiTracks: buffer)
+                buffer = []
+                count = 0
+            }
+        }
+
+        await self.saveTracks(apiTracks: buffer)
         try! await database.deleteOldTracks(startLoading)
     }
     
