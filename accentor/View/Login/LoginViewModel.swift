@@ -12,7 +12,6 @@ class LoginViewModel: ObservableObject {
     @Published var loginState: LoginStates = .waiting
     
     func login(serverURL: String, username: String, password: String) {
-        print("Loggin in with \(serverURL), \(username), \(password) ")
         // Reset state
         self.loginState = .waiting
         let url = URL(string: serverURL)

@@ -18,7 +18,7 @@ struct ArtistCard: View {
                     Image(systemName: "music.mic").font(.largeTitle)
                 }
             }.aspectRatio(1, contentMode: .fit)
-            Text(artist.name!)
+            Text(artist.name)
             Spacer()
         }
     }

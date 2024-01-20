@@ -1,5 +1,5 @@
 //
-//  Player.swift
+//  PlayerView.swift
 //  accentor
 //
 //  Created by Robbe Van Petegem on 05/11/2022.
@@ -7,16 +7,17 @@
 
 import SwiftUI
 import AVFAudio
+import GRDBQuery
 
-struct Player: View {
-    @State private var showQueue = false
-    @StateObject var viewModel = PlayerViewModel.shared
-    @StateObject var playQueue = PlayQueue.shared
+struct PlayerView: View {
+    @EnvironmentStateObject private var viewModel: PlayerViewModel
     
-    func toggleShowQueue() {
-        showQueue.toggle()
+    init() {
+        _viewModel = EnvironmentStateObject {
+            PlayerViewModel(player: $0.player)
+        }
     }
-    
+
     var body: some View {
         ZStack {
             Rectangle().foregroundColor(Color.white.opacity(0.0)).frame(height: 65)
@@ -28,39 +29,39 @@ struct Player: View {
             HStack {
                 Button(action: {}) {
                     HStack {
-                        CachedImage(imageURL: viewModel.playingTrack?.album?.image250) {
+                        CachedImage(imageURL: viewModel.trackInfo?.album?.image250) {
                             ZStack {
                                 Rectangle().fill(.gray)
                                 Image(systemName: "music.note").font(.largeTitle)
                             }
                         /// NOTE: We use `.id()` to force the view to re-initialize.
                         /// This ensure the image changes when the currentTrack changes
-                        }.id(viewModel.playingTrack?.album?.image250)
+                        }.id(viewModel.trackInfo?.album?.image250)
                          .frame(width: 45, height: 45).shadow(radius: 6, x: 0, y: 3).padding(.leading)
                         
                         VStack(alignment: .leading) {
-                            Text(viewModel.playingTrack?.title ?? "").lineLimit(1).truncationMode(.tail)
-                            Text(viewModel.playingTrack?.trackArtistsText ?? "").lineLimit(1).truncationMode(.tail)
+                            Text(viewModel.trackInfo?.track.title ?? "").lineLimit(1).truncationMode(.tail)
+                            Text(TrackArtist.constructTrackArtistText(viewModel.trackInfo?.trackArtists)).lineLimit(1).truncationMode(.tail)
                         }.padding(.leading, 5)
                         
                         Spacer()
                     }.foregroundColor(.black)
                 }
                 #if os(macOS)
-                Button(action: viewModel.prev) {
+                Button(action: viewModel.player.prev) {
                     Image(systemName: "backward.end.fill").font(.title3).padding(12)
-                }.foregroundColor(viewModel.canGoPrev ? .black : .gray.opacity(0.75)).disabled(!viewModel.canGoPrev)
+                }.foregroundColor(viewModel.player.canGoPrev ? .black : .gray.opacity(0.75)).disabled(!viewModel.player.canGoPrev)
                 #endif
                 
-                Button(action: viewModel.togglePlaying) {
-                    Image(systemName: viewModel.playing ? "pause.fill" : "play.fill").font(.title3).padding(12)
-                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75))
-                 .padding(.horizontal, 2).disabled(!viewModel.canPlay)
-                 .keyboardShortcut(.space, modifiers: [])   
+                Button(action: viewModel.player.togglePlaying) {
+                    Image(systemName: viewModel.playerState.isPlaying ? "pause.fill" : "play.fill").font(.title3).padding(12)
+                }.foregroundColor(viewModel.player.canPlay ? .black : .gray.opacity(0.75))
+                    .padding(.horizontal, 2).disabled(!viewModel.player.canPlay)
+                 .keyboardShortcut(.space, modifiers: [])
                 
-                Button(action: viewModel.next) {
+                Button(action: viewModel.player.next) {
                     Image(systemName: "forward.end.fill").font(.title3).padding(12)
-                }.foregroundColor(viewModel.canPlay ? .black : .gray.opacity(0.75)).padding(.trailing, 20).disabled(!viewModel.canGoNext)
+                }.foregroundColor(viewModel.player.canPlay ? .black : .gray.opacity(0.75)).padding(.trailing, 20).disabled(!viewModel.player.canGoNext)
             }
             #if os(macOS)
             .buttonStyle(.plain)
@@ -107,8 +108,6 @@ struct NSBlur: NSViewRepresentable {
 #endif
 
 
-//struct Player_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Player()
-//    }
-//}
+#Preview {
+    PlayerView().environment(\.appDatabase, .empty()).environment(\.player, .empty())
+}

@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import GRDBQuery
 
 struct Home: View {
-    @FetchRequest(entity: Album.entity(), sortDescriptors: Album.sortByRecentlyReleased) var recentlyReleasedAlbums : FetchedResults<Album>
-    @FetchRequest(entity: Album.entity(), sortDescriptors: Album.sortByRecentlyAdded) var recentlyAddedAlbums : FetchedResults<Album>
+    @EnvironmentStateObject private var viewModel: HomeViewModel
+
+    init() {
+        _viewModel = EnvironmentStateObject {
+            HomeViewModel(database: $0.appDatabase)
+        }
+    }
 
     var body: some View {
         ScrollView {
@@ -17,29 +23,38 @@ struct Home: View {
                 Text("Recently released")
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
-                        ForEach(recentlyReleasedAlbums) { item in
-                            AlbumCard(album: item).frame(width: 200)
+                        ForEach(viewModel.recentlyReleasedAlbums) { item in
+                            AlbumCard(id: item.id).frame(width: 200)
                         }
                     }
                 }
                 Text("Recently added albums")
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
-                        ForEach(recentlyAddedAlbums) { item in
-                            AlbumCard(album: item).frame(width: 200)
+                        ForEach(viewModel.recentlyAddedAlbums) { item in
+                            AlbumCard(id: item.id).frame(width: 200)
                         }
                     }
                 }
                 Text("Random albums")
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 5) {
-                        ForEach(recentlyAddedAlbums.shuffled()) { item in
-                            AlbumCard(album: item).frame(width: 200)
+                        ForEach(viewModel.recentlyAddedAlbums.shuffled()) { item in
+                            AlbumCard(id: item.id).frame(width: 200)
+                        }
+                    }
+                }
+                Section("On this day") {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 5) {
+                            ForEach(viewModel.onThisDay) { item in
+                                AlbumCard(id: item.id).frame(width: 200)
+                            }
                         }
                     }
                 }
             }
-        }.navigationTitle("Home")
+        }.padding().navigationTitle("Home")
     }
 }
 

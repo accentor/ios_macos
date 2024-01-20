@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
-import CoreData
+import GRDBQuery
 
 struct Albums: View {
-    @State var searchTerm: String = ""
+    @EnvironmentStateObject private var viewModel: AlbumsViewModel
+
+    init() {
+        _viewModel = EnvironmentStateObject {
+            AlbumsViewModel(database: $0.appDatabase)
+        }
+    }
     
     let columns = [
         GridItem(.adaptive(minimum: 130))
@@ -18,27 +24,10 @@ struct Albums: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                FilteredAlbums(filter: searchTerm)
+                ForEach(viewModel.albumIds, id: \.self) { albumId in AlbumCard(id: albumId) }
             }.toolbar {
-                TextField("Search", text: $searchTerm)
+                TextField("Search", text: $viewModel.searchTerm)
             }
         }.navigationTitle("Albums")
-    }
-}
-
-private struct FilteredAlbums: View {
-    @FetchRequest var albums: FetchedResults<Album>
-    
-    init(filter: String) {
-        let fetchRequest: NSFetchRequest<Album> = Album.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Album.normalizedTitle, ascending: true)]
-        if (filter.count > 0) {
-            fetchRequest.predicate = NSPredicate(format: "normalizedTitle CONTAINS %@", filter.lowercased())
-        }
-        _albums = FetchRequest(fetchRequest: fetchRequest)
-    }
-    
-    var body: some View {
-        ForEach(albums) { album in AlbumCard(album: album) }
     }
 }
