@@ -181,6 +181,16 @@ extension AppDatabase {
             }
         }
         
+        migrator.registerMigration("20240120 - Add plays table") { db in
+            try db.create(table: "play") { table in
+                table.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+                table.column("playedAt", .datetime).notNull()
+                table.column("trackId", .integer).notNull().indexed()
+                table.column("userId", .integer).notNull()
+                table.column("fetchedAt", .datetime).notNull()
+            }
+        }
+        
         return migrator
     }
 }
@@ -239,6 +249,25 @@ extension AppDatabase {
         try await dbWriter.write { db in
             let count = try Track.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
             print("Deleted \(count) old tracks")
+        }
+    }
+    
+    func savePlay(_ play: Play) async throws {
+        try await self.savePlays([play])
+    }
+    
+    func savePlays(_ plays: [Play]) async throws {
+        try await dbWriter.write { db in
+            try plays.forEach { play in
+                try play.upsert(db)
+            }
+        }
+    }
+    
+    func deleteOldPlays(_ fetchedBefore: Date) async throws {
+        try await dbWriter.write { db in
+            let count = try Play.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
+            print("Deleted \(count) old plays")
         }
     }
 }

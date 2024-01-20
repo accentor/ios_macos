@@ -12,7 +12,6 @@ enum ApiError: Error {
     case unknown(String)
 }
 
-
 class AbstractService {
     public static let shared = AbstractService()
     
@@ -61,6 +60,30 @@ class AbstractService {
         return (data, totalPages)
     }
     
+    func create(path: String, body: Data) async throws -> (Data) {
+        var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
+        components.path = "/api/" + path
+        
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
+        request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+        
+        let session = URLSession(configuration: .default)
+        let (data, res) = try await session.upload(for: request, from: body)
+
+        let response = res as! HTTPURLResponse
+        
+        if !(200...299).contains(response.statusCode) {
+            // TODO: Be smarter about the possible status codes
+            print("Error in API")
+            throw ApiError.unknown("Error in api \(response)")
+        }
+
+        return data
+    }
+    
     static var jsonDecoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -73,6 +96,13 @@ class AbstractService {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date: \(string)")
         })
         return decoder
+    }
+    
+    static var jsonEncoder: JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .formatted(dateTimeFormatter)
+        return encoder
     }
     
     static var dateTimeFormatter: DateFormatter {

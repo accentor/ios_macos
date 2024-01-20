@@ -44,6 +44,7 @@ class Player: ObservableObject {  // Possible values of `playerState`
 
     private let playQueue: PlayQueue
     private let database: AppDatabase
+    private let playService: PlayService
     private var player: AVPlayer = AVPlayer()
     private var statusObserver: NSObjectProtocol!
     private var cancellables: Set<AnyCancellable> = []
@@ -57,6 +58,7 @@ class Player: ObservableObject {  // Possible values of `playerState`
     init(queue: PlayQueue, database: AppDatabase) {
         self.playQueue = queue
         self.database = database
+        self.playService = PlayService(database)
         player.allowsExternalPlayback = true
 
         setupCommandCenter()
@@ -166,9 +168,7 @@ extension Player {
     @objc func playerDidFinishPlaying() {
         guard let playingTrackId = self.playingTrackInfo?.track.id else { return }
 
-        PlayService.shared.create(trackId: playingTrackId) { data, error in
-            print(data, error)
-        }
+        Task { await playService.create(trackId: playingTrackId) }
         self.next()
     }
 
