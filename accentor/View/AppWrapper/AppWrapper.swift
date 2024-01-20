@@ -6,62 +6,59 @@
 //
 
 import SwiftUI
-
-enum Route: Hashable {
-    case albums
-    case artists
-    case home
-    case tracks
-}
+import GRDBQuery
 
 struct AppWrapper: View {
-    @State private var selectedRoute: Route?
-    @StateObject var viewModel = AppWrapperViewModel()
-    @Environment(\.managedObjectContext) var context
+    @EnvironmentStateObject private var viewModel: AppWrapperViewModel
+    
+    init() {
+        _viewModel = EnvironmentStateObject {
+            AppWrapperViewModel(database: $0.appDatabase)
+        }
+    }
     
     func onAppear() {
-        print("Starting on appear")
         viewModel.setDefaultSettings()
         
         // Configure URLCache
         URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
         URLCache.shared.diskCapacity = 1_000_000_000 // ~1GB disk cache space
-
-        viewModel.fetchAll(context: context)
+        
+        Task { await viewModel.fetchAll() }
     }
     
     var body: some View {
         NavigationSplitView {
-            List(selection: $selectedRoute) {
+            List(selection: $viewModel.selectedRoute) {
                 Section {
-                    NavigationLink(value: Route.home, label: { Label("Home", systemImage: "music.note.house") })
+                    NavigationLink(value: AppWrapperViewModel.Route.home, label: { Label("Home", systemImage: "music.note.house") })
                 }
                 Section("Library") {
-                    NavigationLink(value: Route.albums, label: { Label("Albums", systemImage: "square.stack") })
-                    NavigationLink(value: Route.artists, label: { Label("Artists", systemImage: "music.mic") })
-                    NavigationLink(value: Route.tracks, label: { Label("Tracks", systemImage: "music.note") })
+                    NavigationLink(value: AppWrapperViewModel.Route.albums, label: { Label("Albums", systemImage: "square.stack") })
+                    NavigationLink(value: AppWrapperViewModel.Route.artists, label: { Label("Artists", systemImage: "music.mic") })
+//                    NavigationLink(value: AppWrapperViewModel.Route.tracks, label: { Label("Tracks", systemImage: "music.note") })
                 }
             }.navigationTitle("Accentor")
         } detail: {
             ZStack(alignment: .bottom) {
-                switch self.selectedRoute {
+                switch viewModel.selectedRoute {
                 case .albums:
-                    Albums()
+                    Albums().padding([.bottom], 65)
                 case .artists:
-                    Artists()
+                    Artists().padding([.bottom], 65)
                 case .home:
-                    Home()
-                case .tracks:
-                    Tracks()
+                    Home().padding([.bottom], 65)
+//                case .tracks:
+//                    Tracks().padding([.bottom], 65)
                 default:
                     Home()
                     
                 }
-                Player()
+                PlayerView()
             }
         }.onAppear(perform: onAppear)
             .refreshable {
-                viewModel.fetchAll(context: context)
+                Task { await viewModel.fetchAll() }
             }
     }
 }

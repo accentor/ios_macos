@@ -6,21 +6,29 @@
 //
 
 import Foundation
-import AVFoundation
 import CoreData
 
 class PlayQueue: ObservableObject {
+    enum QueueItemPosition: Equatable {
+        case next
+        case last
+    }
+
     @Published private(set) var queue: [PlayQueueItem] = []
     @Published private(set) var currentIndex: Int = -1
     
     // PlayQueue is a singleton class, since we only ever want one queue in our whole app
     public static let shared = PlayQueue()
     
+    // Allow empty playQueue for swiftUI previews
+    public static func empty() -> PlayQueue {
+        return PlayQueue()
+    }
+    
     // Computed props
-    var currentTrack: PlayQueueItem? {
+    var currentItem: PlayQueueItem? {
         get {
             guard currentIndex != -1 else { return nil }
-
             return queue[currentIndex]
         }
     }
@@ -32,27 +40,20 @@ class PlayQueue: ObservableObject {
             currentIndex = -1
             return
         }
-
+        print("From `setIndex`", newIndex)
         currentIndex = newIndex
+        
     }
     
     // Managing queue
     func addTrackToQueue(track: Track, position: QueueItemPosition = .last, replace: Bool = false) {
-        if replace { self.clearQueue() }
-
-        switch position {
-        case .last: queue.append(PlayQueueItem(track: track))
-        case .next: queue.insert(PlayQueueItem(track: track), at: min(queue.endIndex, 1))
-        }
-        
-        // Start playing if this is the first track was added
-        if (queue.count == 1) { setIndex(0) }
+        addTracksToQueue(tracks: [track], position: position, replace: replace)
     }
     
-    func addAlbumToQueue(album: Album, position: QueueItemPosition = .last, replace: Bool = false) {
+    func addTracksToQueue(tracks: [Track], position: QueueItemPosition = .last, replace: Bool = false) {
         if replace { self.clearQueue() }
         
-        let mapped = album.tracks.map { PlayQueueItem(track: $0) }
+        let mapped = tracks.map { PlayQueueItem(trackId: $0.id) }
         
         switch position {
         case .last: queue.insert(contentsOf: mapped, at: queue.endIndex)
@@ -60,7 +61,7 @@ class PlayQueue: ObservableObject {
         }
         
         // Start playing if the queue was empty
-        if (queue.count == album.tracks.count) { setIndex(0) }
+        if (queue.count == tracks.count) { setIndex(0) }
         
     }
     
@@ -79,7 +80,3 @@ class PlayQueue: ObservableObject {
     }
 }
 
-enum QueueItemPosition: Equatable {
-    case next
-    case last
-}

@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
-import CoreData
+import GRDBQuery
+
 
 struct Artists: View {
-    @State var searchTerm: String = ""
+    @EnvironmentStateObject private var viewModel: ArtistsViewModel
+
+    init() {
+        _viewModel = EnvironmentStateObject {
+            ArtistsViewModel(database: $0.appDatabase)
+        }
+    }
     
     let columns = [
         GridItem(.adaptive(minimum: 130))
@@ -19,36 +26,19 @@ struct Artists: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    FilteredArtists(filter: searchTerm)
+                    ForEach(viewModel.artists) { artist in
+                        NavigationLink(value: artist) {
+                            ArtistCard(artist: artist)
+                        }.buttonStyle(PlainButtonStyle())
+                    }
                 }
             }.navigationDestination(for: Artist.self) { artist in
-                ArtistView(artist: artist)
+                ArtistView(id: artist.id)
             }.toolbar {
-                TextField("Search", text: $searchTerm)
+                TextField("Search", text: $viewModel.searchTerm)
             }
 
         }.navigationTitle("Artists")
             
-    }
-}
-
-private struct FilteredArtists: View {
-    @FetchRequest var artists: FetchedResults<Artist>
-    
-    init(filter: String) {
-        let fetchRequest: NSFetchRequest<Artist> = Artist.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Artist.normalizedName, ascending: true)]
-        if (filter.count > 0) {
-            fetchRequest.predicate = NSPredicate(format: "normalizedName CONTAINS %@", filter.lowercased())
-        }
-        _artists = FetchRequest(fetchRequest: fetchRequest)
-    }
-    
-    var body: some View {
-        ForEach(artists) { artist in
-            NavigationLink(value: artist) {
-                ArtistCard(artist: artist)
-            }.buttonStyle(PlainButtonStyle())
-        }
     }
 }

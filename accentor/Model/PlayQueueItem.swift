@@ -9,16 +9,16 @@ import Foundation
 import AVFoundation
 
 class PlayQueueItem {
-    @Published private(set) var track: Track
+    @Published private(set) var trackId: Track.ID
     var cachePath: String
     var cached: Bool = false
     
-    init(track: Track) {
-        self.track = track
+    init(trackId: Track.ID) {
+        self.trackId = trackId
         let codecConversionId = UserDefaults.standard.string(forKey: "codecConversionId")!
         var fileCachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         // We store audio under `audio__trackId__codecConversionId`
-        fileCachePath.appendPathComponent("audio__\(track.id)__\(codecConversionId)", isDirectory: false)
+        fileCachePath.appendPathComponent("audio__\(trackId)__\(codecConversionId)", isDirectory: false)
         self.cachePath = fileCachePath.path
         self.cached = FileManager.default.fileExists(atPath: self.cachePath)
         
@@ -42,7 +42,7 @@ class PlayQueueItem {
     
     private func audioURL() -> URL {
         var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
-        components.path = "/api/tracks/\(track.id)/audio"
+        components.path = "/api/tracks/\(trackId)/audio"
         
         components.queryItems = [
             URLQueryItem(name: "codec_conversion_id", value: UserDefaults.standard.string(forKey: "codecConversionId")!),
