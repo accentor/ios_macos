@@ -8,7 +8,7 @@
 import SwiftUI
 import GRDBQuery
 
-struct Albums: View {
+struct AlbumsView: View {
     @EnvironmentStateObject private var viewModel: AlbumsViewModel
 
     init() {

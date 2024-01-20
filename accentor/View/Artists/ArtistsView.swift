@@ -9,7 +9,7 @@ import SwiftUI
 import GRDBQuery
 
 
-struct Artists: View {
+struct ArtistsView: View {
     @EnvironmentStateObject private var viewModel: ArtistsViewModel
 
     init() {

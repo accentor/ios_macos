@@ -37,20 +37,20 @@
 		FDCC756829646D200079B983 /* ArtistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC756129646D1F0079B983 /* ArtistService.swift */; };
 		FDCC75A429646D320079B983 /* DefaultSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC756C29646D310079B983 /* DefaultSettings.swift */; };
 		FDCC75AF29646D320079B983 /* AppWrapperViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC757C29646D310079B983 /* AppWrapperViewModel.swift */; };
-		FDCC75B029646D320079B983 /* AppWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC757D29646D310079B983 /* AppWrapper.swift */; };
-		FDCC75B129646D320079B983 /* Artists.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC757F29646D310079B983 /* Artists.swift */; };
+		FDCC75B029646D320079B983 /* AppWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC757D29646D310079B983 /* AppWrapperView.swift */; };
+		FDCC75B129646D320079B983 /* ArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC757F29646D310079B983 /* ArtistsView.swift */; };
 		FDCC75B229646D320079B983 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758029646D310079B983 /* ArtistView.swift */; };
 		FDCC75B329646D320079B983 /* ArtistCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758129646D310079B983 /* ArtistCard.swift */; };
 		FDCC75B429646D320079B983 /* AlbumCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758329646D310079B983 /* AlbumCard.swift */; };
-		FDCC75B529646D320079B983 /* Albums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758429646D310079B983 /* Albums.swift */; };
+		FDCC75B529646D320079B983 /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758429646D310079B983 /* AlbumsView.swift */; };
 		FDCC75B629646D320079B983 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758629646D310079B983 /* LoginViewModel.swift */; };
-		FDCC75B729646D320079B983 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758729646D310079B983 /* Login.swift */; };
+		FDCC75B729646D320079B983 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758729646D310079B983 /* LoginView.swift */; };
 		FDCC75C529646D320079B983 /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC759A29646D310079B983 /* CachingPlayerItem.swift */; };
 		FDD00CF72B56C2F4007554F7 /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CF62B56C2F4007554F7 /* AlbumsViewModel.swift */; };
 		FDD00CF92B56CDDD007554F7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CF82B56CDDD007554F7 /* Player.swift */; };
 		FDD00CFB2B56DDC8007554F7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CFA2B56DDC8007554F7 /* PlayerView.swift */; };
 		FDD00CFD2B56F1DC007554F7 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CFC2B56F1DC007554F7 /* PlayerViewModel.swift */; };
-		FDD5BD802A064D100011EBF9 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD5BD7F2A064D100011EBF9 /* Home.swift */; };
+		FDD5BD802A064D100011EBF9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD5BD7F2A064D100011EBF9 /* HomeView.swift */; };
 		FDFFD6E829113CDE003A1501 /* accentorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E729113CDE003A1501 /* accentorApp.swift */; };
 		FDFFD6EA29113CDE003A1501 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E929113CDE003A1501 /* Persistence.swift */; };
 		FDFFD6ED29113CDE003A1501 /* accentor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */; };
@@ -107,20 +107,20 @@
 		FDCC756129646D1F0079B983 /* ArtistService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistService.swift; sourceTree = "<group>"; };
 		FDCC756C29646D310079B983 /* DefaultSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSettings.swift; sourceTree = "<group>"; };
 		FDCC757C29646D310079B983 /* AppWrapperViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppWrapperViewModel.swift; sourceTree = "<group>"; };
-		FDCC757D29646D310079B983 /* AppWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppWrapper.swift; sourceTree = "<group>"; };
-		FDCC757F29646D310079B983 /* Artists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artists.swift; sourceTree = "<group>"; };
+		FDCC757D29646D310079B983 /* AppWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppWrapperView.swift; sourceTree = "<group>"; };
+		FDCC757F29646D310079B983 /* ArtistsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistsView.swift; sourceTree = "<group>"; };
 		FDCC758029646D310079B983 /* ArtistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
 		FDCC758129646D310079B983 /* ArtistCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistCard.swift; sourceTree = "<group>"; };
 		FDCC758329646D310079B983 /* AlbumCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCard.swift; sourceTree = "<group>"; };
-		FDCC758429646D310079B983 /* Albums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Albums.swift; sourceTree = "<group>"; };
+		FDCC758429646D310079B983 /* AlbumsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
 		FDCC758629646D310079B983 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		FDCC758729646D310079B983 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		FDCC758729646D310079B983 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		FDCC759A29646D310079B983 /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		FDD00CF62B56C2F4007554F7 /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
 		FDD00CF82B56CDDD007554F7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FDD00CFA2B56DDC8007554F7 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		FDD00CFC2B56F1DC007554F7 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
-		FDD5BD7F2A064D100011EBF9 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		FDD5BD7F2A064D100011EBF9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FDFEA3E729644A80000B9ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FDFFD6E429113CDE003A1501 /* accentor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accentor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFFD6E729113CDE003A1501 /* accentorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorApp.swift; sourceTree = "<group>"; };
@@ -227,7 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				FDCC757C29646D310079B983 /* AppWrapperViewModel.swift */,
-				FDCC757D29646D310079B983 /* AppWrapper.swift */,
+				FDCC757D29646D310079B983 /* AppWrapperView.swift */,
 			);
 			path = AppWrapper;
 			sourceTree = "<group>";
@@ -235,7 +235,7 @@
 		FDCC757E29646D310079B983 /* Artists */ = {
 			isa = PBXGroup;
 			children = (
-				FDCC757F29646D310079B983 /* Artists.swift */,
+				FDCC757F29646D310079B983 /* ArtistsView.swift */,
 				FD405A7F2B58733D008A3CB3 /* ArtistsViewModel.swift */,
 				FDCC758029646D310079B983 /* ArtistView.swift */,
 				FD405A812B5877B6008A3CB3 /* ArtistViewModel.swift */,
@@ -249,7 +249,7 @@
 			children = (
 				FDCC758329646D310079B983 /* AlbumCard.swift */,
 				FDBE6BFC2B56AFD2004F39CA /* AlbumCardViewModel.swift */,
-				FDCC758429646D310079B983 /* Albums.swift */,
+				FDCC758429646D310079B983 /* AlbumsView.swift */,
 				FDD00CF62B56C2F4007554F7 /* AlbumsViewModel.swift */,
 			);
 			path = Albums;
@@ -259,7 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				FDCC758629646D310079B983 /* LoginViewModel.swift */,
-				FDCC758729646D310079B983 /* Login.swift */,
+				FDCC758729646D310079B983 /* LoginView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -284,7 +284,7 @@
 		FDD5BD7C2A064CA20011EBF9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				FDD5BD7F2A064D100011EBF9 /* Home.swift */,
+				FDD5BD7F2A064D100011EBF9 /* HomeView.swift */,
 				FDBE6BF82B56AE0B004F39CA /* HomeViewModel.swift */,
 			);
 			path = Home;
@@ -508,8 +508,8 @@
 				FDCC75AF29646D320079B983 /* AppWrapperViewModel.swift in Sources */,
 				FDCC756629646D200079B983 /* AbstractService.swift in Sources */,
 				FDCC753D29646CCD0079B983 /* PlayQueueItem.swift in Sources */,
-				FDCC75B129646D320079B983 /* Artists.swift in Sources */,
-				FDD5BD802A064D100011EBF9 /* Home.swift in Sources */,
+				FDCC75B129646D320079B983 /* ArtistsView.swift in Sources */,
+				FDD5BD802A064D100011EBF9 /* HomeView.swift in Sources */,
 				FD405A802B58733D008A3CB3 /* ArtistsViewModel.swift in Sources */,
 				FDCC756229646D200079B983 /* PlayService.swift in Sources */,
 				FDCC75B629646D320079B983 /* LoginViewModel.swift in Sources */,
@@ -517,9 +517,9 @@
 				FDCC75B329646D320079B983 /* ArtistCard.swift in Sources */,
 				FDBE6BEE2B55BB78004F39CA /* AlbumArtist.swift in Sources */,
 				FDCC75A429646D320079B983 /* DefaultSettings.swift in Sources */,
-				FDCC75B029646D320079B983 /* AppWrapper.swift in Sources */,
+				FDCC75B029646D320079B983 /* AppWrapperView.swift in Sources */,
 				FDCC75B229646D320079B983 /* ArtistView.swift in Sources */,
-				FDCC75B729646D320079B983 /* Login.swift in Sources */,
+				FDCC75B729646D320079B983 /* LoginView.swift in Sources */,
 				FDCC75B429646D320079B983 /* AlbumCard.swift in Sources */,
 				FDCC753C29646CCD0079B983 /* PlayQueue.swift in Sources */,
 				FDBE6BF92B56AE0B004F39CA /* HomeViewModel.swift in Sources */,
@@ -532,7 +532,7 @@
 				FDBE6BEC2B55B8B5004F39CA /* Album.swift in Sources */,
 				FDBE6BF22B55D1A8004F39CA /* TrackArtist.swift in Sources */,
 				FD344EF42A079F7D00B7ADA7 /* ImageRepository.swift in Sources */,
-				FDCC75B529646D320079B983 /* Albums.swift in Sources */,
+				FDCC75B529646D320079B983 /* AlbumsView.swift in Sources */,
 				FDBE6BFD2B56AFD2004F39CA /* AlbumCardViewModel.swift in Sources */,
 				FDD00CFD2B56F1DC007554F7 /* PlayerViewModel.swift in Sources */,
 				FDD00CF92B56CDDD007554F7 /* Player.swift in Sources */,
