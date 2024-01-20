@@ -26,9 +26,18 @@ final class AppWrapperViewModel: ObservableObject {
         self.database = database
     }
 
-    func setDefaultSettings() {
-        // Always set this key, to apply new default settings
-        UserDefaults.standard.set(DefaultSettings.codecConversionId, forKey: "codecConversionId")
+    
+    func handleAppear() {
+        setDefaultSettings()
+        
+        // Configure URLCache
+        URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
+        URLCache.shared.diskCapacity = 1_000_000_000 // ~1GB disk cache space
+        
+        #if !DEBUG
+        // Don't auto-refresh in debug, to save churn
+        Task { await fetchAll() }
+        #endif
     }
     
     func fetchAll() async {
@@ -37,6 +46,11 @@ final class AppWrapperViewModel: ObservableObject {
         async let plays: () = PlayService(database).index()
         async let tracks: () = TrackService(database).index()
         _ = await [albums, artists, plays, tracks]
+    }
+    
+    private func setDefaultSettings() {
+        // Always set this key, to apply new default settings
+        UserDefaults.standard.set(DefaultSettings.codecConversionId, forKey: "codecConversionId")
     }
 }
 
