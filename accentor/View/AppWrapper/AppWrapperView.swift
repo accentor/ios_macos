@@ -17,16 +17,6 @@ struct AppWrapperView: View {
         }
     }
     
-    func onAppear() {
-        viewModel.setDefaultSettings()
-        
-        // Configure URLCache
-        URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
-        URLCache.shared.diskCapacity = 1_000_000_000 // ~1GB disk cache space
-        
-        Task { await viewModel.fetchAll() }
-    }
-    
     var body: some View {
         NavigationSplitView {
             List(selection: $viewModel.selectedRoute) {
@@ -56,7 +46,7 @@ struct AppWrapperView: View {
                 }
                 PlayerView()
             }
-        }.onAppear(perform: onAppear)
+        }.onAppear(perform: viewModel.handleAppear)
             .refreshable {
                 Task { await viewModel.fetchAll() }
             }

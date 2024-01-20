@@ -181,6 +181,47 @@ extension AppDatabase {
             }
         }
         
+        migrator.registerMigration("20240120 - Add plays table") { db in
+            try db.create(table: "play") { table in
+                table.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+                table.column("playedAt", .datetime).notNull()
+                table.column("trackId", .integer).notNull().indexed()
+                table.column("userId", .integer).notNull()
+                table.column("fetchedAt", .datetime).notNull()
+            }
+        }
+        
+        migrator.registerMigration("20240120 - Add playStat views") { db in
+            try db.create(view: "trackPlayStat", asLiteral: """
+                SELECT
+                    trackId,
+                    COUNT(*) as playCount,
+                    MAX(playedAt) as lastPlayed
+                FROM play
+                GROUP BY trackId
+            """)
+            
+            try db.create(view: "albumPlayStat", asLiteral: """
+                SELECT
+                    albumId,
+                    COUNT(*) as playCount,
+                    MAX(playedAt) as lastPlayed
+                FROM play INNER JOIN track ON track.id = play.trackId
+                GROUP BY albumId
+            """)
+
+            try db.create(view: "artistPlayStat", asLiteral: """
+                SELECT
+                    artistId,
+                    COUNT(*) as playCount,
+                    MAX(playedAt) as lastPlayed
+                FROM play INNER JOIN trackArtist ON trackArtist.trackId = play.trackId
+                WHERE trackArtist.hidden IS false
+                GROUP BY artistId
+            """)
+        }
+
+        
         return migrator
     }
 }
@@ -239,6 +280,25 @@ extension AppDatabase {
         try await dbWriter.write { db in
             let count = try Track.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
             print("Deleted \(count) old tracks")
+        }
+    }
+    
+    func savePlay(_ play: Play) async throws {
+        try await self.savePlays([play])
+    }
+    
+    func savePlays(_ plays: [Play]) async throws {
+        try await dbWriter.write { db in
+            try plays.forEach { play in
+                try play.upsert(db)
+            }
+        }
+    }
+    
+    func deleteOldPlays(_ fetchedBefore: Date) async throws {
+        try await dbWriter.write { db in
+            let count = try Play.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
+            print("Deleted \(count) old plays")
         }
     }
 }

@@ -57,4 +57,5 @@ extension Track {
     static let albumFK = ForeignKey(["albumId"], to: ["id"])
     static let album = belongsTo(Album.self, using: albumFK)
     static let trackArtists = hasMany(TrackArtist.self)
+    static let plays = hasMany(Play.self, using: Play.trackFK)
 }
