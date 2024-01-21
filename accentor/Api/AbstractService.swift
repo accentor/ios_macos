@@ -50,6 +50,7 @@ class AbstractService {
                 var request = URLRequest(url: components.url!)
                 request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
                 request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+                request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
                 
                 let session = URLSession(configuration: .default)
                 // TODO: Handle errors in requests
@@ -82,6 +83,7 @@ class AbstractService {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
         request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+        request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
         
         let session = URLSession(configuration: .default)
         let (data, res) = try await session.upload(for: request, from: body)
@@ -132,5 +134,19 @@ class AbstractService {
         formatter.locale = Locale(identifier: "en_US")
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
+    }
+    
+    static var userAgent: String {
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        let systemVersion = ProcessInfo().operatingSystemVersionString
+        
+        #if os(iOS)
+        let os = "iOS"
+        #elseif os(macOS)
+        let os = "macOS"
+        #endif
+        
+        return "Accentor \(appVersion)-\(buildNumber) on \(os) \(systemVersion)"
     }
 }
