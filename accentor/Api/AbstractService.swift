@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 enum ApiError: Error {
+    case unauthorized
     case unknown(String)
 }
 
@@ -50,6 +51,7 @@ class AbstractService {
                 var request = URLRequest(url: components.url!)
                 request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
                 request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+                request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
                 
                 let session = URLSession(configuration: .default)
                 // TODO: Handle errors in requests
@@ -80,18 +82,26 @@ class AbstractService {
         var request = URLRequest(url: components.url!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
-        request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+        if let deviceId = UserDefaults.standard.string(forKey: "deviceId") {
+            request.addValue(deviceId, forHTTPHeaderField: "x-device-id")
+        }
+        if let secret = UserDefaults.standard.string(forKey: "secret") {
+            request.addValue(secret, forHTTPHeaderField: "x-secret")
+        }
+        request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
         
         let session = URLSession(configuration: .default)
         let (data, res) = try await session.upload(for: request, from: body)
 
         let response = res as! HTTPURLResponse
-        
-        if !(200...299).contains(response.statusCode) {
+
+        guard (200...299).contains(response.statusCode) else {
             // TODO: Be smarter about the possible status codes
             print("Error in API")
-            throw ApiError.unknown("Error in api \(response)")
+            switch response.statusCode {
+            case 401: throw ApiError.unauthorized
+            default: throw ApiError.unknown("Error in api \(response)")
+            }
         }
 
         return data
@@ -132,5 +142,24 @@ class AbstractService {
         formatter.locale = Locale(identifier: "en_US")
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
+    }
+    
+    static var userAgent: String {
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        #if DEBUG
+        let buildNumber = "debug"
+        #else
+        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        #endif
+        
+        let systemVersion = ProcessInfo().operatingSystemVersionString
+        
+        #if os(iOS)
+        let os = "iOS"
+        #elseif os(macOS)
+        let os = "macOS"
+        #endif
+        
+        return "Accentor \(appVersion)-\(buildNumber) on \(os) \(systemVersion)"
     }
 }
