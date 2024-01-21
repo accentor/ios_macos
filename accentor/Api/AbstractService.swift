@@ -13,52 +13,65 @@ enum ApiError: Error {
 }
 
 class AbstractService {
-    public static let shared = AbstractService()
-    
-    func index(path: String, completion: @escaping (Data) async -> ()) async {
-        var currentPage = 1
-        var totalPages = 1
+    struct Index: AsyncSequence {
+        typealias AsyncIterator = IndexIterator
+        typealias Element = Data
         
-        while (currentPage <= totalPages) {
-            do {
-                let (data, total) = try await self.fetchPage(page: currentPage, path: path)
-                totalPages = total
-                await completion(data)
-            } catch {
-                print("Error fetching data", error)
+        let path: String
+
+        struct IndexIterator: AsyncIteratorProtocol {
+            let path: String
+            var currentPage = 1
+
+
+            mutating func next() async -> Data? {
+                guard !Task.isCancelled else {
+                     return nil
+                 }
+
+                let data = try! await self.fetchPage()
+
+                guard !data.isEmpty else {
+                    return nil
+                }
+                
+                currentPage += 1
+                return data
             }
             
-            currentPage = currentPage + 1
-        }
-    }
-    
-    private func fetchPage(page: Int, path: String) async throws -> (Data, Int) {
-        var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
-        components.path = "/api/" + path
-        
-        components.queryItems = [
-            URLQueryItem(name: "page", value: String(page))
-        ]
-        
-        var request = URLRequest(url: components.url!)
-        request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
-        request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
-        
-        let session = URLSession(configuration: .default)
-        // TODO: Handle errors in requests
-        let (data, res) = try await session.data(for: request)
-        let response = res as! HTTPURLResponse
-        
-        if response.statusCode != 200 {
-            // TODO: Be smarter about the possible status codes
-            print("Error in API")
-            throw ApiError.unknown("Error in api \(response)")
+            private func fetchPage() async throws -> Data {
+                var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
+                components.path = "/api/" + path
+                
+                components.queryItems = [
+                    URLQueryItem(name: "page", value: String(currentPage))
+                ]
+                
+                var request = URLRequest(url: components.url!)
+                request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
+                request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+                
+                let session = URLSession(configuration: .default)
+                // TODO: Handle errors in requests
+                let (data, res) = try await session.data(for: request)
+                let response = res as! HTTPURLResponse
+                
+                if response.statusCode != 200 {
+                    // TODO: Be smarter about the possible status codes
+                    print("Error in API")
+                    throw ApiError.unknown("Error in api \(response)")
+                }
+                
+                return data
+            }
         }
 
-        let totalPages = Int(response.value(forHTTPHeaderField: "x-total-pages")!) ?? 0
-        
-        return (data, totalPages)
+        func makeAsyncIterator() -> IndexIterator {
+            return IndexIterator(path: path)
+        }
     }
+
+    public static let shared = AbstractService()
     
     func create(path: String, body: Data) async throws -> (Data) {
         var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!

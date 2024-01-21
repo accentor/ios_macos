@@ -16,7 +16,6 @@ struct APIPlayBodyWrapper: Codable {
     let play: APIPlayBody
 }
 
-
 struct PlayService {
     static let apiPath = "plays"
     let database: AppDatabase
@@ -27,16 +26,26 @@ struct PlayService {
     
     func index() async {
         let startLoading = Date()
+        var count = 0
+        var buffer: [Play] = []
         
-        await AbstractService.shared.index(path: PlayService.apiPath) { jsonData in
+        for await data in AbstractService.Index(path: PlayService.apiPath) {
             do {
-                let plays = try AbstractService.jsonDecoder.decode([Play].self, from: jsonData)
-                try await self.database.savePlays(plays)
-            }  catch {
-                print("Error decoding or saving plays", error)
+                let plays = try AbstractService.jsonDecoder.decode([Play].self, from: data)
+                buffer.append(contentsOf: plays)
+            } catch {
+                print("Error decoding plays", error)
+            }
+            
+            count += 1
+            if count >= 5 {
+                try! await self.database.savePlays(buffer)
+                buffer = []
+                count = 0
             }
         }
         
+        try! await self.database.savePlays(buffer)
         try! await database.deleteOldPlays(startLoading)
     }
     

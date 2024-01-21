@@ -17,16 +17,27 @@ struct AlbumService {
     
     func index() async {
         let startLoading = Date()
+        var count = 0
+        var buffer: [APIAlbum] = []
 
-        await AbstractService.shared.index(path: AlbumService.apiPath, completion: { jsonData in
+        for await data in AbstractService.Index(path: AlbumService.apiPath) {
             do {
-                let albums = try AbstractService.jsonDecoder.decode([APIAlbum].self, from: jsonData)
-                await self.saveAlbums(apiAlbums: albums)
+                let albums = try AbstractService.jsonDecoder.decode([APIAlbum].self, from: data)
+                buffer.append(contentsOf: albums)
+                
             } catch {
                 print("Error decoding albums", error)
             }
-        })
+            
+            count += 1
+            if count >= 5 {
+                await saveAlbums(apiAlbums: buffer)
+                buffer = []
+                count = 0
+            }
+        }
         
+        await saveAlbums(apiAlbums: buffer)
         try! await database.deleteOldAlbums(startLoading)
     }
     

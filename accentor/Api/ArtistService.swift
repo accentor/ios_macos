@@ -8,7 +8,7 @@
 import Foundation
 
 struct ArtistService {
-    let apiPath = "artists"
+    static let apiPath = "artists"
     let database: AppDatabase
 
     init(_ db: AppDatabase) {
@@ -17,16 +17,27 @@ struct ArtistService {
 
     func index() async {
         let startLoading = Date()
+        var count = 0
+        var buffer: [APIArtist] = []
         
-        await AbstractService.shared.index(path: apiPath, completion: { jsonData in
+        for await data in AbstractService.Index(path: ArtistService.apiPath) {
             do {
-                let artists = try AbstractService.jsonDecoder.decode([APIArtist].self, from: jsonData)
-                await self.saveArtists(apiArtists: artists)
+                let artists = try AbstractService.jsonDecoder.decode([APIArtist].self, from: data)
+                buffer.append(contentsOf: artists)
+                
             } catch {
                 print("Error decoding artists", error)
             }
-        })
+            
+            count += 1
+            if count >= 5 {
+                await saveArtists(apiArtists: buffer)
+                buffer = []
+                count = 0
+            }
+        }
         
+        await saveArtists(apiArtists: buffer)
         try! await database.deleteOldArtists(startLoading)
     }
     
