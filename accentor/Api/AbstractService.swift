@@ -23,24 +23,25 @@ class AbstractService {
         struct IndexIterator: AsyncIteratorProtocol {
             let path: String
             var currentPage = 1
+            var totalPages = 1
 
 
             mutating func next() async -> Data? {
                 guard !Task.isCancelled else {
                      return nil
-                 }
-
-                let data = try! await self.fetchPage()
-
-                guard !data.isEmpty else {
+                }
+                guard currentPage <= totalPages else {
                     return nil
                 }
+
+                let (data, response) = try! await self.fetchPage()
+                totalPages = Int(response.value(forHTTPHeaderField: "x-total-pages")!) ?? 0
                 
                 currentPage += 1
                 return data
             }
             
-            private func fetchPage() async throws -> Data {
+            private func fetchPage() async throws -> (Data, HTTPURLResponse) {
                 var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
                 components.path = "/api/" + path
                 
@@ -64,7 +65,7 @@ class AbstractService {
                     throw ApiError.unknown("Error in api \(response)")
                 }
                 
-                return data
+                return (data, response)
             }
         }
 
