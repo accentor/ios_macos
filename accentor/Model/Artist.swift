@@ -78,6 +78,13 @@ extension DerivableRequest<Artist> {
     
     /// Order by a random seed
     func orderByRandomSeed(seed: Int) -> Self {
+        // NOTE: iOS' default sqlite version does not have support for the math functions
+        // We should look into adding a custom version of sqlite to enable this
+        // See: <https://github.com/groue/GRDB.swift/blob/master/Documentation/CustomSQLiteBuilds.md>
+        #if os(iOS)
+        order(sql: "random()", arguments: [])
+        #else
         order(sql: "sin(id + ?)", arguments: [seed])
+        #endif
     }
 }
