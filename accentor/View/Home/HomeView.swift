@@ -75,7 +75,7 @@ struct HomeView: View {
                 Section("Random albums") {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 5) {
-                            ForEach(viewModel.recentlyAddedAlbums.shuffled()) { item in
+                            ForEach(viewModel.randomAlbums) { item in
                                 AlbumCard(id: item.id).frame(width: 200)
                             }
                         }
@@ -84,7 +84,7 @@ struct HomeView: View {
                 Section("Random artists") {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 5) {
-                            ForEach(viewModel.recentlyAddedArtists.shuffled()) { artist in
+                            ForEach(viewModel.randomArtists) { artist in
                                 ArtistCard(artist: artist).frame(width: 200)
                             }
                         }
