@@ -8,58 +8,37 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var serverURL: String = ""
-    @State var username: String = ""
-    @State var password: String = ""
     @StateObject var viewModel = LoginViewModel()
-
+    
     var body: some View {
-        VStack {
-            Text("Log in to accentor").font(.largeTitle).fontWeight(.semibold).padding(.bottom, 20)
-            TextField("Server URL", text: $serverURL).padding()
-                #if os(iOS)
-                .textInputAutocapitalization(.never)
-                #endif
-                .disableAutocorrection(true)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(lineWidth: 2.0)
-                )
-                .padding(.bottom, 20)
-            TextField("Username", text: $username).padding()
-                #if os(iOS)
-                .textInputAutocapitalization(.never)
-                #endif
-                .disableAutocorrection(true)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(lineWidth: 2.0)
-                )
-                .padding(.bottom, 20)
-            SecureField("Password", text: $password).padding()
-                .border(.secondary)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(lineWidth: 2.0)
-                )
-                .padding(.bottom, 20)
+        ZStack {
+            Form {
+                Section(header: Text("Sign in to accentor")) {
+                    TextField("Server URL", text: $viewModel.serverURL)
+#if os(iOS)
+                        .textInputAutocapitalization(.never)
+#endif
+                        .disableAutocorrection(true)
+                    TextField("Username", text: $viewModel.username)
+#if os(iOS)
+                        .textInputAutocapitalization(.never)
+#endif
+                    SecureField("Password", text: $viewModel.password)
+                }
+                Section {
+                    Button(action: { Task { await viewModel.login() }}) {
+                        Text("Sign in")
+                    }.disabled(!viewModel.canSubmit)
+                }
+            }.alert(isPresented: viewModel.showAlert) {
+                Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: .default(Text("OK")))
+            }.disabled(viewModel.loginState == .waiting)
             
-            switch viewModel.loginState {
-            case .success: Text("Login succeeded!").font(.headline).foregroundColor(.green)
-            case .serverURLIncorrect: Text("Not a valid server url").foregroundColor(.red)
-            case .usernamePasswordIncorrect: Text("Username and password were not correct. Try again.").foregroundColor(.red)
-            case .waiting: Text("")
+            if viewModel.loginState == .waiting {
+                ProgressView()
             }
-            
-            Button(action: { viewModel.login(serverURL: serverURL, username: username, password: password) }) {
-                Text("Login").font(.title3).padding(15.0)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10.0)
-                            .stroke(lineWidth: 2.0)
-                    )
-            }
-            
-        }.padding(20)
+        }
+        
     }
 }
 

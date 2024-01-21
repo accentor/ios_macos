@@ -9,35 +9,63 @@ import Foundation
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
-    @Published var loginState: LoginStates = .waiting
+    enum LoginStates: Equatable {
+        case userInput
+        case waiting
+        case success
+        case serverURLIncorrect
+        case usernamePasswordIncorrect
+    }
     
-    func login(serverURL: String, username: String, password: String) {
-        // Reset state
-        self.loginState = .waiting
+    @Published var loginState: LoginStates = .userInput
+    @Published var serverURL: String = ""
+    @Published var username: String = ""
+    @Published var password: String = ""
+
+    var errorMessage: String? {
+        get {
+            switch loginState {
+            case .serverURLIncorrect:
+                "The server url is not correct"
+            case .usernamePasswordIncorrect:
+                "Username and password don't match"
+            default: nil
+            }
+        }
+    }
+
+    var showAlert: Binding<Bool> {
+        Binding(get: { self.errorMessage != nil }, set: { _ in self.loginState = .userInput })
+    }
+    
+    var canSubmit: Bool {
+        get {
+            !serverURL.isEmpty && !username.isEmpty && !password.isEmpty
+        }
+    }
+    
+    func login() async {
+        DispatchQueue.main.sync {
+            self.loginState = .waiting
+        }
+
         let url = URL(string: serverURL)
         UserDefaults.standard.set(url, forKey: "serverURL")
         
-        AuthService.shared.login(username: username, password: password, completion: {(response, error) in
-            guard let response = response, error == nil else {
-                DispatchQueue.main.async {
-                    self.loginState = .usernamePasswordIncorrect
-                }
-                return
-            }
-            
-            UserDefaults.standard.set(response.deviceId, forKey: "deviceId")
-            UserDefaults.standard.set(response.secret, forKey: "secret")
-            UserDefaults.standard.set(response.userId, forKey: "userId")
+        do {
+            try await AuthService.shared.login(username: username, password: password)
+
             DispatchQueue.main.async {
                 self.loginState = .success
             }
-        })
+        } catch ApiError.unauthorized {
+            DispatchQueue.main.sync {
+                self.loginState = .usernamePasswordIncorrect
+            }
+        } catch {
+            DispatchQueue.main.sync {
+                self.loginState = .serverURLIncorrect
+            }
+        }
     }
-}
-
-enum LoginStates: Equatable {
-    case waiting
-    case success
-    case serverURLIncorrect
-    case usernamePasswordIncorrect
 }

@@ -19,38 +19,20 @@ struct APILoginResponse: Decodable {
 }
 
 struct AuthService {
+    static let apiPath = "auth_tokens"
     public static let shared = AuthService()
 
-    func login(username: String, password: String, completion: @escaping (APILoginResponse?, Error?) -> Void) {
+    func login(username: String, password: String) async throws {
         let body = APILoginBody(name: username, password: password)
-        guard let uploadData = try? JSONEncoder().encode(body) else {
-            return
-        }
+        let uploadData = try! AbstractService.jsonEncoder.encode(body)
         
-        var components = URLComponents(url: UserDefaults.standard.url(forKey: "serverURL")!, resolvingAgainstBaseURL: true)!
-        components.path = "/api/auth_tokens"
-        
-        var request = URLRequest(url: components.url!)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Accentor for iOS/macOS", forHTTPHeaderField: "user-agent")
+        let response = try await AbstractService.shared.create(path: AuthService.apiPath, body: uploadData)
 
-        let task = URLSession.shared.uploadTask(with: request, from: uploadData) { (data, response, error) in
-            if let error = error {
-                completion(nil, error)
-            }
-            
-            if let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) {
-                completion(nil, error)
-            }
-            
-            if let data = data {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let parsedData = try? decoder.decode(APILoginResponse.self, from: data)
-                completion(parsedData, nil)
-            }
-        }
-        task.resume()
+
+        let data = try AbstractService.jsonDecoder.decode(APILoginResponse.self, from: response)
+        
+        UserDefaults.standard.set(data.deviceId, forKey: "deviceId")
+        UserDefaults.standard.set(data.secret, forKey: "secret")
+        UserDefaults.standard.set(data.userId, forKey: "userId")
     }
 }
