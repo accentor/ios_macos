@@ -25,9 +25,8 @@ struct AlbumsView: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(viewModel.albumIds, id: \.self) { albumId in AlbumCard(id: albumId) }
-            }.toolbar {
-                TextField("Search", text: $viewModel.searchTerm)
             }
         }.navigationTitle("Albums")
+         .searchable(text: $viewModel.searchTerm)
     }
 }

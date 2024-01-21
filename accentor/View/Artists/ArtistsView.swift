@@ -34,11 +34,8 @@ struct ArtistsView: View {
                 }
             }.navigationDestination(for: Artist.self) { artist in
                 ArtistView(id: artist.id)
-            }.toolbar {
-                TextField("Search", text: $viewModel.searchTerm)
             }
-
         }.navigationTitle("Artists")
-            
+        .searchable(text: $viewModel.searchTerm)
     }
 }
