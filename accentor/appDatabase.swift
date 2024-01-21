@@ -63,8 +63,7 @@ extension AppDatabase {
 
         // Log SQL statements if the `SQL_TRACE` environment variable is set.
         // See <https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/database/trace(options:_:)>
-        //if ProcessInfo.processInfo.environment["SQL_TRACE"] != nil {
-        if true {
+        if ProcessInfo.processInfo.environment["SQL_TRACE"] != nil {
             config.prepareDatabase { db in
                 db.trace {
                     // It's ok to log statements publicly. Sensitive
