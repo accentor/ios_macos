@@ -102,4 +102,9 @@ extension DerivableRequest<Album> {
         let statAlias = TableAlias()
         return joining(required: Album.playStat.aliased(statAlias)).order(statAlias[AlbumPlayStat.Columns.lastPlayed.desc])
     }
+    
+    /// Order by a random seed
+    func orderByRandomSeed(seed: Int) -> Self {
+        order(sql: "sin(id + ?)", arguments: [seed])
+    }
 }

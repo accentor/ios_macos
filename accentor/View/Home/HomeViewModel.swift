@@ -16,12 +16,16 @@ final class HomeViewModel: ObservableObject {
     @Published private(set) var onThisDay: [Album] = []
     @Published private(set) var recentlyAddedArtists: [Artist] = []
     @Published private(set) var recentlyPlayedArtists: [Artist] = []
+    @Published private(set) var randomAlbums: [Album] = []
+    @Published private(set) var randomArtists: [Artist] = []
     
     private let database: AppDatabase
+    private let randomSeed: Int
     private var cancellables: Set<AnyCancellable> = []
     
     init(database: AppDatabase) {
         self.database = database
+        self.randomSeed = Int.random(in: 1..<10000)
         
         self.fetchRecentlyPlayedAlbums()
         self.fetchRecentlyPlayedArtists()
@@ -29,6 +33,8 @@ final class HomeViewModel: ObservableObject {
         self.fetchRecentlyReleased()
         self.fetchOnThisDay()
         self.fetchRecentlyAddedArtists()
+        self.fetchRandomAlbums()
+        self.fetchRandomArtists()
     }
     
     private func fetchRecentlyPlayedAlbums() {
@@ -104,4 +110,25 @@ final class HomeViewModel: ObservableObject {
                 }).store(in: &cancellables)
     }
     
+    private func fetchRandomAlbums() {
+        ValueObservation
+            .tracking(Album.all().orderByRandomSeed(seed: randomSeed).fetchAll)
+            .publisher(in: database.reader, scheduling: .async(onQueue: DispatchQueue.main))
+            .sink(
+                receiveCompletion: { _ in /* ignore error */ },
+                receiveValue: { [weak self] albums in
+                    self?.randomAlbums = albums
+                }).store(in: &cancellables)
+    }
+    
+    private func fetchRandomArtists() {
+        ValueObservation
+            .tracking(Artist.all().orderByRandomSeed(seed: randomSeed).fetchAll)
+            .publisher(in: database.reader, scheduling: .async(onQueue: DispatchQueue.main))
+            .sink(
+                receiveCompletion: { _ in /* ignore error */ },
+                receiveValue: { [weak self] artists in
+                    self?.randomArtists = artists
+                }).store(in: &cancellables)
+    }
 }
