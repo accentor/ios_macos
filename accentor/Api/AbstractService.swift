@@ -146,7 +146,12 @@ class AbstractService {
     
     static var userAgent: String {
         let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        #if DEBUG
+        let buildNumber = "debug"
+        #else
         let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        #endif
+        
         let systemVersion = ProcessInfo().operatingSystemVersionString
         
         #if os(iOS)
