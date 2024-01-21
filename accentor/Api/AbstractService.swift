@@ -25,9 +25,13 @@ class AbstractService {
 
 
             mutating func next() async -> Data? {
+                guard !Task.isCancelled else {
+                     return nil
+                 }
+
                 let data = try! await self.fetchPage()
 
-                if data.isEmpty {
+                guard !data.isEmpty else {
                     return nil
                 }
                 
