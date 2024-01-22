@@ -209,8 +209,7 @@ extension Player {
         guard playerState != .stopped else { return }
         
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-        nowPlayingInfoCenter.nowPlayingInfo = constructNowPlaying()
-
+        nowPlayingInfoCenter.nowPlayingInfo = constructNowPlaying(nil)
     }
     
     private func handlePlaybackChange() {
@@ -219,7 +218,7 @@ extension Player {
         guard let currentItem = player.currentItem, currentItem.status == .readyToPlay else { return }
         
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? constructNowPlaying()
+        var nowPlayingInfo = constructNowPlaying(nowPlayingInfoCenter.nowPlayingInfo)
         
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Float(currentItem.currentTime().seconds)
         nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
@@ -228,8 +227,8 @@ extension Player {
         Task { await self.setNowPlayingArtwork() }
     }
     
-    private func constructNowPlaying() -> [String: Any] {
-        var nowPlayingInfo = [String: Any]()
+    private func constructNowPlaying(_ nowPlayingInfo: [String: Any]?) -> [String: Any] {
+        var nowPlayingInfo = nowPlayingInfo ?? [String: Any]()
         
         // Always set type to music
         nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = MPMediaType.music.rawValue
@@ -255,7 +254,7 @@ extension Player {
         guard let image = await imageRepository.getImage(imageURL: imageURL) else { return }
 
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? constructNowPlaying()
+        var nowPlayingInfo = constructNowPlaying(nowPlayingInfoCenter.nowPlayingInfo)
 
         nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
 
