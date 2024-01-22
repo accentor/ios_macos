@@ -14,7 +14,7 @@ struct accentorApp: App {
     var body: some Scene {
         WindowGroup {
             if (userId != nil) {
-                AppWrapperView().environment(\.appDatabase, .shared).environment(\.player, .shared)
+                AppWrapperView()
             } else {
                 LoginView()
             }
@@ -36,6 +36,7 @@ struct accentorApp: App {
                 })
             }
         }
+        .environment(\.appDatabase, .shared).environment(\.player, .shared)
     }
 }
 
