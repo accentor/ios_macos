@@ -18,14 +18,16 @@ struct AlbumsView: View {
     }
     
     let columns = [
-        GridItem(.adaptive(minimum: 130))
+        GridItem(.adaptive(minimum: 162, maximum: 252))
     ]
     
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(viewModel.albumIds, id: \.self) { albumId in AlbumCard(id: albumId) }
-            }
+                ForEach(viewModel.albumIds, id: \.self) { albumId in
+                    AlbumCard(id: albumId)
+                }
+            }.padding(EdgeInsets(top: 20, leading: 30, bottom: 20, trailing: 30))
         }.navigationTitle("Albums")
          .searchable(text: $viewModel.searchTerm)
     }
