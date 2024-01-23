@@ -31,19 +31,22 @@ struct AppWrapperView: View {
             }.navigationTitle("Accentor")
         } detail: {
             ZStack(alignment: .bottom) {
-                switch viewModel.selectedRoute {
-                case .albums:
-                    AlbumsView().padding([.bottom], 65)
-                case .artists:
-                    ArtistsView().padding([.bottom], 65)
-                case .home:
-                    HomeView().padding([.bottom], 65)
-//                case .tracks:
-//                    Tracks().padding([.bottom], 65)
-                default:
-                    HomeView()
-                    
-                }
+                HStack {
+                    switch viewModel.selectedRoute {
+                    case .albums:
+                        AlbumsView()
+                    case .artists:
+                        ArtistsView()
+                    case .home:
+                        HomeView()
+    //                case .tracks:
+    //                    Tracks()
+                    default:
+                        HomeView()
+                        
+                    }
+                }.background(.white)
+                
                 PlayerView()
             }
         }.onAppear(perform: viewModel.handleAppear)
