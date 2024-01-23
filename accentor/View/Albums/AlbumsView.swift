@@ -27,7 +27,7 @@ struct AlbumsView: View {
                 ForEach(viewModel.albumIds, id: \.self) { albumId in
                     AlbumCard(id: albumId)
                 }
-            }.padding(EdgeInsets(top: 20, leading: 30, bottom: 20, trailing: 30))
+            }.padding(EdgeInsets(top: 20, leading: 30, bottom: 65, trailing: 30))
         }.navigationTitle("Albums")
          .searchable(text: $viewModel.searchTerm)
     }
