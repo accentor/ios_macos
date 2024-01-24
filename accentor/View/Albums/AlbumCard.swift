@@ -26,11 +26,11 @@ struct AlbumCard: View {
                             Image(systemName: "music.note").font(.largeTitle)
                         }
                     }.scaledToFill()
-                    .clipped()
-                    .frame(width: geometry.size.width, height: geometry.size.width)
+                        .clipped()
+                        .frame(width: geometry.size.width, height: geometry.size.width)
                     
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                    .shadow(radius: 6, x: -3, y: 3)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .shadow(radius: 6, x: -3, y: 3)
                     
                 }.frame(maxWidth: .infinity).aspectRatio(1, contentMode: .fit)
                 VStack(alignment: .leading) {
