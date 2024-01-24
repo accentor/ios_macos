@@ -15,12 +15,15 @@ final class AlbumCardViewModel: ObservableObject {
         var albumArtists: [AlbumArtist]
     }
     @Published private(set) var albumInfo: AlbumInfo?
+    @Published var isHovered: Bool = false
     
     private var observationCancellable: AnyCancellable?
     private let database: AppDatabase
+    private let player: Player
     
-    init(database: AppDatabase, id: Album.ID) {
+    init(database: AppDatabase, player: Player, id: Album.ID) {
         self.database = database
+        self.player = player
         self.observationCancellable = ValueObservation
             .tracking(Album.filter(key: id).including(all: Album.albumArtists).asRequest(of: AlbumInfo.self).fetchOne)
             .publisher(in: database.reader, scheduling: .immediate)
@@ -31,12 +34,17 @@ final class AlbumCardViewModel: ObservableObject {
                 })
     }
     
-    func queueAlbum() async {
+    func queueAlbum(replace: Bool = true, position: PlayQueue.QueueItemPosition = .last, shuffled: Bool = false) {
         guard let album = albumInfo?.album else { return }
 
-        let tracks = try! await self.database.reader.read { db in
-            try album.tracks.order(Column("number")).fetchAll(db)
+        Task {
+            let tracks = try! await self.database.reader.read { db in
+                try album.tracks.order(literal: shuffled ? "RANDOM()" : "number").fetchAll(db)
+            }
+            
+            
+            
+            player.playQueue.addTracksToQueue(tracks: tracks, position: position, replace: replace)
         }
-        PlayQueue.shared.addTracksToQueue(tracks: tracks, replace: true)
     }
 }

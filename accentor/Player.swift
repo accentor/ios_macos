@@ -42,7 +42,7 @@ class Player: ObservableObject {  // Possible values of `playerState`
     }
     @Published private(set) var playingTrackInfo: TrackInfo?
 
-    private let playQueue: PlayQueue
+    let playQueue: PlayQueue
     private let database: AppDatabase
     private let playService: PlayService
     private var player: AVPlayer = AVPlayer()

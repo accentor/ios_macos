@@ -26,6 +26,7 @@ struct PlayerView: View {
                         #else
                         .background(NSBlur())
                         #endif
+                        .shadow(radius: 4, x: 0, y: -1)
             HStack {
                 Button(action: {}) {
                     HStack {
