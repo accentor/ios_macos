@@ -43,9 +43,10 @@ struct AlbumCard: View {
                 }.truncationMode(.tail).font(.system(size: 12))
                 
                 Spacer()
-            }.onTapGesture {
-                viewModel.queueAlbum()
-            }.padding(.horizontal, 6)
+            }.padding([.horizontal, .top], 6)
+                .contextMenu(menuItems: {
+                    ContextActions(viewModel: viewModel)
+                })
         } else {
             ProgressView()
         }
@@ -60,7 +61,7 @@ struct AlbumCard: View {
                     HStack(alignment: .bottom, content: {
                         PlayButton(viewModel: viewModel)
                         Spacer()
-                        ContextActions(viewModel: viewModel)
+                        ContextButton(viewModel: viewModel)
                     })
                 }.padding(10)
             }
@@ -88,16 +89,14 @@ struct AlbumCard: View {
         }
     }
     
-    struct ContextActions: View {
+    struct ContextButton: View {
         @State var isHovered: Bool = false
         let viewModel: AlbumCardViewModel
         
+        
         var body: some View {
             Menu {
-                Button("Play “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum() })
-                Button("Shuffle “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum(shuffled: true) })
-                Button("Play next", action:  { viewModel.queueAlbum(replace: false, position: .next) })
-                Button("Play last", action: { viewModel.queueAlbum(replace: false, position: .last) })
+                ContextActions(viewModel: viewModel)
             } label: {
                 ZStack {
                     Circle().fill(isHovered ? Color.accentColor : Color(white: 0, opacity: 0.25)).frame(width: 30, height: 30)
@@ -109,6 +108,17 @@ struct AlbumCard: View {
                     self.isHovered = hovering
                 })
             }.buttonStyle(.plain)
+        }
+    }
+    
+    struct ContextActions: View {
+        let viewModel: AlbumCardViewModel
+        
+        var body: some View {
+            Button("Play “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum() })
+            Button("Shuffle “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum(shuffled: true) })
+            Button("Play next", action:  { viewModel.queueAlbum(replace: false, position: .next) })
+            Button("Play last", action: { viewModel.queueAlbum(replace: false, position: .last) })
         }
     }
 }
