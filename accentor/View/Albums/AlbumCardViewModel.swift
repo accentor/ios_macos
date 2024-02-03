@@ -34,17 +34,19 @@ final class AlbumCardViewModel: ObservableObject {
                 })
     }
     
-    func queueAlbum(replace: Bool = true, position: PlayQueue.QueueItemPosition = .last, shuffled: Bool = false) {
-        guard let album = albumInfo?.album else { return }
-
-        Task {
-            let tracks = try! await self.database.reader.read { db in
-                try album.tracks.order(literal: shuffled ? "RANDOM()" : "number").fetchAll(db)
-            }
-            
-            
-            
-            player.playQueue.addTracksToQueue(tracks: tracks, position: position, replace: replace)
-        }
+    func playAlbum() {
+        albumInfo?.album.queue(database: database, playQueue: player.playQueue)
+    }
+    
+    func shuffleAlbum() {
+        albumInfo?.album.queue(.shuffle, database: database, playQueue: player.playQueue)
+    }
+    
+    func playNext() {
+        albumInfo?.album.queue(.playNext, database: database, playQueue: player.playQueue)
+    }
+    
+    func playLast() {
+        albumInfo?.album.queue(.playLast, database: database, playQueue: player.playQueue)
     }
 }

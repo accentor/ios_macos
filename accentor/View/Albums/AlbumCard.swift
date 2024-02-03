@@ -74,7 +74,7 @@ struct AlbumCard: View {
         let viewModel: AlbumCardViewModel
         
         var body: some View {
-            Button(action: { viewModel.queueAlbum() }, label: {
+            Button(action: viewModel.playAlbum, label: {
                 ZStack {
                     Circle().fill(isHovered ? Color.accentColor : Color(white: 0, opacity: 0.25)).frame(width: 30, height: 30)
                     Label("Play", systemImage: "play.fill")
@@ -115,10 +115,10 @@ struct AlbumCard: View {
         let viewModel: AlbumCardViewModel
         
         var body: some View {
-            Button("Play “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum() })
-            Button("Shuffle “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum(shuffled: true) })
-            Button("Play next", action:  { viewModel.queueAlbum(replace: false, position: .next) })
-            Button("Play last", action: { viewModel.queueAlbum(replace: false, position: .last) })
+            Button("Play “\(viewModel.albumInfo!.album.title)”", action: viewModel.playAlbum)
+            Button("Shuffle “\(viewModel.albumInfo!.album.title)”", action: viewModel.shuffleAlbum)
+            Button("Play next", action:  viewModel.playNext)
+            Button("Play last", action: viewModel.playLast)
         }
     }
 }
