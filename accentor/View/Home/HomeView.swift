@@ -20,78 +20,50 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Recently released albums")
+                AlbumsSection(title: "Recently released albums", albums: viewModel.recentlyReleasedAlbums)
+                AlbumsSection(title: "Recently added albums", albums: viewModel.recentlyAddedAlbums)
+                AlbumsSection(title: "On this day", albums: viewModel.onThisDay)
+                AlbumsSection(title: "Recently played albums", albums: viewModel.recentlyPlayedAlbums)
+                ArtistsSection(title: "Recently added artists", artists: viewModel.recentlyAddedArtists)
+                ArtistsSection(title: "Recently played artists", artists: viewModel.recentlyPlayedArtists)
+                AlbumsSection(title: "Random albums", albums: viewModel.randomAlbums)
+                ArtistsSection(title: "Random artists", artists: viewModel.randomArtists)
+            }
+        }.padding().navigationTitle("Home")
+    }
+    
+    struct ArtistsSection: View {
+        let title: String
+        let artists: [Artist]
+        
+        var body: some View {
+            Section(title) {
                 ScrollView(.horizontal) {
-                    LazyHStack(spacing: 5) {
-                        ForEach(viewModel.recentlyReleasedAlbums) { item in
-                            AlbumCard(id: item.id).frame(width: 200)
-                        }
-                    }
-                }
-                Text("Recently added albums")
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: 5) {
-                        ForEach(viewModel.recentlyAddedAlbums) { item in
-                            AlbumCard(id: item.id).frame(width: 200)
-                        }
-                    }
-                }
-                Section("On this day") {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.onThisDay) { item in
-                                AlbumCard(id: item.id).frame(width: 200)
-                            }
-                        }
-                    }
-                }
-                Section("Recently played albums") {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.recentlyPlayedAlbums) { album in
-                                AlbumCard(id: album.id).frame(width: 200)
-                            }
-                        }
-                    }
-                }
-                Section("Recently added artists") {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.recentlyAddedArtists) { artist in
-                                ArtistCard(artist: artist).frame(width: 200)
-                            }
-                        }
-                    }
-                }
-                Section("Recently played artists") {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.recentlyPlayedArtists) { artist in
-                                ArtistCard(artist: artist).frame(width: 200)
-                            }
-                        }
-                    }
-                }
-                Section("Random albums") {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.randomAlbums) { item in
-                                AlbumCard(id: item.id).frame(width: 200)
-                            }
-                        }
-                    }
-                }
-                Section("Random artists") {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.randomArtists) { artist in
-                                ArtistCard(artist: artist).frame(width: 200)
-                            }
+                    LazyHStack {
+                        ForEach(artists) { item in
+                            ArtistCard(artist: item).frame(width: 200)
                         }
                     }
                 }
             }
-        }.padding().navigationTitle("Home")
+        }
+    }
+    
+    struct AlbumsSection: View {
+        let title: String
+        let albums: [Album]
+        
+        var body: some View {
+            Section(title) {
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(albums) { item in
+                            AlbumCard(id: item.id).frame(width: 200)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
