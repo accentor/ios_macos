@@ -41,7 +41,7 @@ struct HomeView: View {
                 ScrollView(.horizontal) {
                     LazyHStack {
                         ForEach(artists) { item in
-                            ArtistCard(artist: item).frame(width: 200, height: 250)
+                            ArtistCard(artist: item).frame(width: 200, height: 240)
                         }
                     }
                 }
