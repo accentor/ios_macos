@@ -32,11 +32,12 @@ struct ArtistView: View {
                         }
                         Text(artist.name)
                     }
-                    Text("Albums")
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 5) {
-                            ForEach(viewModel.artistInfo!.albums) { item in
-                                AlbumCard(id: item.id).frame(minWidth: 130, maxWidth: 200)
+                    Section("Albums") {
+                        ScrollView(.horizontal) {
+                            LazyHStack(spacing: 5) {
+                                ForEach(viewModel.artistInfo!.albums) { item in
+                                    AlbumCard(id: item.id).frame(width: 200, height: 250)
+                                }
                             }
                         }
                     }
