@@ -23,17 +23,13 @@ struct ArtistsView: View {
     ]
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(viewModel.artists) { artist in
-                        NavigationLink(value: artist) {
-                            ArtistCard(artist: artist)
-                        }.buttonStyle(PlainButtonStyle())
-                    }
+        ScrollView {
+            LazyVGrid(columns: columns) {
+                ForEach(viewModel.artists) { artist in
+                    NavigationLink(value: artist) {
+                        ArtistCard(artist: artist)
+                    }.buttonStyle(PlainButtonStyle())
                 }
-            }.navigationDestination(for: Artist.self) { artist in
-                ArtistView(id: artist.id)
             }
         }.navigationTitle("Artists")
         .searchable(text: $viewModel.searchTerm)

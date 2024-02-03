@@ -8,6 +8,7 @@
 import Combine
 import GRDB
 import Foundation
+import SwiftUI
 
 final class AppWrapperViewModel: ObservableObject {
     enum Route: Hashable {
@@ -20,6 +21,7 @@ final class AppWrapperViewModel: ObservableObject {
     // NOTE: This will never actually be `nil`, but this is needed to build on iOS
     // Since this initializer isn't available on iOS: <https://developer.apple.com/documentation/swiftui/list/init(selection:content:)-590zm>
     @Published var selectedRoute: Route? = .home
+    @Published var detailsPath = NavigationPath()
     private let database: AppDatabase
 
     init(database: AppDatabase) {

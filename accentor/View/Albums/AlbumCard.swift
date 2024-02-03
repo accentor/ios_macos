@@ -18,35 +18,38 @@ struct AlbumCard: View {
     }
     var body: some View {
         if let album = viewModel.albumInfo?.album {
-            VStack(alignment: .leading) {
-                GeometryReader { geometry in
-                    CachedImage(imageURL: album.image250) {
-                        ZStack {
-                            Rectangle().fill(.gray)
-                            Image(systemName: "music.note").font(.largeTitle)
-                        }
-                    }.scaledToFill()
-                        .clipped()
-                        .frame(width: geometry.size.width, height: geometry.size.width)
-                    
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                        .shadow(radius: 6, x: -3, y: 3)
-                    
-                }.frame(maxWidth: .infinity).aspectRatio(1, contentMode: .fit)
-                    .overlay(overlay)
-                    .onHover { isHovered in
-                        viewModel.isHovered = isHovered
-                    }
+            NavigationLink(value: album) {
                 VStack(alignment: .leading) {
-                    Text(album.title).lineLimit(2)
-                    Text(AlbumArtist.constructAlbumArtistText(viewModel.albumInfo?.albumArtists)).foregroundColor(.gray).lineLimit(1)
-                }.truncationMode(.tail).font(.system(size: 12))
-                
-                Spacer()
-            }.padding([.horizontal, .top], 6)
-                .contextMenu(menuItems: {
-                    ContextActions(viewModel: viewModel)
-                })
+                    GeometryReader { geometry in
+                        CachedImage(imageURL: album.image250) {
+                            ZStack {
+                                Rectangle().fill(.gray)
+                                Image(systemName: "music.note").font(.largeTitle)
+                            }
+                        }.scaledToFill()
+                            .clipped()
+                            .frame(width: geometry.size.width, height: geometry.size.width)
+                        
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            .shadow(radius: 6, x: -3, y: 3)
+                        
+                    }.frame(maxWidth: .infinity).aspectRatio(1, contentMode: .fit)
+                        .overlay(overlay)
+                        .onHover { isHovered in
+                            viewModel.isHovered = isHovered
+                        }
+                    VStack(alignment: .leading) {
+                        Text(album.title).lineLimit(2)
+                        Text(AlbumArtist.constructAlbumArtistText(viewModel.albumInfo?.albumArtists)).foregroundColor(.gray).lineLimit(1)
+                    }.truncationMode(.tail).font(.system(size: 12))
+                    
+                    Spacer()
+                }.padding([.horizontal, .top], 6)
+                    .contextMenu(menuItems: {
+                        ContextActions(viewModel: viewModel)
+                    })
+            }.buttonStyle(.plain)
+            
         } else {
             ProgressView()
         }

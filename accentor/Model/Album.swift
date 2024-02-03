@@ -8,7 +8,7 @@
 import Foundation
 import GRDB
 
-struct Album: Identifiable, Equatable, Codable, FetchableRecord, PersistableRecord {
+struct Album: Identifiable, Equatable, Hashable, Codable, FetchableRecord, PersistableRecord {
     // Generic properties
     var id: Int64
     var createdAt: Date
