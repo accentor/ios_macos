@@ -18,35 +18,38 @@ struct AlbumCard: View {
     }
     var body: some View {
         if let album = viewModel.albumInfo?.album {
-            VStack(alignment: .leading) {
-                GeometryReader { geometry in
-                    CachedImage(imageURL: album.image250) {
-                        ZStack {
-                            Rectangle().fill(.gray)
-                            Image(systemName: "music.note").font(.largeTitle)
-                        }
-                    }.scaledToFill()
-                        .clipped()
-                        .frame(width: geometry.size.width, height: geometry.size.width)
-                    
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                        .shadow(radius: 6, x: -3, y: 3)
-                    
-                }.frame(maxWidth: .infinity).aspectRatio(1, contentMode: .fit)
-                    .overlay(overlay)
-                    .onHover { isHovered in
-                        viewModel.isHovered = isHovered
-                    }
+            NavigationLink(value: album) {
                 VStack(alignment: .leading) {
-                    Text(album.title).lineLimit(2)
-                    Text(AlbumArtist.constructAlbumArtistText(viewModel.albumInfo?.albumArtists)).foregroundColor(.gray).lineLimit(1)
-                }.truncationMode(.tail).font(.system(size: 12))
-                
-                Spacer()
-            }.padding([.horizontal, .top], 6)
-                .contextMenu(menuItems: {
-                    ContextActions(viewModel: viewModel)
-                })
+                    GeometryReader { geometry in
+                        CachedImage(imageURL: album.image250) {
+                            ZStack {
+                                Rectangle().fill(.gray)
+                                Image(systemName: "music.note").font(.largeTitle)
+                            }
+                        }.scaledToFill()
+                            .clipped()
+                            .frame(width: geometry.size.width, height: geometry.size.width)
+                        
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            .shadow(radius: 6, x: -3, y: 3)
+                        
+                    }.frame(maxWidth: .infinity).aspectRatio(1, contentMode: .fit)
+                        .overlay(overlay)
+                        .onHover { isHovered in
+                            viewModel.isHovered = isHovered
+                        }
+                    VStack(alignment: .leading) {
+                        Text(album.title).lineLimit(2)
+                        Text(AlbumArtist.constructAlbumArtistText(viewModel.albumInfo?.albumArtists)).foregroundColor(.gray).lineLimit(1)
+                    }.truncationMode(.tail).font(.system(size: 12))
+                    
+                    Spacer()
+                }.padding([.horizontal, .top], 6)
+                    .contextMenu(menuItems: {
+                        ContextActions(viewModel: viewModel)
+                    })
+            }.buttonStyle(.plain)
+            
         } else {
             ProgressView()
         }
@@ -74,7 +77,7 @@ struct AlbumCard: View {
         let viewModel: AlbumCardViewModel
         
         var body: some View {
-            Button(action: { viewModel.queueAlbum() }, label: {
+            Button(action: viewModel.playAlbum, label: {
                 ZStack {
                     Circle().fill(isHovered ? Color.accentColor : Color(white: 0, opacity: 0.25)).frame(width: 30, height: 30)
                     Label("Play", systemImage: "play.fill")
@@ -115,10 +118,10 @@ struct AlbumCard: View {
         let viewModel: AlbumCardViewModel
         
         var body: some View {
-            Button("Play “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum() })
-            Button("Shuffle “\(viewModel.albumInfo!.album.title)”", action: { viewModel.queueAlbum(shuffled: true) })
-            Button("Play next", action:  { viewModel.queueAlbum(replace: false, position: .next) })
-            Button("Play last", action: { viewModel.queueAlbum(replace: false, position: .last) })
+            Button("Play “\(viewModel.albumInfo!.album.title)”", action: viewModel.playAlbum)
+            Button("Shuffle “\(viewModel.albumInfo!.album.title)”", action: viewModel.shuffleAlbum)
+            Button("Play next", action:  viewModel.playNext)
+            Button("Play last", action: viewModel.playLast)
         }
     }
 }

@@ -22,13 +22,12 @@ struct AlbumsView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns) {
-                ForEach(viewModel.albumIds, id: \.self) { albumId in
-                    AlbumCard(id: albumId)
-                }
-            }.padding(EdgeInsets(top: 20, leading: 30, bottom: 65, trailing: 30))
-        }.navigationTitle("Albums")
-         .searchable(text: $viewModel.searchTerm)
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(viewModel.albumIds, id: \.self) { albumId in
+                        AlbumCard(id: albumId)
+                    }
+                }.padding(EdgeInsets(top: 20, leading: 30, bottom: 65, trailing: 30))
+            }.searchable(text: $viewModel.searchTerm).navigationTitle("Albums")
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import GRDB
 
-struct Album: Identifiable, Equatable, Codable, FetchableRecord, PersistableRecord {
+struct Album: Identifiable, Equatable, Hashable, Codable, FetchableRecord, PersistableRecord {
     // Generic properties
     var id: Int64
     var createdAt: Date
@@ -113,5 +113,34 @@ extension DerivableRequest<Album> {
         #else
         order(sql: "sin(id + ?)", arguments: [seed])
         #endif
+    }
+}
+
+// MARK: Add to playlist
+extension Album {
+    enum queueOptions {
+        case playNow, shuffle, playNext, playLast
+        
+        var shuffled: Bool {
+            self == .shuffle
+        }
+        
+        var position: PlayQueue.QueueItemPosition {
+            self == .playNext ? .next : .last
+        }
+        
+        var replace: Bool {
+            self == .playNow || self == .shuffle
+        }
+    }
+    
+    func queue(_ mode: queueOptions = .playNow, database: AppDatabase, playQueue: PlayQueue) {
+        Task {
+            let tracks = try! await database.reader.read { db in
+                try self.tracks.order(literal: mode.shuffled ? "RANDOM()" : "number").fetchAll(db)
+            }
+
+            playQueue.addTracksToQueue(tracks: tracks, position: mode.position, replace: mode.replace)
+        }
     }
 }

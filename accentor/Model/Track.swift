@@ -32,6 +32,7 @@ struct Track: Identifiable, Equatable, Codable, FetchableRecord, PersistableReco
         static let id = Column(CodingKeys.id)
         static let title = Column(CodingKeys.title)
         static let normalizedTitle = Column(CodingKeys.normalizedTitle)
+        static let number = Column(CodingKeys.number)
     }
 }
 
@@ -58,4 +59,17 @@ extension Track {
     static let album = belongsTo(Album.self, using: albumFK)
     static let trackArtists = hasMany(TrackArtist.self)
     static let plays = hasMany(Play.self, using: Play.trackFK)
+}
+
+extension Track {
+    var formattedLength: String {
+        get {
+            guard let length = length else {
+                return "--:--"
+            }
+            
+            let pattern: Duration.TimeFormatStyle.Pattern = length >= 3600 ? .hourMinuteSecond : .minuteSecond
+            return Duration.seconds(length).formatted(.time(pattern: pattern))
+        }
+    }
 }

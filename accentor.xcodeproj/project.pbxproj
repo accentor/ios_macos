@@ -19,6 +19,8 @@
 		FD3AA9872B5BFF4600034750 /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3AA9862B5BFF4600034750 /* Play.swift */; };
 		FD405A802B58733D008A3CB3 /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD405A7F2B58733D008A3CB3 /* ArtistsViewModel.swift */; };
 		FD405A822B5877B6008A3CB3 /* ArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD405A812B5877B6008A3CB3 /* ArtistViewModel.swift */; };
+		FD69881F2B61A36C0061FC90 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD69881E2B61A36C0061FC90 /* AlbumView.swift */; };
+		FD6988212B61A3750061FC90 /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6988202B61A3750061FC90 /* AlbumViewModel.swift */; };
 		FDBE6BE72B559B20004F39CA /* appDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBE6BE62B559B20004F39CA /* appDatabase.swift */; };
 		FDBE6BEA2B559B6C004F39CA /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = FDBE6BE92B559B6C004F39CA /* GRDB */; };
 		FDBE6BEC2B55B8B5004F39CA /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBE6BEB2B55B8B5004F39CA /* Album.swift */; };
@@ -54,6 +56,8 @@
 		FDD00CFB2B56DDC8007554F7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CFA2B56DDC8007554F7 /* PlayerView.swift */; };
 		FDD00CFD2B56F1DC007554F7 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CFC2B56F1DC007554F7 /* PlayerViewModel.swift */; };
 		FDD5BD802A064D100011EBF9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD5BD7F2A064D100011EBF9 /* HomeView.swift */; };
+		FDE5E6A02B6D7606006F1853 /* TrackRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE5E69F2B6D7606006F1853 /* TrackRowView.swift */; };
+		FDE5E6A22B6D7612006F1853 /* TrackRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE5E6A12B6D7612006F1853 /* TrackRowViewModel.swift */; };
 		FDFFD6E829113CDE003A1501 /* accentorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E729113CDE003A1501 /* accentorApp.swift */; };
 		FDFFD6EA29113CDE003A1501 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6E929113CDE003A1501 /* Persistence.swift */; };
 		FDFFD6ED29113CDE003A1501 /* accentor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDFFD6EB29113CDE003A1501 /* accentor.xcdatamodeld */; };
@@ -94,6 +98,8 @@
 		FD3AA9862B5BFF4600034750 /* Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
 		FD405A7F2B58733D008A3CB3 /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
 		FD405A812B5877B6008A3CB3 /* ArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewModel.swift; sourceTree = "<group>"; };
+		FD69881E2B61A36C0061FC90 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
+		FD6988202B61A3750061FC90 /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
 		FDBE6BE62B559B20004F39CA /* appDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appDatabase.swift; sourceTree = "<group>"; };
 		FDBE6BEB2B55B8B5004F39CA /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		FDBE6BED2B55BB78004F39CA /* AlbumArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtist.swift; sourceTree = "<group>"; };
@@ -127,6 +133,8 @@
 		FDD00CFA2B56DDC8007554F7 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		FDD00CFC2B56F1DC007554F7 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		FDD5BD7F2A064D100011EBF9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		FDE5E69F2B6D7606006F1853 /* TrackRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRowView.swift; sourceTree = "<group>"; };
+		FDE5E6A12B6D7612006F1853 /* TrackRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRowViewModel.swift; sourceTree = "<group>"; };
 		FDFEA3E729644A80000B9ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FDFFD6E429113CDE003A1501 /* accentor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accentor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFFD6E729113CDE003A1501 /* accentorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accentorApp.swift; sourceTree = "<group>"; };
@@ -221,6 +229,7 @@
 		FDCC757729646D310079B983 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FDE5E69E2B6D75F4006F1853 /* TrackRow */,
 				FDD5BD7C2A064CA20011EBF9 /* Home */,
 				FD8CAECF2965B9B400BADDC4 /* Image */,
 				FDCC757B29646D310079B983 /* AppWrapper */,
@@ -259,6 +268,8 @@
 				FDCC758329646D310079B983 /* AlbumCard.swift */,
 				FDBE6BFC2B56AFD2004F39CA /* AlbumCardViewModel.swift */,
 				FDCC758429646D310079B983 /* AlbumsView.swift */,
+				FD69881E2B61A36C0061FC90 /* AlbumView.swift */,
+				FD6988202B61A3750061FC90 /* AlbumViewModel.swift */,
 				FDD00CF62B56C2F4007554F7 /* AlbumsViewModel.swift */,
 			);
 			path = Albums;
@@ -297,6 +308,15 @@
 				FDBE6BF82B56AE0B004F39CA /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		FDE5E69E2B6D75F4006F1853 /* TrackRow */ = {
+			isa = PBXGroup;
+			children = (
+				FDE5E69F2B6D7606006F1853 /* TrackRowView.swift */,
+				FDE5E6A12B6D7612006F1853 /* TrackRowViewModel.swift */,
+			);
+			path = TrackRow;
 			sourceTree = "<group>";
 		};
 		FDFFD6DB29113CDE003A1501 = {
@@ -514,12 +534,15 @@
 				FDFFD6ED29113CDE003A1501 /* accentor.xcdatamodeld in Sources */,
 				FDFFD6E829113CDE003A1501 /* accentorApp.swift in Sources */,
 				FD405A822B5877B6008A3CB3 /* ArtistViewModel.swift in Sources */,
+				FD69881F2B61A36C0061FC90 /* AlbumView.swift in Sources */,
+				FD6988212B61A3750061FC90 /* AlbumViewModel.swift in Sources */,
 				FDCC75AF29646D320079B983 /* AppWrapperViewModel.swift in Sources */,
 				FDCC756629646D200079B983 /* AbstractService.swift in Sources */,
 				FDCC753D29646CCD0079B983 /* PlayQueueItem.swift in Sources */,
 				FDCC75B129646D320079B983 /* ArtistsView.swift in Sources */,
 				FDD5BD802A064D100011EBF9 /* HomeView.swift in Sources */,
 				FD405A802B58733D008A3CB3 /* ArtistsViewModel.swift in Sources */,
+				FDE5E6A22B6D7612006F1853 /* TrackRowViewModel.swift in Sources */,
 				FDCC756229646D200079B983 /* PlayService.swift in Sources */,
 				FDCC75B629646D320079B983 /* LoginViewModel.swift in Sources */,
 				FD3AA9872B5BFF4600034750 /* Play.swift in Sources */,
@@ -549,6 +572,7 @@
 				FDD00CF92B56CDDD007554F7 /* Player.swift in Sources */,
 				FD2E15F42B5C272D001D2C52 /* AlbumPlayStat.swift in Sources */,
 				FD344EF92A07B07000B7ADA7 /* CachedImageViewModel.swift in Sources */,
+				FDE5E6A02B6D7606006F1853 /* TrackRowView.swift in Sources */,
 				FDCC756829646D200079B983 /* ArtistService.swift in Sources */,
 				FDD00CFB2B56DDC8007554F7 /* PlayerView.swift in Sources */,
 				FDCC756529646D200079B983 /* TrackService.swift in Sources */,
