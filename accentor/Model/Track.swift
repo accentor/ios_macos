@@ -8,7 +8,7 @@
 import Foundation
 import GRDB
 
-struct Track: Identifiable, Equatable, Codable, FetchableRecord, PersistableRecord {
+struct Track: Identifiable, Equatable, Hashable, Codable, FetchableRecord, PersistableRecord {
     // Generic properties
     var id: Int64
     var createdAt: Date
