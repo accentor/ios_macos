@@ -19,7 +19,7 @@ struct ArtistsView: View {
     }
     
     let columns = [
-        GridItem(.adaptive(minimum: 130))
+        GridItem(.adaptive(minimum: 162, maximum: 252))
     ]
 
     var body: some View {
@@ -30,7 +30,7 @@ struct ArtistsView: View {
                         ArtistCard(artist: artist)
                     }.buttonStyle(PlainButtonStyle())
                 }
-            }
+            }.padding(EdgeInsets(top: 20, leading: 30, bottom: 65, trailing: 30))
         }.navigationTitle("Artists")
         .searchable(text: $viewModel.searchTerm)
     }
