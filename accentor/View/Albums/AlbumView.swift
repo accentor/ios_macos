@@ -10,6 +10,7 @@ import GRDBQuery
 
 struct AlbumView: View {
     @EnvironmentStateObject private var viewModel: AlbumViewModel
+    @Environment(\.defaultMinListRowHeight) var minRowHeight
     
     init(id: Album.ID) {
         _viewModel = EnvironmentStateObject {
@@ -19,42 +20,46 @@ struct AlbumView: View {
     
     var body: some View {
         if let album = viewModel.albumInfo?.album {
-            VStack {
-                CachedImage(imageURL: album.image250) {
-                    GeometryReader { geometry in
-                        ZStack {
-                            Rectangle().fill(.gray)
-                            Image(systemName: "music.note").font(.largeTitle)
-                        }.frame(width: geometry.size.width, height: geometry.size.width)
-                    }
-                }.scaledToFit()
-                    .frame(maxWidth: 250)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                    .shadow(radius: 6, x: -3, y: 3)
-                
-                Text(album.title).font(.title)
-                Text(AlbumArtist.constructAlbumArtistText(viewModel.albumInfo?.albumArtists)).foregroundStyle(Color.accentColor)
-                
-                HStack {
-                    Button(action: viewModel.playAlbum, label: {
-                        Label("Play", systemImage: "play.fill")
-                    })
-                    
-                    Button(action: viewModel.shuffleAlbum, label: {
-                        Label("Shuffle", systemImage: "shuffle")
-                    })
-                }.buttonStyle(.borderedProminent)
-                List {
-                    Section(content: {
-                        ForEach(viewModel.albumInfo!.tracks, id: \.track.id) { trackInfo in
-                            TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists)
+            ScrollView {
+                VStack {
+                    CachedImage(imageURL: album.image250) {
+                        GeometryReader { geometry in
+                            ZStack {
+                                Rectangle().fill(.gray)
+                                Image(systemName: "music.note").font(.largeTitle)
+                            }.frame(width: geometry.size.width, height: geometry.size.width)
                         }
-                    }, footer: {
-                        // Add padding here, so the view scrolls under the player
-                        Text(viewModel.tracksStats).padding(.bottom, 75)
-                    })
-                }.listStyle(.plain)
-            }.padding(.top, 10)
+                    }.scaledToFit()
+                        .frame(maxWidth: 250)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .shadow(radius: 6, x: -3, y: 3)
+                    
+                    Text(album.title).font(.title)
+                    Text(AlbumArtist.constructAlbumArtistText(viewModel.albumInfo?.albumArtists)).foregroundStyle(Color.accentColor)
+                    
+                    HStack {
+                        Button(action: viewModel.playAlbum, label: {
+                            Label("Play", systemImage: "play.fill")
+                        })
+                        
+                        Button(action: viewModel.shuffleAlbum, label: {
+                            Label("Shuffle", systemImage: "shuffle")
+                        })
+                    }.buttonStyle(.borderedProminent)
+                    List {
+                        Section(content: {
+                            ForEach(viewModel.albumInfo!.tracks, id: \.track.id) { trackInfo in
+                                TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists, showNumber: true)
+                            }
+                        }, footer: {
+                            // Add padding here, so the view scrolls under the player
+                            Text(viewModel.tracksStats)
+                        })
+                    }.listStyle(.plain)
+                        .scrollDisabled(true)
+                        .frame(minHeight: minRowHeight * CGFloat(viewModel.albumInfo!.tracks.count) * 2)
+                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 75, trailing: 0))
+            }
             .navigationTitle(album.title)
 #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -71,7 +76,6 @@ struct AlbumView: View {
                     }
                 })
             }
-            
         } else {
             ProgressView()
         }
