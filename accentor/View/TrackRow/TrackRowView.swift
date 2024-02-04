@@ -50,6 +50,7 @@ struct TrackRowView: View {
             TrackActions(viewModel: viewModel)
         } label: {
             ZStack {
+                Circle().fill(Color(white: 0, opacity: 0)).frame(width: 30, height: 30)
                 Label("Actions", systemImage: "ellipsis")
                     .foregroundStyle(Color.accentColor)
                     .labelStyle(.iconOnly)
