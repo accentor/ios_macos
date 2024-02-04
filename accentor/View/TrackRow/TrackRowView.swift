@@ -10,8 +10,10 @@ import GRDBQuery
 
 struct TrackRowView: View {
     @EnvironmentStateObject private var viewModel: TrackRowViewModel
+    let showNumber: Bool
     
-    init(track: Track, trackArtists: [TrackArtist]) {
+    init(track: Track, trackArtists: [TrackArtist], showNumber: Bool = false) {
+        self.showNumber = showNumber
         _viewModel = EnvironmentStateObject {
             TrackRowViewModel(database: $0.appDatabase, player: $0.player, track: track, trackArtists: trackArtists)
         }
@@ -19,7 +21,9 @@ struct TrackRowView: View {
     
     var body: some View {
         HStack {
-            Text(String(viewModel.track.number)).padding(.trailing, 20)
+            if (showNumber) {
+                Text(String(viewModel.track.number)).padding(.trailing, 20)
+            }
             VStack(alignment: .leading) {
                 Text(viewModel.track.title).foregroundStyle(Color.black)
                 Text(TrackArtist.constructTrackArtistText(viewModel.trackArtists))
