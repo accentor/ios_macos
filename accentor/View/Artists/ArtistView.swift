@@ -22,7 +22,7 @@ struct ArtistView: View {
         if let artist = viewModel.artistInfo?.artist {
             ScrollView {
                 VStack(alignment: .leading) {
-                    HStack {
+                    HStack(alignment: .bottom) {
                         if (artist.image250 != nil) {
                             CachedImage(imageURL: artist.image250) {
                                 ZStack {
@@ -31,28 +31,28 @@ struct ArtistView: View {
                                 }
                             }.frame(maxWidth: 250, maxHeight: 250)
                         }
-                        Text(artist.name)
-                    }
-                    Section("Albums") {
+                        Text(artist.name).font(.headline)
+                    }.padding(10)
+                    Section(content: {
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: 5) {
                                 ForEach(viewModel.artistInfo!.albums) { item in
                                     AlbumCard(id: item.id).frame(width: 200, height: 250)
                                 }
-                            }
+                            }.padding(.horizontal, 8)
                         }
-                    }
-                    List {
-                        Section(content: {
-                            ForEach(viewModel.artistInfo!.tracks, id: \.track.id) { trackInfo in
-                                TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists)
-                            }
-                        }, header: {
-                            Text("Tracks")
-                        })
-                    }.listStyle(.plain)
-                        .scrollDisabled(true)
-                        .frame(minHeight: minRowHeight * CGFloat(viewModel.artistInfo!.tracks.count) * 2)
+                    }, header: {
+                        Text("Albums").padding(.horizontal, 12).font(.subheadline)
+                    })
+                    Section(content: {
+                        ForEach(viewModel.artistInfo!.tracks, id: \.track.id) { trackInfo in
+                            TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists).padding(.horizontal, 12)
+                            Divider()
+                        }
+                    }, header: {
+                        Text("Tracks").padding(.horizontal, 12).font(.subheadline)
+                        Divider()
+                    })
                 }.padding(EdgeInsets(top: 10, leading: 0, bottom: 75, trailing: 0))
             }.navigationTitle(artist.name)
 #if os(iOS)
