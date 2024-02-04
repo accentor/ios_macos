@@ -9,9 +9,14 @@ import Combine
 import GRDB
 
 final class ArtistViewModel: ObservableObject {
+    struct TrackInfo: Decodable {
+        var track: Track
+        var trackArtists: [TrackArtist]
+    }
+
     struct ArtistInfo: Decodable, FetchableRecord {
         var artist: Artist
-        var tracks: [Track]
+        var tracks: [TrackInfo]
         var albums: [Album]
     }
 
@@ -23,7 +28,10 @@ final class ArtistViewModel: ObservableObject {
     init(database: AppDatabase, id: Album.ID) {
         self.database = database
         self.observationCancellable = ValueObservation
-            .tracking(Artist.filter(key: id).including(all: Artist.tracks.order(Track.Columns.normalizedTitle)).including(all: Artist.albums.all().orderByRelease()).asRequest(of: ArtistInfo.self).fetchOne)
+            .tracking(Artist.filter(key: id)
+                .including(all: Artist.tracks.order(Track.Columns.normalizedTitle).distinct().including(all: Track.trackArtists))
+                .including(all: Artist.albums.all().orderByRelease())
+                .asRequest(of: ArtistInfo.self).fetchOne)
             .publisher(in: database.reader, scheduling: .immediate)
             .sink(
                 receiveCompletion: { _ in /* ignore error */ },

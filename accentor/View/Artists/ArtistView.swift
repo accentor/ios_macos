@@ -10,13 +10,14 @@ import GRDBQuery
 
 struct ArtistView: View {
     @EnvironmentStateObject private var viewModel: ArtistViewModel
+    @Environment(\.defaultMinListRowHeight) var minRowHeight
     
     init(id: Artist.ID) {
         _viewModel = EnvironmentStateObject {
             ArtistViewModel(database: $0.appDatabase, id: id)
         }
     }
-
+    
     var body: some View {
         if let artist = viewModel.artistInfo?.artist {
             ScrollView {
@@ -41,12 +42,22 @@ struct ArtistView: View {
                             }
                         }
                     }
-                    Text("Tracks")
-                    ForEach(viewModel.artistInfo!.tracks) { track in
-                        Text(track.title)
-                    }
-                }
+                    List {
+                        Section(content: {
+                            ForEach(viewModel.artistInfo!.tracks, id: \.track.id) { trackInfo in
+                                TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists)
+                            }
+                        }, header: {
+                            Text("Tracks")
+                        })
+                    }.listStyle(.plain)
+                        .scrollDisabled(true)
+                        .frame(minHeight: minRowHeight * CGFloat(viewModel.artistInfo!.tracks.count) * 2)
+                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 75, trailing: 0))
             }.navigationTitle(artist.name)
+#if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+#endif
         } else {
             ProgressView()
         }
