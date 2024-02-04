@@ -46,18 +46,16 @@ struct AlbumView: View {
                             Label("Shuffle", systemImage: "shuffle")
                         })
                     }.buttonStyle(.borderedProminent)
-                    List {
-                        Section(content: {
-                            ForEach(viewModel.albumInfo!.tracks, id: \.track.id) { trackInfo in
-                                TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists, showNumber: true)
-                            }
-                        }, footer: {
-                            // Add padding here, so the view scrolls under the player
-                            Text(viewModel.tracksStats)
-                        })
-                    }.listStyle(.plain)
-                        .scrollDisabled(true)
-                        .frame(minHeight: minRowHeight * CGFloat(viewModel.albumInfo!.tracks.count) * 2)
+                    Section(content: {
+                        Divider()
+                        ForEach(viewModel.albumInfo!.tracks, id: \.track.id) { trackInfo in
+                            TrackRowView(track: trackInfo.track, trackArtists: trackInfo.trackArtists, showNumber: true).padding(.horizontal, 12)
+                            Divider()
+                        }
+                    }, footer: {
+                        // Add padding here, so the view scrolls under the player
+                        Text(viewModel.tracksStats).frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 12).font(.caption2).foregroundStyle(Color.gray)
+                    })
                 }.padding(EdgeInsets(top: 10, leading: 0, bottom: 75, trailing: 0))
             }
             .navigationTitle(album.title)
