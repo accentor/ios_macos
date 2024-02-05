@@ -59,7 +59,7 @@ struct HomeView: View {
                     }
                 }
             }, header: {
-                Text(title).padding(.horizontal, 12)
+                Text(title).padding(.horizontal, 16)
             })
         }
     }
@@ -91,7 +91,7 @@ struct HomeView: View {
                     }
                 }
             }, header: {
-                Text(title).padding(.horizontal, 12)
+                Text(title).padding(.horizontal, 16)
             })
         }
     }
