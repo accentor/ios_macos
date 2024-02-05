@@ -28,8 +28,8 @@ struct HomeView: View {
                 ArtistsSection(title: "Recently played artists", artists: viewModel.recentlyPlayedArtists)
                 AlbumsSection(title: "Random albums", albums: viewModel.randomAlbums)
                 ArtistsSection(title: "Random artists", artists: viewModel.randomArtists)
-            }
-        }.padding().navigationTitle("Home")
+            }.padding(EdgeInsets(top: 10, leading: 0, bottom: 75, trailing: 0))
+        }.navigationTitle("Home")
     }
     
     struct ArtistsSection: View {
@@ -37,15 +37,30 @@ struct HomeView: View {
         let artists: [Artist]
         
         var body: some View {
-            Section(title) {
+            Section(content: {
                 ScrollView(.horizontal) {
                     LazyHStack {
                         ForEach(artists) { item in
                             ArtistCard(artist: item).frame(width: 200, height: 240)
                         }
+                    }.modify {
+                        if #available(macOS 14.0, iOS 17.0, *) {
+                            $0.scrollTargetLayout()
+                        } else {
+                            $0.padding(.horizontal, 8)
+                        }
+                    }
+                }.modify {
+                    if #available(macOS 14.0, iOS 17.0, *) {
+                        $0.scrollTargetBehavior(.viewAligned)
+                            .safeAreaPadding(.horizontal, 8)
+                    } else {
+                        $0
                     }
                 }
-            }
+            }, header: {
+                Text(title).padding(.horizontal, 12)
+            })
         }
     }
     
@@ -54,15 +69,30 @@ struct HomeView: View {
         let albums: [Album]
         
         var body: some View {
-            Section(title) {
+            Section(content: {
                 ScrollView(.horizontal) {
                     LazyHStack {
                         ForEach(albums) { item in
                             AlbumCard(id: item.id).frame(width: 200, height: 250)
                         }
+                    }.modify {
+                        if #available(macOS 14.0, iOS 17.0, *) {
+                            $0.scrollTargetLayout()
+                        } else {
+                            $0.padding(.horizontal, 8)
+                        }
+                    }
+                }.modify {
+                    if #available(macOS 14.0, iOS 17.0, *) {
+                        $0.scrollTargetBehavior(.viewAligned)
+                            .safeAreaPadding(.horizontal, 8)
+                    } else {
+                        $0
                     }
                 }
-            }
+            }, header: {
+                Text(title).padding(.horizontal, 12)
+            })
         }
     }
 }

@@ -10,7 +10,7 @@ import GRDBQuery
 
 struct AlbumsView: View {
     @EnvironmentStateObject private var viewModel: AlbumsViewModel
-
+    
     init() {
         _viewModel = EnvironmentStateObject {
             AlbumsViewModel(database: $0.appDatabase)
@@ -22,12 +22,26 @@ struct AlbumsView: View {
     ]
     
     var body: some View {
-            ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(viewModel.albumIds, id: \.self) { albumId in
-                        AlbumCard(id: albumId)
-                    }
-                }.padding(EdgeInsets(top: 20, leading: 30, bottom: 65, trailing: 30))
-            }.searchable(text: $viewModel.searchTerm).navigationTitle("Albums")
+        ScrollView {
+            LazyVGrid(columns: columns) {
+                ForEach(viewModel.albumIds, id: \.self) { albumId in
+                    AlbumCard(id: albumId)
+                }
+            }.modify {
+                if #available(macOS 14.0, iOS 17.0, *) {
+                    $0.scrollTargetLayout()
+                } else {
+                    $0.padding(EdgeInsets(top: 4, leading: 30, bottom: 65, trailing: 30))
+                }
+            }
+            
+        }.modify {
+            if #available(macOS 14.0, iOS 17.0, *) {
+                $0.scrollTargetBehavior(.viewAligned)
+                    .safeAreaPadding(EdgeInsets(top: 4, leading: 30, bottom: 65, trailing: 30))
+            } else {
+                $0
+            }
+        }.searchable(text: $viewModel.searchTerm).navigationTitle("Albums")
     }
 }

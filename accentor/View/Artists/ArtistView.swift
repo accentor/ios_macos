@@ -39,7 +39,20 @@ struct ArtistView: View {
                                 ForEach(viewModel.artistInfo!.albums) { item in
                                     AlbumCard(id: item.id).frame(width: 200, height: 250)
                                 }
-                            }.padding(.horizontal, 8)
+                            }.modify {
+                                if #available(macOS 14.0, iOS 17.0, *) {
+                                    $0.scrollTargetLayout()
+                                } else {
+                                    $0.padding(.horizontal, 8)
+                                }
+                            }
+                        }.modify {
+                            if #available(macOS 14.0, iOS 17.0, *) {
+                                $0.scrollTargetBehavior(.viewAligned)
+                                    .safeAreaPadding(.horizontal, 8)
+                            } else {
+                                $0
+                            }
                         }
                     }, header: {
                         Text("Albums").padding(.horizontal, 12).font(.subheadline)
