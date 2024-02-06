@@ -99,7 +99,7 @@ final class HomeViewModel: ObservableObject {
     
     private func fetchOnThisDay() {
         let df = DateFormatter()
-        df.dateFormat = "MM-dd"
+        df.dateFormat = "-MM-dd"
         ValueObservation
             .tracking(Album.filter(Column("release").like("%\(df.string(from: Date()))%")).order(Column("release").desc).fetchAll)
             .publisher(in: database.reader, scheduling: .async(onQueue: DispatchQueue.main))
