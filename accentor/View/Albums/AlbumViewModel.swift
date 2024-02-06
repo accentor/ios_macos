@@ -25,8 +25,10 @@ final class AlbumViewModel: ObservableObject {
     var tracksStats: String {
         guard let tracks = albumInfo?.tracks else { return "" }
         
-        let totalLength = tracks.reduce(0) { partialResult, trackInfo in
-            partialResult + (trackInfo.track.length ?? 0)
+        // We force our counter to be an `Int64`
+        // This avoids an overflow when an album is more than 32768 sec (±9h)
+        let totalLength = tracks.reduce(Int64(0)) { partialResult, trackInfo in
+            partialResult + Int64(trackInfo.track.length ?? 0)
         }
         
         let hours = totalLength / 60 / 60
