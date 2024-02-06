@@ -22,7 +22,7 @@ struct TrackRowView: View {
     var body: some View {
         HStack {
             if (showNumber) {
-                Text(String(viewModel.track.number)).padding(.trailing, 20)
+                Text(String(viewModel.track.number)).frame(width: 25, alignment: .leading)
             }
             VStack(alignment: .leading) {
                 Text(viewModel.track.title).foregroundStyle(Color.black)
