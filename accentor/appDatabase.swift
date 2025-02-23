@@ -300,6 +300,14 @@ extension AppDatabase {
             print("Deleted \(count) old plays")
         }
     }
+    
+    func clearDatabase() async throws {
+        let now = Date();
+        try await deleteOldPlays(now)
+        try await deleteOldTracks(now)
+        try await deleteOldAlbums(now)
+        try await deleteOldArtists(now)
+    }
 }
 
 // MARK: - Database seeds

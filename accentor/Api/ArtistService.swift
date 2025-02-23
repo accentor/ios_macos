@@ -20,25 +20,31 @@ struct ArtistService {
         var count = 0
         var buffer: [APIArtist] = []
         
-        for await data in AbstractService.Index(path: ArtistService.apiPath) {
-            do {
-                let artists = try AbstractService.jsonDecoder.decode([APIArtist].self, from: data)
-                buffer.append(contentsOf: artists)
+        do {
+            for try await data in AbstractService.Index(path: ArtistService.apiPath) {
+                do {
+                    let artists = try AbstractService.jsonDecoder.decode([APIArtist].self, from: data)
+                    buffer.append(contentsOf: artists)
+                    
+                } catch {
+                    print("Error decoding artists", error)
+                }
                 
-            } catch {
-                print("Error decoding artists", error)
+                count += 1
+                if count >= 5 {
+                    await saveArtists(apiArtists: buffer)
+                    buffer = []
+                    count = 0
+                }
             }
             
-            count += 1
-            if count >= 5 {
-                await saveArtists(apiArtists: buffer)
-                buffer = []
-                count = 0
-            }
+            await saveArtists(apiArtists: buffer)
+            try! await database.deleteOldArtists(startLoading)
+        }  catch ApiError.unauthorized {
+            Task { try await AuthService(database).logout() }
+        } catch {
+            print("Encountered an error fetching data", error)
         }
-        
-        await saveArtists(apiArtists: buffer)
-        try! await database.deleteOldArtists(startLoading)
     }
     
     private func saveArtists(apiArtists: [APIArtist]) async {

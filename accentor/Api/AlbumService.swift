@@ -20,25 +20,31 @@ struct AlbumService {
         var count = 0
         var buffer: [APIAlbum] = []
 
-        for await data in AbstractService.Index(path: AlbumService.apiPath) {
-            do {
-                let albums = try AbstractService.jsonDecoder.decode([APIAlbum].self, from: data)
-                buffer.append(contentsOf: albums)
+        do {
+            for try await data in AbstractService.Index(path: AlbumService.apiPath) {
+                do {
+                    let albums = try AbstractService.jsonDecoder.decode([APIAlbum].self, from: data)
+                    buffer.append(contentsOf: albums)
+                    
+                } catch {
+                    print("Error decoding albums", error)
+                }
                 
-            } catch {
-                print("Error decoding albums", error)
+                count += 1
+                if count >= 5 {
+                    await saveAlbums(apiAlbums: buffer)
+                    buffer = []
+                    count = 0
+                }
             }
             
-            count += 1
-            if count >= 5 {
-                await saveAlbums(apiAlbums: buffer)
-                buffer = []
-                count = 0
-            }
+            await saveAlbums(apiAlbums: buffer)
+            try! await database.deleteOldAlbums(startLoading)
+        } catch ApiError.unauthorized {
+            Task { try await AuthService(database).logout() }
+        } catch {
+            print("Encountered an error fetching data", error)
         }
-        
-        await saveAlbums(apiAlbums: buffer)
-        try! await database.deleteOldAlbums(startLoading)
     }
     
     private func saveAlbums(apiAlbums: [APIAlbum]) async {

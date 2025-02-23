@@ -26,7 +26,7 @@ class AbstractService {
             var totalPages = 1
 
 
-            mutating func next() async -> Data? {
+            mutating func next() async throws -> Data? {
                 guard !Task.isCancelled else {
                      return nil
                 }
@@ -34,7 +34,7 @@ class AbstractService {
                     return nil
                 }
 
-                let (data, response) = try! await self.fetchPage()
+                let (data, response) = try await self.fetchPage()
                 totalPages = Int(response.value(forHTTPHeaderField: "x-total-pages")!) ?? 0
                 
                 currentPage += 1
@@ -59,10 +59,13 @@ class AbstractService {
                 let (data, res) = try await session.data(for: request)
                 let response = res as! HTTPURLResponse
                 
-                if response.statusCode != 200 {
+                guard (200...299).contains(response.statusCode) else {
                     // TODO: Be smarter about the possible status codes
                     print("Error in API")
-                    throw ApiError.unknown("Error in api \(response)")
+                    switch response.statusCode {
+                    case 401: throw ApiError.unauthorized
+                    default: throw ApiError.unknown("Error in api \(response)")
+                    }
                 }
                 
                 return (data, response)

@@ -35,6 +35,16 @@ struct accentorApp: App {
                     Text("Refresh")
                 })
             }
+            CommandMenu("Account") {
+                Button(action: {
+                    Task {
+                        try await AuthService(AppDatabase.shared).logout()
+                    }
+                }, label: {
+                    Text("Sign out")
+                })
+            }
+
         }
         .environment(\.appDatabase, .shared).environment(\.player, .shared)
     }
