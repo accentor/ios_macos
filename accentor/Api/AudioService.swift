@@ -65,8 +65,7 @@ class AudioService {
         
         components.queryItems = [
             URLQueryItem(name: "codec_conversion_id", value: UserDefaults.standard.string(forKey: "codecConversionId")!),
-            URLQueryItem(name: "secret", value: UserDefaults.standard.string(forKey: "secret")!),
-            URLQueryItem(name: "device_id", value: UserDefaults.standard.string(forKey: "deviceId")!)
+            URLQueryItem(name: "token", value: UserDefaults.standard.string(forKey: "apiToken")!)
         ]
         
         return components.url!
