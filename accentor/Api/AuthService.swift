@@ -10,6 +10,7 @@ import Foundation
 struct APILoginBody: Codable {
     let name: String
     let password: String
+    let application: String
 }
 
 struct APILoginResponse: Decodable {
