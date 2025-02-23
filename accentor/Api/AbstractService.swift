@@ -148,14 +148,18 @@ class AbstractService {
         return formatter
     }
     
-    static var userAgent: String {
+    static var application: String {
         let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         #if DEBUG
         let buildNumber = "debug"
         #else
         let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
         #endif
-        
+
+        return "Accentor \(appVersion)-\(buildNumber)"
+    }
+    
+    static var userAgent: String {
         let systemVersion = ProcessInfo().operatingSystemVersionString
         
         #if os(iOS)
@@ -164,6 +168,6 @@ class AbstractService {
         let os = "macOS"
         #endif
         
-        return "Accentor \(appVersion)-\(buildNumber) on \(os) \(systemVersion)"
+        return "\(os) \(systemVersion)"
     }
 }

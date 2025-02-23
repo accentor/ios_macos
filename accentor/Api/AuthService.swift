@@ -10,6 +10,7 @@ import Foundation
 struct APILoginBody: Codable {
     let name: String
     let password: String
+    let application: String
 }
 
 struct APILoginResponse: Decodable {
@@ -27,7 +28,7 @@ struct AuthService {
     }
 
     func login(username: String, password: String) async throws {
-        let body = APILoginBody(name: username, password: password)
+        let body = APILoginBody(name: username, password: password, application: AbstractService.application)
         let uploadData = try! AbstractService.jsonEncoder.encode(body)
         
         let response = try await AbstractService.shared.create(path: AuthService.apiPath, body: uploadData)
