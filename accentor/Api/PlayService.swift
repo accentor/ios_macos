@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Sentry
 
 struct APIPlayBody: Codable {
     let trackId: Int64
@@ -34,6 +35,7 @@ struct PlayService {
                     let plays = try AbstractService.jsonDecoder.decode([Play].self, from: data)
                     buffer.append(contentsOf: plays)
                 } catch {
+                    SentrySDK.capture(error: error)
                     print("Error decoding plays", error)
                 }
                 
@@ -50,6 +52,7 @@ struct PlayService {
         }  catch ApiError.unauthorized {
             Task { try await AuthService(database).logout() }
         } catch {
+            SentrySDK.capture(error: error)
             print("Encountered an error fetching data", error)
         }
     }
@@ -66,6 +69,7 @@ struct PlayService {
         }  catch ApiError.unauthorized {
             Task { try await AuthService(AppDatabase.shared).logout() }
         } catch {
+            SentrySDK.capture(error: error)
             print("Encountered an error creating play", error)
         }
         

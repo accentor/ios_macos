@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import Sentry
 
 @main
 struct accentorApp: App {
     @AppStorage("userId") private var userId: Int?
+    
+    init() {
+        SentrySDK.start { options in
+            // NOTE: We read the DSN setting from the `SENTRY_DSN` environment variable
+            #if DEBUG
+            options.debug = true // Enabling debug when first installing is always helpful
+            #endif
+        }
+    }
 
     var body: some Scene {
         WindowGroup {

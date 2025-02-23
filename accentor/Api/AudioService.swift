@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Sentry
 
 class AudioService {
     public static let shared = AudioService()
@@ -50,7 +51,8 @@ class AudioService {
                 try FileManager.default.copyItem(at: tmpURL, to: file)
                 
                 completion(nil)
-            } catch _ {
+            } catch {
+                SentrySDK.capture(error: error)
                 completion(error)
             }
         }

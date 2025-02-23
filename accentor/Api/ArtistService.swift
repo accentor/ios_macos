@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Sentry
 
 struct ArtistService {
     static let apiPath = "artists"
@@ -43,6 +44,7 @@ struct ArtistService {
         }  catch ApiError.unauthorized {
             Task { try await AuthService(database).logout() }
         } catch {
+            SentrySDK.capture(error: error)
             print("Encountered an error fetching data", error)
         }
     }
@@ -57,6 +59,7 @@ struct ArtistService {
         do {
             try await database.saveArtists(artists)
         } catch {
+            SentrySDK.capture(error: error)
             print(error)
         }
     }

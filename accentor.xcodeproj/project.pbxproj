@@ -11,6 +11,9 @@
 		FD0C5CBC29644E50000AF7D6 /* CONTRIBUTING.md in Resources */ = {isa = PBXBuildFile; fileRef = FD0C5CB829644E50000AF7D6 /* CONTRIBUTING.md */; };
 		FD0C5CBD29644E50000AF7D6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FD0C5CB929644E50000AF7D6 /* README.md */; };
 		FD0C5CBE29644E50000AF7D6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FD0C5CBA29644E50000AF7D6 /* LICENSE */; };
+		FD263A992D6B32FD005747AA /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FD263A982D6B32FD005747AA /* Sentry */; };
+		FD263A9B2D6B32FD005747AA /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = FD263A9A2D6B32FD005747AA /* SentrySwiftUI */; };
+		FD263A9F2D6B37EF005747AA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FD263A9E2D6B37EF005747AA /* PrivacyInfo.xcprivacy */; };
 		FD2E15F42B5C272D001D2C52 /* AlbumPlayStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E15F32B5C272D001D2C52 /* AlbumPlayStat.swift */; };
 		FD2E15F62B5C30F7001D2C52 /* ArtistPlayStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E15F52B5C30F7001D2C52 /* ArtistPlayStat.swift */; };
 		FD344EF42A079F7D00B7ADA7 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD344EF32A079F7D00B7ADA7 /* ImageRepository.swift */; };
@@ -91,6 +94,7 @@
 		FD0C5CB829644E50000AF7D6 /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		FD0C5CB929644E50000AF7D6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FD0C5CBA29644E50000AF7D6 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		FD263A9E2D6B37EF005747AA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = accentor/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FD2E15F32B5C272D001D2C52 /* AlbumPlayStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPlayStat.swift; sourceTree = "<group>"; };
 		FD2E15F52B5C30F7001D2C52 /* ArtistPlayStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistPlayStat.swift; sourceTree = "<group>"; };
 		FD344EF32A079F7D00B7ADA7 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
@@ -158,7 +162,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDBE6BF72B56ACB6004F39CA /* GRDBQuery in Frameworks */,
+				FD263A9B2D6B32FD005747AA /* SentrySwiftUI in Frameworks */,
 				FDBE6BEA2B559B6C004F39CA /* GRDB in Frameworks */,
+				FD263A992D6B32FD005747AA /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +330,7 @@
 		FDFFD6DB29113CDE003A1501 = {
 			isa = PBXGroup;
 			children = (
+				FD263A9E2D6B37EF005747AA /* PrivacyInfo.xcprivacy */,
 				FD0C5CB729644E50000AF7D6 /* CODE_OF_CONDUCT.md */,
 				FD0C5CB829644E50000AF7D6 /* CONTRIBUTING.md */,
 				FD0C5CBA29644E50000AF7D6 /* LICENSE */,
@@ -411,6 +418,8 @@
 			packageProductDependencies = (
 				FDBE6BE92B559B6C004F39CA /* GRDB */,
 				FDBE6BF62B56ACB6004F39CA /* GRDBQuery */,
+				FD263A982D6B32FD005747AA /* Sentry */,
+				FD263A9A2D6B32FD005747AA /* SentrySwiftUI */,
 			);
 			productName = accentor;
 			productReference = FDFFD6E429113CDE003A1501 /* accentor.app */;
@@ -487,6 +496,7 @@
 			packageReferences = (
 				FDBE6BE82B559B6C004F39CA /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				FDBE6BF52B56ACB6004F39CA /* XCRemoteSwiftPackageReference "GRDBQuery" */,
+				FD263A972D6B32FD005747AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = FDFFD6E529113CDE003A1501 /* Products */;
 			projectDirPath = "";
@@ -505,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD0C5CBE29644E50000AF7D6 /* LICENSE in Resources */,
+				FD263A9F2D6B37EF005747AA /* PrivacyInfo.xcprivacy in Resources */,
 				FDFFD6F529113CDF003A1501 /* Preview Assets.xcassets in Resources */,
 				FDFFD6F129113CDF003A1501 /* Assets.xcassets in Resources */,
 				FD0C5CBD29644E50000AF7D6 /* README.md in Resources */,
@@ -956,6 +967,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FD263A972D6B32FD005747AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.45.0;
+			};
+		};
 		FDBE6BE82B559B6C004F39CA /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
@@ -975,6 +994,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FD263A982D6B32FD005747AA /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD263A972D6B32FD005747AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		FD263A9A2D6B32FD005747AA /* SentrySwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD263A972D6B32FD005747AA /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = SentrySwiftUI;
+		};
 		FDBE6BE92B559B6C004F39CA /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FDBE6BE82B559B6C004F39CA /* XCRemoteSwiftPackageReference "GRDB.swift" */;
