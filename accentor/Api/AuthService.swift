@@ -15,8 +15,7 @@ struct APILoginBody: Codable {
 
 struct APILoginResponse: Decodable {
     let userId: Int64
-    let deviceId: String
-    let secret: String
+    let token: String
 }
 
 struct AuthService {
@@ -36,14 +35,12 @@ struct AuthService {
 
         let data = try AbstractService.jsonDecoder.decode(APILoginResponse.self, from: response)
         
-        UserDefaults.standard.set(data.deviceId, forKey: "deviceId")
-        UserDefaults.standard.set(data.secret, forKey: "secret")
+        UserDefaults.standard.set(data.token, forKey: "apiToken")
         UserDefaults.standard.set(data.userId, forKey: "userId")
     }
     
     func logout() async throws {
-        UserDefaults.standard.removeObject(forKey: "devicedId")
-        UserDefaults.standard.removeObject(forKey: "secret")
+        UserDefaults.standard.removeObject(forKey: "apiToken")
         UserDefaults.standard.removeObject(forKey: "userId")
         
         do {
