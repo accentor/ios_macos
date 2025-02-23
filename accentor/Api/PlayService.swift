@@ -28,25 +28,30 @@ struct PlayService {
         let startLoading = Date()
         var count = 0
         var buffer: [Play] = []
-        
-        for await data in AbstractService.Index(path: PlayService.apiPath) {
-            do {
-                let plays = try AbstractService.jsonDecoder.decode([Play].self, from: data)
-                buffer.append(contentsOf: plays)
-            } catch {
-                print("Error decoding plays", error)
+        do {
+            for try await data in AbstractService.Index(path: PlayService.apiPath) {
+                do {
+                    let plays = try AbstractService.jsonDecoder.decode([Play].self, from: data)
+                    buffer.append(contentsOf: plays)
+                } catch {
+                    print("Error decoding plays", error)
+                }
+                
+                count += 1
+                if count >= 5 {
+                    try! await self.database.savePlays(buffer)
+                    buffer = []
+                    count = 0
+                }
             }
             
-            count += 1
-            if count >= 5 {
-                try! await self.database.savePlays(buffer)
-                buffer = []
-                count = 0
-            }
+            try! await self.database.savePlays(buffer)
+            try! await database.deleteOldPlays(startLoading)
+        }  catch ApiError.unauthorized {
+            Task { try await AuthService(database).logout() }
+        } catch {
+            print("Encountered an error fetching data", error)
         }
-        
-        try! await self.database.savePlays(buffer)
-        try! await database.deleteOldPlays(startLoading)
     }
     
     func create(trackId: Int64) async {
@@ -58,8 +63,10 @@ struct PlayService {
             let play = try AbstractService.jsonDecoder.decode(Play.self, from: response)
             
             try await self.database.savePlay(play)
+        }  catch ApiError.unauthorized {
+            Task { try await AuthService(AppDatabase.shared).logout() }
         } catch {
-            print("Error saving play", error)
+            print("Encountered an error creating play", error)
         }
         
     }

@@ -21,6 +21,12 @@ class LoginViewModel: ObservableObject {
     @Published var serverURL: String = ""
     @Published var username: String = ""
     @Published var password: String = ""
+    
+    private let database: AppDatabase
+    
+    init(database: AppDatabase) {
+        self.database = database
+    }
 
     var errorMessage: String? {
         get {
@@ -53,7 +59,7 @@ class LoginViewModel: ObservableObject {
         UserDefaults.standard.set(url, forKey: "serverURL")
         
         do {
-            try await AuthService.shared.login(username: username, password: password)
+            try await AuthService(self.database).login(username: username, password: password)
 
             DispatchQueue.main.async {
                 self.loginState = .success

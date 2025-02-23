@@ -20,7 +20,11 @@ struct APILoginResponse: Decodable {
 
 struct AuthService {
     static let apiPath = "auth_tokens"
-    public static let shared = AuthService()
+    let database: AppDatabase
+    
+    init(_ db: AppDatabase) {
+        self.database = db
+    }
 
     func login(username: String, password: String) async throws {
         let body = APILoginBody(name: username, password: password)
@@ -34,5 +38,28 @@ struct AuthService {
         UserDefaults.standard.set(data.deviceId, forKey: "deviceId")
         UserDefaults.standard.set(data.secret, forKey: "secret")
         UserDefaults.standard.set(data.userId, forKey: "userId")
+    }
+    
+    func logout() async throws {
+        UserDefaults.standard.removeObject(forKey: "devicedId")
+        UserDefaults.standard.removeObject(forKey: "secret")
+        UserDefaults.standard.removeObject(forKey: "userId")
+        
+        do {
+            try await database.clearDatabase()
+        } catch {
+            print(error)
+        }
+        
+        let fileCachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let files = try FileManager.default.contentsOfDirectory(at: fileCachePath, includingPropertiesForKeys: [])
+        print("Removing \(files.count) from audio cache")
+        do {
+            try files.forEach { path in
+                try FileManager.default.removeItem(atPath: path.path())
+            }
+        } catch {
+            print(error)
+        }
     }
 }

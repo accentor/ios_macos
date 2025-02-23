@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+import GRDBQuery
 
 struct LoginView: View {
-    @StateObject var viewModel = LoginViewModel()
+    @EnvironmentStateObject private var viewModel: LoginViewModel
+
+    init() {
+        _viewModel = EnvironmentStateObject {
+            LoginViewModel(database: $0.appDatabase)
+        }
+    }
     
     var body: some View {
         ZStack {

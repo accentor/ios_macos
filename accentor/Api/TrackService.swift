@@ -21,24 +21,30 @@ struct TrackService {
         var count = 0
         var buffer: [APITrack] = []
         
-        for await data in AbstractService.Index(path: TrackService.apiPath) {
-            do {
-                let tracks = try AbstractService.jsonDecoder.decode([APITrack].self, from: data)
-                buffer.append(contentsOf: tracks)
-            } catch {
-                print("Error decoding tracks", error)
+        do {
+            for try await data in AbstractService.Index(path: TrackService.apiPath) {
+                do {
+                    let tracks = try AbstractService.jsonDecoder.decode([APITrack].self, from: data)
+                    buffer.append(contentsOf: tracks)
+                } catch {
+                    print("Error decoding tracks", error)
+                }
+                
+                count += 1
+                if count >= 5 {
+                    await self.saveTracks(apiTracks: buffer)
+                    buffer = []
+                    count = 0
+                }
             }
             
-            count += 1
-            if count >= 5 {
-                await self.saveTracks(apiTracks: buffer)
-                buffer = []
-                count = 0
-            }
+            await self.saveTracks(apiTracks: buffer)
+            try! await database.deleteOldTracks(startLoading)
+        }  catch ApiError.unauthorized {
+            Task { try await AuthService(AppDatabase.shared).logout() }
+        } catch {
+            print("Encountered an error fetching data", error)
         }
-
-        await self.saveTracks(apiTracks: buffer)
-        try! await database.deleteOldTracks(startLoading)
     }
     
     private func saveTracks(apiTracks: [APITrack]) async {
