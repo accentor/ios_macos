@@ -1,5 +1,5 @@
 {
-  "originHash" : "5d7cd714d3467c602dc957fe0de2ee39e8ff506582cd0f6ce338011e0848f9fd",
+  "originHash" : "f84ba7aa4736953a9896a5ee5bf613ee4a3cb88ec96f339a4421839a794c9c1f",
   "pins" : [
     {
       "identity" : "grdb.swift",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "f279a57b7ba5749c05d347751a2f572f8759a7d2",
         "version" : "0.10.1"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa.git",
+      "state" : {
+        "revision" : "3640aaf7849a9fc39996d777e6df866251bb98d6",
+        "version" : "8.45.0"
       }
     }
   ],

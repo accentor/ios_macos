@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Sentry
 
 struct APILoginBody: Codable {
     let name: String
@@ -49,6 +50,7 @@ struct AuthService {
         do {
             try await database.clearDatabase()
         } catch {
+            SentrySDK.capture(error: error)
             print(error)
         }
         
@@ -60,6 +62,7 @@ struct AuthService {
                 try FileManager.default.removeItem(atPath: path.path())
             }
         } catch {
+            SentrySDK.capture(error: error)
             print(error)
         }
     }

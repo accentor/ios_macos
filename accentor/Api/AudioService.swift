@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Sentry
 
 class AudioService {
     public static let shared = AudioService()
@@ -51,6 +52,7 @@ class AudioService {
                 
                 completion(nil)
             } catch _ {
+                SentrySDK.capture(error: error)
                 completion(error)
             }
         }

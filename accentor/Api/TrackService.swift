@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreData
+import Sentry
 
 struct TrackService {
     static let apiPath = "tracks";
@@ -27,6 +27,7 @@ struct TrackService {
                     let tracks = try AbstractService.jsonDecoder.decode([APITrack].self, from: data)
                     buffer.append(contentsOf: tracks)
                 } catch {
+                    SentrySDK.capture(error: error)
                     print("Error decoding tracks", error)
                 }
                 
@@ -43,6 +44,7 @@ struct TrackService {
         }  catch ApiError.unauthorized {
             Task { try await AuthService(AppDatabase.shared).logout() }
         } catch {
+            SentrySDK.capture(error: error)
             print("Encountered an error fetching data", error)
         }
     }
@@ -62,6 +64,7 @@ struct TrackService {
         do {
             try await database.saveTracks(tracks: tracks, trackArtists: trackArtists)
         } catch {
+            SentrySDK.capture(error: error)
             print(error)
         }
     }
