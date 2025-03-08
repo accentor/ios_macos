@@ -50,8 +50,7 @@ class AbstractService {
                 ]
                 
                 var request = URLRequest(url: components.url!)
-                request.addValue(UserDefaults.standard.string(forKey: "deviceId")!, forHTTPHeaderField: "x-device-id")
-                request.addValue(UserDefaults.standard.string(forKey: "secret")!, forHTTPHeaderField: "x-secret")
+                request.addValue("Bearer \(UserDefaults.standard.string(forKey: "apiToken")!)", forHTTPHeaderField: "Authorization")
                 request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
                 
                 let session = URLSession(configuration: .default)
@@ -86,11 +85,8 @@ class AbstractService {
         var request = URLRequest(url: components.url!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        if let deviceId = UserDefaults.standard.string(forKey: "deviceId") {
-            request.addValue(deviceId, forHTTPHeaderField: "x-device-id")
-        }
-        if let secret = UserDefaults.standard.string(forKey: "secret") {
-            request.addValue(secret, forHTTPHeaderField: "x-secret")
+        if let apiToken = UserDefaults.standard.string(forKey: "apiToken") {
+            request.addValue("Bearer \(apiToken)", forHTTPHeaderField: "Authorization")
         }
         request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
         
