@@ -8,5 +8,5 @@
 import Foundation
 
 enum DefaultSettings {
-    static let codecConversionId = 7 // The AAC 256 codec in our current production ENV
+    static let codecConversionId = 3 // The MP3 320 codec in our current production ENV
 }
