@@ -50,7 +50,9 @@ class AbstractService {
                 ]
                 
                 var request = URLRequest(url: components.url!)
-                request.addValue("Bearer \(UserDefaults.standard.string(forKey: "apiToken")!)", forHTTPHeaderField: "Authorization")
+                if let apiToken = UserDefaults.standard.string(forKey: "apiToken") {
+                    request.addValue("Bearer \(apiToken)", forHTTPHeaderField: "Authorization")
+                }
                 request.setValue(AbstractService.userAgent, forHTTPHeaderField: "user-agent")
                 
                 let session = URLSession(configuration: .default)
