@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import OSLog
 
 class PlayQueue: ObservableObject {
     enum QueueItemPosition: Equatable {
@@ -16,6 +17,7 @@ class PlayQueue: ObservableObject {
 
     @Published private(set) var queue: [PlayQueueItem] = []
     @Published private(set) var currentIndex: Int = -1
+    
     
     // PlayQueue is a singleton class, since we only ever want one queue in our whole app
     public static let shared = PlayQueue()
@@ -40,7 +42,6 @@ class PlayQueue: ObservableObject {
             currentIndex = -1
             return
         }
-        print("From `setIndex`", newIndex)
         currentIndex = newIndex
         
     }

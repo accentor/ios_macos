@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import OSLog
 
 enum ApiError: Error {
     case unauthorized
@@ -62,7 +63,7 @@ class AbstractService {
                 
                 guard (200...299).contains(response.statusCode) else {
                     // TODO: Be smarter about the possible status codes
-                    print("Error in API")
+                    Logger.api.info("API reponded with error code \(response.statusCode)")
                     switch response.statusCode {
                     case 401: throw ApiError.unauthorized
                     default: throw ApiError.unknown("Error in api \(response)")
@@ -99,7 +100,7 @@ class AbstractService {
 
         guard (200...299).contains(response.statusCode) else {
             // TODO: Be smarter about the possible status codes
-            print("Error in API")
+            Logger.api.info("API reponded with error code \(response.statusCode)")
             switch response.statusCode {
             case 401: throw ApiError.unauthorized
             default: throw ApiError.unknown("Error in api \(response)")

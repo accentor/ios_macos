@@ -7,6 +7,7 @@
 
 import Foundation
 import Sentry
+import OSLog
 
 struct TrackService {
     static let apiPath = "tracks";
@@ -28,7 +29,7 @@ struct TrackService {
                     buffer.append(contentsOf: tracks)
                 } catch {
                     SentrySDK.capture(error: error)
-                    print("Error decoding tracks", error)
+                    Logger.api.error("Error decoding tracks \(error)")
                 }
                 
                 count += 1
@@ -45,7 +46,7 @@ struct TrackService {
             Task { try await AuthService(AppDatabase.shared).logout() }
         } catch {
             SentrySDK.capture(error: error)
-            print("Encountered an error fetching data", error)
+            Logger.api.error("Error fetching tracks \(error)")
         }
     }
     
@@ -65,7 +66,7 @@ struct TrackService {
             try await database.saveTracks(tracks: tracks, trackArtists: trackArtists)
         } catch {
             SentrySDK.capture(error: error)
-            print(error)
+            Logger.api.error("Error storing tracks \(error)")
         }
     }
 }

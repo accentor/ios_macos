@@ -55,7 +55,7 @@ class PlayQueueItem {
 
 extension PlayQueueItem: CachingPlayerItemDelegate {
     func playerItem(_ playerItem: CachingPlayerItem, didFinishDownloadingData data: Data) {
-        print("finished downlaoding and storing in \(self.cachePath)")
+        print("finished downloading and storing in \(self.cachePath)")
         FileManager.default.createFile(atPath: self.cachePath, contents: data)
     }
 }

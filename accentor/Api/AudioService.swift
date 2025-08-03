@@ -29,7 +29,7 @@ class AudioService {
         
         
         downloadAudio(url: trackURL, toFile: fileCachePath, completion: { (error) in
-            print("Downlaoded audio from \(trackURL) and storing in \(fileCachePath)")
+            print("Downloaded audio from \(trackURL) and storing in \(fileCachePath)")
             completion(fileCachePath, error)
         })
     }
