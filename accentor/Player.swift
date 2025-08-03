@@ -48,7 +48,8 @@ class Player: ObservableObject {  // Possible values of `playerState`
     private let playService: PlayService
     private var player: AVPlayer = AVPlayer()
     private var statusObserver: NSObjectProtocol!
-    private var cancellables: Set<AnyCancellable> = []
+    private var playQueueIndexTracking: AnyCancellable?
+    private var trackInfoObservation: AnyCancellable?
 
     static func empty() -> Player {
         return Player(queue: PlayQueue.empty(), database: AppDatabase.empty())
@@ -65,13 +66,13 @@ class Player: ObservableObject {  // Possible values of `playerState`
         setupCommandCenter()
         
         // Listen for changes in the playQueue
-        playQueue.$currentIndex.sink { [weak self] newIndex in
+        self.playQueueIndexTracking = playQueue.$currentIndex.sink { [weak self] newIndex in
             guard let self = self else { return }
 
             DispatchQueue.main.async {
                 self.setPlayingTrack(currentItem: self.playQueue.currentItem)
             }
-        }.store(in: &cancellables)
+        }
         
         statusObserver = player.observe(\.currentItem?.status, options: .initial) {
             [unowned self] _, _ in self.handlePlaybackChange()
@@ -193,9 +194,12 @@ extension Player {
 // MARK: - Now playing info
 extension Player {
     private func fetchPlayingTrackInfo() {
+        // Cancel previous observation
+        self.trackInfoObservation?.cancel()
+        
         guard let trackId = playingItem?.trackId else { return }
 
-        ValueObservation
+        self.trackInfoObservation = ValueObservation
             .tracking(Track.filter(key: trackId).including(all: Track.trackArtists).including(optional: Track.album.forKey("album").including(all: Album.albumArtists.forKey("albumArtists"))).asRequest(of: TrackInfo.self).fetchOne)
             .publisher(in: database.reader, scheduling: .immediate)
             .sink(
@@ -203,7 +207,7 @@ extension Player {
                 receiveValue: { [weak self] trackInfo in
                     self?.playingTrackInfo = trackInfo
                     self?.handlePlaybackChange()
-                }).store(in: &cancellables)
+                })
     }
     
     private func handlePlayerItemChange() {
