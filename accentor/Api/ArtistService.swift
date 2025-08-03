@@ -7,6 +7,7 @@
 
 import Foundation
 import Sentry
+import OSLog
 
 struct ArtistService {
     static let apiPath = "artists"
@@ -28,7 +29,7 @@ struct ArtistService {
                     buffer.append(contentsOf: artists)
                     
                 } catch {
-                    print("Error decoding artists", error)
+                    Logger.api.error("Error decoding artists \(error)")
                 }
                 
                 count += 1
@@ -45,7 +46,7 @@ struct ArtistService {
             Task { try await AuthService(database).logout() }
         } catch {
             SentrySDK.capture(error: error)
-            print("Encountered an error fetching data", error)
+            Logger.api.error("Error fetching artists \(error)")
         }
     }
     
@@ -60,7 +61,7 @@ struct ArtistService {
             try await database.saveArtists(artists)
         } catch {
             SentrySDK.capture(error: error)
-            print(error)
+            Logger.api.error("Error saving artists \(error)")
         }
     }
 }

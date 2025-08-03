@@ -7,6 +7,7 @@
 
 import Foundation
 import Sentry
+import OSLog
 
 struct APILoginBody: Codable {
     let name: String
@@ -48,19 +49,19 @@ struct AuthService {
             try await database.clearDatabase()
         } catch {
             SentrySDK.capture(error: error)
-            print(error)
+            Logger.api.error("Could not clear database \(error)")
         }
         
         let fileCachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         let files = try FileManager.default.contentsOfDirectory(at: fileCachePath, includingPropertiesForKeys: [])
-        print("Removing \(files.count) from audio cache")
+        Logger.api.info("Removing \(files.count) from audio cache")
         do {
             try files.forEach { path in
                 try FileManager.default.removeItem(atPath: path.path())
             }
         } catch {
             SentrySDK.capture(error: error)
-            print(error)
+            Logger.api.error("Could not remove track \(error)")
         }
     }
 }

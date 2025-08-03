@@ -7,6 +7,7 @@
 
 import Foundation
 import Sentry
+import OSLog
 
 struct AlbumService {
     static let apiPath = "albums"
@@ -28,7 +29,7 @@ struct AlbumService {
                     buffer.append(contentsOf: albums)
                     
                 } catch {
-                    print("Error decoding albums", error)
+                    Logger.api.error("Error decoding albums \(error)")
                 }
                 
                 count += 1
@@ -45,7 +46,7 @@ struct AlbumService {
             Task { try await AuthService(database).logout() }
         } catch {
             SentrySDK.capture(error: error)
-            print("Encountered an error fetching data", error)
+            Logger.api.error("Encountered an error fetching albums \(error)")
         }
     }
     
@@ -64,7 +65,7 @@ struct AlbumService {
             try await database.saveAlbums(albums: albums, albumArtists: albumArtists)
         } catch {
             SentrySDK.capture(error: error)
-            print(error)
+            Logger.api.error("Encountered an error saving albums \(error)")
         }
     }
 }

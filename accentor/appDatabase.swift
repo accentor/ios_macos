@@ -244,7 +244,7 @@ extension AppDatabase {
     func deleteOldAlbums(_ fetchedBefore: Date) async throws {
         try await dbWriter.write { db in
             let count = try Album.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
-            print("Deleted \(count) old albums")
+            Logger.api.info("Deleted \(count) old albums")
         }
     }
     
@@ -259,7 +259,7 @@ extension AppDatabase {
     func deleteOldArtists(_ fetchedBefore: Date) async throws {
         try await dbWriter.write { db in
             let count = try Artist.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
-            print("Deleted \(count) old artists")
+            Logger.api.info("Deleted \(count) old artists")
         }
     }
     
@@ -278,7 +278,7 @@ extension AppDatabase {
     func deleteOldTracks(_ fetchedBefore: Date) async throws {
         try await dbWriter.write { db in
             let count = try Track.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
-            print("Deleted \(count) old tracks")
+            Logger.api.info("Deleted \(count) old tracks")
         }
     }
     
@@ -297,7 +297,7 @@ extension AppDatabase {
     func deleteOldPlays(_ fetchedBefore: Date) async throws {
         try await dbWriter.write { db in
             let count = try Play.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
-            print("Deleted \(count) old plays")
+            Logger.api.info("Deleted \(count) old plays")
         }
     }
     

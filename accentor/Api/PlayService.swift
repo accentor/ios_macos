@@ -7,6 +7,7 @@
 
 import Foundation
 import Sentry
+import OSLog
 
 struct APIPlayBody: Codable {
     let trackId: Int64
@@ -36,7 +37,7 @@ struct PlayService {
                     buffer.append(contentsOf: plays)
                 } catch {
                     SentrySDK.capture(error: error)
-                    print("Error decoding plays", error)
+                    Logger.api.error("Error decoding plays \(error)")
                 }
                 
                 count += 1
@@ -53,7 +54,7 @@ struct PlayService {
             Task { try await AuthService(database).logout() }
         } catch {
             SentrySDK.capture(error: error)
-            print("Encountered an error fetching data", error)
+            Logger.api.error("Error fetching plays \(error)")
         }
     }
     
@@ -70,7 +71,7 @@ struct PlayService {
             Task { try await AuthService(AppDatabase.shared).logout() }
         } catch {
             SentrySDK.capture(error: error)
-            print("Encountered an error creating play", error)
+            Logger.api.error("Error creating play \(error)")
         }
         
     }

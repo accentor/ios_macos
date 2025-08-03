@@ -12,6 +12,7 @@ import AVFoundation
 import MediaPlayer
 import GRDB
 import Sentry
+import OSLog
 
 class Player: ObservableObject {  // Possible values of `playerState`
     // The raw values match those of `MPNowPlayingPlaybackState`
@@ -127,7 +128,7 @@ extension Player {
         }
         catch {
             SentrySDK.capture(error: error)
-            print("Error while playing", error)
+            Logger.player.error("Error while playing \(error)")
         }
     }
     
