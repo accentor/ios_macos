@@ -45,9 +45,10 @@ final class AppWrapperViewModel: ObservableObject {
     func fetchAll() async {
         async let albums: () = AlbumService(database).index()
         async let artists: () = ArtistService(database).index()
+        async let codecConversions: () = CodecConversionService(database).index()
         async let plays: () = PlayService(database).index()
         async let tracks: () = TrackService(database).index()
-        _ = await [albums, artists, plays, tracks]
+        _ = await [albums, artists, codecConversions, plays, tracks]
     }
     
     private func setDefaultSettings() {

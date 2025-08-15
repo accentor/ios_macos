@@ -35,9 +35,10 @@ struct accentorApp: App {
                     Task {
                         async let albums: () = AlbumService(AppDatabase.shared).index()
                         async let artists: () = ArtistService(AppDatabase.shared).index()
+                        async let codecConversions: () = CodecConversionService(AppDatabase.shared).index()
                         async let plays: () = PlayService(AppDatabase.shared).index()
                         async let tracks: () = TrackService(AppDatabase.shared).index()
-                        _ = await [albums, artists, plays, tracks]
+                        _ = await [albums, artists, codecConversions, plays, tracks]
                     }
 
                     UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "last_sync_finished")
