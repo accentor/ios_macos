@@ -219,6 +219,16 @@ extension AppDatabase {
                 GROUP BY artistId
             """)
         }
+        
+        migrator.registerMigration("20250815 - Add CodecConversions") { db in
+            try db.create(table: "codecConversion") { table in
+                table.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+                table.column("name", .text).notNull()
+                table.column("ffmpegParams", .text).notNull()
+                table.column("resultingCodecId", .integer).notNull()
+                table.column("fetchedAt", .datetime).notNull()
+            }
+        }
 
         
         return migrator
@@ -301,12 +311,28 @@ extension AppDatabase {
         }
     }
     
+    func saveCodecConversions(_ conversions: [CodecConversion]) async throws {
+        try await dbWriter.write { db in
+            try conversions.forEach { conversion in
+                try conversion.upsert(db)
+            }
+        }
+    }
+    
+    func deleteOldCodecConversions(_ fetchedBefore: Date) async throws {
+        try await dbWriter.write { db in
+            let count = try CodecConversion.filter(Column("fetchedAt") < fetchedBefore).deleteAll(db)
+            Logger.api.info("Deleted \(count) old codec conversions")
+        }
+    }
+    
     func clearDatabase() async throws {
         let now = Date();
         try await deleteOldPlays(now)
         try await deleteOldTracks(now)
         try await deleteOldAlbums(now)
         try await deleteOldArtists(now)
+        try await deleteOldCodecConversions(now)
     }
 }
 

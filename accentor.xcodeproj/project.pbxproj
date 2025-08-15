@@ -56,6 +56,8 @@
 		FDCC75B629646D320079B983 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758629646D310079B983 /* LoginViewModel.swift */; };
 		FDCC75B729646D320079B983 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC758729646D310079B983 /* LoginView.swift */; };
 		FDCC75C529646D320079B983 /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCC759A29646D310079B983 /* CachingPlayerItem.swift */; };
+		FDCE60242E4F3074006EE95A /* CodecConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCE60232E4F3074006EE95A /* CodecConversion.swift */; };
+		FDCE60262E4F319D006EE95A /* CodecConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCE60252E4F319D006EE95A /* CodecConversionService.swift */; };
 		FDD00CF72B56C2F4007554F7 /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CF62B56C2F4007554F7 /* AlbumsViewModel.swift */; };
 		FDD00CF92B56CDDD007554F7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CF82B56CDDD007554F7 /* Player.swift */; };
 		FDD00CFB2B56DDC8007554F7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD00CFA2B56DDC8007554F7 /* PlayerView.swift */; };
@@ -136,6 +138,8 @@
 		FDCC758629646D310079B983 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		FDCC758729646D310079B983 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		FDCC759A29646D310079B983 /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
+		FDCE60232E4F3074006EE95A /* CodecConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodecConversion.swift; sourceTree = "<group>"; };
+		FDCE60252E4F319D006EE95A /* CodecConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodecConversionService.swift; sourceTree = "<group>"; };
 		FDD00CF62B56C2F4007554F7 /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
 		FDD00CF82B56CDDD007554F7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FDD00CFA2B56DDC8007554F7 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				FD2E15F32B5C272D001D2C52 /* AlbumPlayStat.swift */,
 				FD2E15F52B5C30F7001D2C52 /* ArtistPlayStat.swift */,
 				FDBE6BED2B55BB78004F39CA /* AlbumArtist.swift */,
+				FDCE60232E4F3074006EE95A /* CodecConversion.swift */,
 				FDBE6BF32B55D21E004F39CA /* Artist.swift */,
 				FDBE6BEF2B55D0C7004F39CA /* Track.swift */,
 				FDBE6BF12B55D1A8004F39CA /* TrackArtist.swift */,
@@ -219,6 +224,7 @@
 				FDCC755F29646D1F0079B983 /* AbstractService.swift */,
 				FDCC756029646D1F0079B983 /* AlbumService.swift */,
 				FDCC756129646D1F0079B983 /* ArtistService.swift */,
+				FDCE60252E4F319D006EE95A /* CodecConversionService.swift */,
 				FDCC755D29646D1F0079B983 /* AudioService.swift */,
 				FDCC755C29646D1F0079B983 /* AuthService.swift */,
 				FDCC755B29646D1F0079B983 /* PlayService.swift */,
@@ -583,6 +589,7 @@
 				FDCC756329646D200079B983 /* AuthService.swift in Sources */,
 				FDBE6BEC2B55B8B5004F39CA /* Album.swift in Sources */,
 				FDBE6BF22B55D1A8004F39CA /* TrackArtist.swift in Sources */,
+				FDCE60242E4F3074006EE95A /* CodecConversion.swift in Sources */,
 				FD344EF42A079F7D00B7ADA7 /* ImageRepository.swift in Sources */,
 				FDCC75B529646D320079B983 /* AlbumsView.swift in Sources */,
 				FDBE6BFD2B56AFD2004F39CA /* AlbumCardViewModel.swift in Sources */,
@@ -591,6 +598,7 @@
 				FD2E15F42B5C272D001D2C52 /* AlbumPlayStat.swift in Sources */,
 				FD344EF92A07B07000B7ADA7 /* CachedImageViewModel.swift in Sources */,
 				FDE5E6A02B6D7606006F1853 /* TrackRowView.swift in Sources */,
+				FDCE60262E4F319D006EE95A /* CodecConversionService.swift in Sources */,
 				FDCC756829646D200079B983 /* ArtistService.swift in Sources */,
 				FDD00CFB2B56DDC8007554F7 /* PlayerView.swift in Sources */,
 				FD76FEB22E3F8F0400C742DB /* Logger.swift in Sources */,
