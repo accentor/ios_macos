@@ -27,6 +27,20 @@ final class HomeViewModel: ObservableObject {
         self.database = database
         self.randomSeed = Int.random(in: 1..<10000)
         
+        self.fetchAllData()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAllData), name: .NSCalendarDayChanged, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func fetchAllData() {
+        // Remove all previous cancellables
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll(keepingCapacity: true)
+
         self.fetchRecentlyPlayedAlbums()
         self.fetchRecentlyPlayedArtists()
         self.fetchRecentlyAddedAlbums()
